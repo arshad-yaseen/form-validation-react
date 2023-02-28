@@ -1,41 +1,21 @@
-import React, { Component, ReactNode, useEffect } from 'react';
+import React,{ useEffect } from 'react';
 
-type Props = {
-    children: ReactNode;
-  };
-  
-  type State = {
-    form: ReactNode;
-  };
-  
-  class ValidateForm extends Component<Props, State> {
-    constructor(props: Props) {
-      super(props);
-      this.state = { form: this.props.children };
-      
-    }
-  
-    render() {
-      const form = document.querySelector('#_validation_parent :first-child');
+interface Props {
+  children: React.ReactNode;
+}
 
-      console.log(this.props.children);
-      console.log(this.state.form);
+function ValidateForm(props: Props) {
+  const form = document.querySelector('#_validation_parent :first-child');
 
-      useEffect(()=> {
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
 
-        console.log(form);
-        
-
-      },[form])
-      
-      
-      return (
-        <div id='_validation_parent'>
-          {this.props.children}
-        </div>
-      );
-    }
-  }
-  
+  return (
+    <div id='_validation_parent'>
+      {props.children}
+    </div>
+  );
+}
 
 export default ValidateForm;
