@@ -1,7 +1,6 @@
 import React, { Component, ReactNode } from 'react';
 
 type Props = {
-    name: string;
     children: ReactNode;
   };
   
@@ -17,14 +16,18 @@ type Props = {
     }
   
     render() {
+      let parent = document.getElementById('_validation_parent')
+      let form = parent?.childNodes[0] as HTMLElement;
+
       console.log(this.props.children);
       console.log(this.state.form);
-      console.log(this.props.name);
+      console.log(form);
+      
       
       return (
-        <>
-          {this.props.name}
-        </>
+        <div id='_validation_parent'>
+          {this.props.children}
+        </div>
       );
     }
   }
