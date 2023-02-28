@@ -1,4 +1,19 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -23,15 +38,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importStar(require("react"));
-class ValidateForm extends react_1.Component {
-    constructor(props) {
-        super(props);
-        this.state = { form: this.props.children };
+var react_1 = __importStar(require("react"));
+var ValidateForm = /** @class */ (function (_super) {
+    __extends(ValidateForm, _super);
+    function ValidateForm(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = { form: _this.props.children };
+        return _this;
     }
-    render() {
+    ValidateForm.prototype.render = function () {
         return (react_1.default.createElement(react_1.default.Fragment, null, this.props.children));
-    }
-}
+    };
+    return ValidateForm;
+}(react_1.Component));
 exports.default = ValidateForm;
 //# sourceMappingURL=index.js.map
