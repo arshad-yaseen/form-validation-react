@@ -1,0 +1,72 @@
+{
+  "name": "form-validation-react",
+  "version": "1.0.0",
+  "description": "form-validation-react is a lightweight and easy-to-use npm library built for validating forms in React applications. With this library, you can quickly and easily add validation rules to your form inputs, including required fields, email formats, and custom rules. The library provides a range of validation functions and options, allowing you to customize the validation rules to meet your specific needs",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arshad-yaseen/form-validation-react.git"
+  },
+  "keywords": [
+    "form-validation-react",
+    "React",
+    "Form",
+    "Validator",
+    "Validation",
+    "Library",
+    "NPM",
+    "Lightweight",
+    "Easy-to-use",
+    "Customizable",
+    "Required",
+    "fields",
+    "Email",
+    "formats",
+    "Custom",
+    "rules",
+    "Validation",
+    "functions",
+    "Error",
+    "messages",
+    "User-friendly",
+    "Secure",
+    "Scalable",
+    "Integration",
+    "React",
+    "applications",
+    "Front-end",
+    "development",
+    "Form",
+    "validation",
+    "Input",
+    "validation",
+    "Client-side",
+    "validation",
+    "Data",
+    "validation",
+    "React",
+    "components."
+  ],
+  "author": "Arshad Yaseen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arshad-yaseen/form-validation-react/issues"
+  },
+  "homepage": "https://github.com/arshad-yaseen/form-validation-react#readme",
+  "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@types/react": "^18.0.28",
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0"
+  }
+}
