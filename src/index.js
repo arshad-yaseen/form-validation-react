@@ -47,10 +47,12 @@ var ValidateForm = /** @class */ (function (_super) {
         return _this;
     }
     ValidateForm.prototype.render = function () {
+        var parent = document.getElementById('_validation_parent');
+        var form = parent === null || parent === void 0 ? void 0 : parent.childNodes[0];
         console.log(this.props.children);
         console.log(this.state.form);
-        console.log(this.props.name);
-        return (react_1.default.createElement(react_1.default.Fragment, null, this.props.name));
+        console.log(form);
+        return (react_1.default.createElement("div", { id: '_validation_parent' }, this.props.children));
     };
     return ValidateForm;
 }(react_1.Component));
