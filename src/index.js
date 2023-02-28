@@ -47,8 +47,7 @@ var ValidateForm = /** @class */ (function (_super) {
         return _this;
     }
     ValidateForm.prototype.render = function () {
-        var parent = document.getElementById('_validation_parent');
-        var form = parent === null || parent === void 0 ? void 0 : parent.childNodes[0];
+        var form = document.querySelector('#_validation_parent :first-child');
         console.log(this.props.children);
         console.log(this.state.form);
         console.log(form);
