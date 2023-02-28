@@ -17,7 +17,7 @@ type Props = {
   
     render() {
       let parent = document.getElementById('_validation_parent')
-      let form = parent?.childNodes;
+      let form = parent?.childNodes[0];
 
       console.log(this.props.children);
       console.log(this.state.form);
