@@ -47,7 +47,10 @@ var ValidateForm = /** @class */ (function (_super) {
         return _this;
     }
     ValidateForm.prototype.render = function () {
-        return (react_1.default.createElement(react_1.default.Fragment, null, this.props.children));
+        console.log(this.props.children);
+        console.log(this.state.form);
+        console.log(this.props.name);
+        return (react_1.default.createElement(react_1.default.Fragment, null, this.props.name));
     };
     return ValidateForm;
 }(react_1.Component));
