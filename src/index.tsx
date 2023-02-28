@@ -13,17 +13,17 @@ type Props = {
     constructor(props: Props) {
       super(props);
       this.state = { form: this.props.children };
-      console.log(this.props.children);
-      console.log(this.props.name);
-      
       
     }
   
     render() {
+      console.log(this.props.children);
+      console.log(this.state.form);
+      console.log(this.props.name);
+      
       return (
         <>
-          {this.props.children}
-          {this?.props?.name}
+          {this.props.name}
         </>
       );
     }
