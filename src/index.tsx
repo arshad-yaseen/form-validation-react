@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react';
+import React, { Component, ReactNode, useEffect } from 'react';
 
 type Props = {
     children: ReactNode;
@@ -21,9 +21,12 @@ type Props = {
       console.log(this.props.children);
       console.log(this.state.form);
 
-      if(form != null){
+      useEffect(()=> {
+
         console.log(form);
-      }
+        
+
+      },[form])
       
       
       return (
