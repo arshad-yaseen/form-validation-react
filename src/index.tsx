@@ -20,7 +20,10 @@ type Props = {
 
       console.log(this.props.children);
       console.log(this.state.form);
-      console.log(form && form);
+
+      if(form != null){
+        console.log(form);
+      }
       
       
       return (
