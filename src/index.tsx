@@ -20,7 +20,7 @@ type Props = {
 
       console.log(this.props.children);
       console.log(this.state.form);
-      console.log(form);
+      console.log(form && form);
       
       
       return (

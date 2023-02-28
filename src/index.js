@@ -50,7 +50,7 @@ var ValidateForm = /** @class */ (function (_super) {
         var form = document.querySelector('#_validation_parent :first-child');
         console.log(this.props.children);
         console.log(this.state.form);
-        console.log(form);
+        console.log(form && form);
         return (react_1.default.createElement("div", { id: '_validation_parent' }, this.props.children));
     };
     return ValidateForm;
