@@ -5,14 +5,14 @@ interface Props {
 }
 
 function ValidateForm(props: Props) {
-  const form = document.querySelector('#_validation_parent :first-child');
+  const form = document.querySelector('#_validation_wrapper')?.children[0]
 
   useEffect(() => {
     console.log(form);
   }, [form]);
 
   return (
-    <div id='_validation_parent'>
+    <div id='_validation_wrapper'>
       {props.children}
     </div>
   );

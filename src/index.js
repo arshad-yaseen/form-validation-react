@@ -25,7 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(require("react"));
 function ValidateForm(props) {
-    var form = document.querySelector('#_validation_parent :first-child');
+    var _a;
+    var form = (_a = document.querySelector('#_validation_parent')) === null || _a === void 0 ? void 0 : _a.children[0];
     (0, react_1.useEffect)(function () {
         console.log(form);
     }, [form]);
