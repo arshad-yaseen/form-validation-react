@@ -5,6 +5,7 @@ interface ValidateRequiredObj {
   applyOnly: Array<string>;
   action: String;
   notvalidated: Function;
+  onsuccess: Function
   message: string;
 }
 interface ValidateMinMaxObj {
@@ -13,6 +14,7 @@ interface ValidateMinMaxObj {
     min: string;
     max: string;
   };
+  onsuccess: Function
   exceedsMax: Function;
   exceedsMin: Function;
 }
@@ -126,7 +128,13 @@ class ValidateForm extends Component<Props> {
             } 
           });
         } else {
-          form.submit()
+          if(rules.validateRequired?.onsuccess){
+            rules.validateRequired?.onsuccess();
+          }else{
+            if(errorText.innerText === ""){
+              form.submit()
+            }
+          }
         }
       });
     };
@@ -180,6 +188,9 @@ class ValidateForm extends Component<Props> {
                   } else {
                     input.style.borderColor = "";
                     errorText.innerText = ""
+                    if(rules.ValidateMinMax?.onsuccess){
+                      rules.ValidateMinMax?.onsuccess(input);
+                    }
                   }
                 } else if (type === "text") {
                   if (value.length < Number(min)) {
@@ -213,6 +224,9 @@ class ValidateForm extends Component<Props> {
                   } else {
                     input.style.borderColor = "";
                     errorText.innerText = ""
+                    if(rules.ValidateMinMax?.onsuccess){
+                      rules.ValidateMinMax?.onsuccess(input);
+                    }
                   }
                 }
               }
@@ -264,6 +278,9 @@ inputs.forEach(input => {
           }
         } else {
           input.style.borderColor = "";
+          if(rules.ValidateMinMax?.onsuccess){
+            rules.ValidateMinMax?.onsuccess(input);
+          }
         }
       } else if (type === "text") {
         if (value.length < Number(min)) {
@@ -296,6 +313,9 @@ inputs.forEach(input => {
           }
         } else {
           input.style.borderColor = "";
+          if(rules.ValidateMinMax?.onsuccess){
+            rules.ValidateMinMax?.onsuccess(input);
+          }
         }
       }
     }
