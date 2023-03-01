@@ -54,9 +54,22 @@ var ValidateForm = /** @class */ (function (_super) {
     };
     ValidateForm.prototype.init = function () {
         var rules = this.props.rules;
+        var errorElement = this.props.errorElement;
         var allowedKeys = ["validateRequired"];
         var wrapper = document.getElementById("_validation_wrapper");
         var form = wrapper === null || wrapper === void 0 ? void 0 : wrapper.children[0];
+        var errorText = document.querySelector(errorElement);
+        var errorMessage = String;
+        form.addEventListener("input", function () {
+            if (errorText) {
+                errorText.innerText = "";
+            }
+        });
+        var setErrorText = function (message) {
+            if (errorText) {
+                errorText.innerText = message;
+            }
+        };
         var runValidateRequired = function () {
             // Check If All Required Feilds Filled
             form.addEventListener("input", function (event) {
@@ -92,6 +105,9 @@ var ValidateForm = /** @class */ (function (_super) {
                             input.focus();
                         }
                         if (((_b = rules.validateRequired) === null || _b === void 0 ? void 0 : _b.action) === "input_red_border") {
+                            if (rules.validateRequired.message) {
+                                setErrorText(rules.validateRequired.message);
+                            }
                             if (input.style.border) {
                                 input.style.borderColor = "red";
                             }
@@ -99,19 +115,116 @@ var ValidateForm = /** @class */ (function (_super) {
                                 input.style.border = "1px solid red";
                             }
                         }
-                        else {
-                            // Default Action
-                        }
                     });
                 }
                 else {
-                    form.submit();
+                    if (errorText.innerText === "") {
+                        form.submit();
+                    }
                 }
+            });
+        };
+        var runValidateMinMax = function () {
+            var inputs = form.querySelectorAll('input[min][max]');
+            inputs.forEach(function (input) {
+                input.addEventListener('blur', function (event) {
+                    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+                    var input = event.target;
+                    var min = input.min;
+                    var max = input.max;
+                    var value = input.value;
+                    var type = input.type;
+                    var inputMinMessage = input.getAttribute("data-min-message");
+                    var inputMaxMessage = input.getAttribute("data-max-message");
+                    if (min && max) {
+                        if (type === "number") {
+                            if (value < min) {
+                                if ((_a = rules.ValidateMinMax) === null || _a === void 0 ? void 0 : _a.exceedsMin) {
+                                    (_b = rules.ValidateMinMax) === null || _b === void 0 ? void 0 : _b.exceedsMin(input);
+                                }
+                                if (input.style.border) {
+                                    input.style.borderColor = "red";
+                                }
+                                else {
+                                    input.style.border = "1px solid red";
+                                }
+                                if (inputMinMessage) {
+                                    setErrorText(inputMinMessage);
+                                }
+                                else {
+                                    setErrorText((_c = rules.ValidateMinMax) === null || _c === void 0 ? void 0 : _c.message.min);
+                                }
+                            }
+                            else if (value > max) {
+                                if ((_d = rules.ValidateMinMax) === null || _d === void 0 ? void 0 : _d.exceedsMax) {
+                                    (_e = rules.ValidateMinMax) === null || _e === void 0 ? void 0 : _e.exceedsMax(input);
+                                }
+                                if (input.style.border) {
+                                    input.style.borderColor = "red";
+                                }
+                                else {
+                                    input.style.border = "1px solid red";
+                                }
+                                if (inputMaxMessage) {
+                                    setErrorText(inputMaxMessage);
+                                }
+                                else {
+                                    setErrorText((_f = rules.ValidateMinMax) === null || _f === void 0 ? void 0 : _f.message.max);
+                                }
+                            }
+                            else {
+                                input.style.borderColor = "";
+                            }
+                        }
+                        else if (type === "text") {
+                            if (value.length < Number(min)) {
+                                if ((_g = rules.ValidateMinMax) === null || _g === void 0 ? void 0 : _g.exceedsMin) {
+                                    (_h = rules.ValidateMinMax) === null || _h === void 0 ? void 0 : _h.exceedsMin(input);
+                                }
+                                if (input.style.border) {
+                                    input.style.borderColor = "red";
+                                }
+                                else {
+                                    input.style.border = "1px solid red";
+                                }
+                                if (inputMinMessage) {
+                                    setErrorText(inputMinMessage);
+                                }
+                                else {
+                                    setErrorText((_j = rules.ValidateMinMax) === null || _j === void 0 ? void 0 : _j.message.min);
+                                }
+                            }
+                            else if (value.length > Number(max)) {
+                                if ((_k = rules.ValidateMinMax) === null || _k === void 0 ? void 0 : _k.exceedsMax) {
+                                    (_l = rules.ValidateMinMax) === null || _l === void 0 ? void 0 : _l.exceedsMax(input);
+                                }
+                                if (input.style.border) {
+                                    input.style.borderColor = "red";
+                                }
+                                else {
+                                    input.style.border = "1px solid red";
+                                }
+                                if (inputMaxMessage) {
+                                    setErrorText(inputMaxMessage);
+                                }
+                                else {
+                                    setErrorText((_m = rules.ValidateMinMax) === null || _m === void 0 ? void 0 : _m.message.max);
+                                }
+                            }
+                            else {
+                                input.style.borderColor = "";
+                            }
+                        }
+                    }
+                });
             });
         };
         if (rules) {
             if (rules.validateRequired) {
                 runValidateRequired();
+            }
+            if (rules.ValidateMinMax) {
+                runValidateMinMax();
             }
         }
     };
