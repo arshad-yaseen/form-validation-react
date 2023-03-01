@@ -1,4 +1,19 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -24,13 +39,86 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(require("react"));
-function ValidateForm(props) {
-    var _a;
-    var form = (_a = document.querySelector('#_validation_parent')) === null || _a === void 0 ? void 0 : _a.children[0];
-    (0, react_1.useEffect)(function () {
-        console.log(form);
-    }, [form]);
-    return (react_1.default.createElement("div", { id: '_validation_parent' }, props.children));
-}
+var ValidateForm = /** @class */ (function (_super) {
+    __extends(ValidateForm, _super);
+    function ValidateForm() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    ValidateForm.prototype.componentDidMount = function () {
+        this.init();
+    };
+    ValidateForm.prototype.componentDidUpdate = function (prevProps) {
+        if (this.props.rules !== prevProps.rules) {
+            this.init();
+        }
+    };
+    ValidateForm.prototype.init = function () {
+        var rules = this.props.rules;
+        var allowedKeys = ["validateRequired"];
+        var wrapper = document.getElementById("_validation_wrapper");
+        var form = wrapper === null || wrapper === void 0 ? void 0 : wrapper.children[0];
+        var runValidateRequired = function () {
+            // Check If All Required Feilds Filled
+            form.addEventListener("input", function (event) {
+                var input = event.target;
+                input.style.borderColor = "";
+            });
+            var submit_button = (form === null || form === void 0 ? void 0 : form.querySelector('button[type="submit"]')) || (form === null || form === void 0 ? void 0 : form.querySelector('input[type="submit"]'));
+            submit_button === null || submit_button === void 0 ? void 0 : submit_button.addEventListener("click", function (event) {
+                var _a, _b;
+                event.preventDefault();
+                var requiredInputs = [];
+                if ((_a = rules.validateRequired) === null || _a === void 0 ? void 0 : _a.applyOnly) {
+                    (_b = rules.validateRequired) === null || _b === void 0 ? void 0 : _b.applyOnly.forEach(function (inputName) {
+                        requiredInputs.push(form === null || form === void 0 ? void 0 : form.querySelector("[name=\"".concat(inputName, "\"]")));
+                    });
+                }
+                else {
+                    form === null || form === void 0 ? void 0 : form.querySelectorAll("input[required]").forEach(function (input) {
+                        requiredInputs.push(input);
+                    });
+                }
+                var missingInputs = [];
+                requiredInputs === null || requiredInputs === void 0 ? void 0 : requiredInputs.forEach(function (input) {
+                    if (!input.value) {
+                        missingInputs.push(input);
+                    }
+                });
+                if (missingInputs.length > 0) {
+                    missingInputs.forEach(function (input, index) {
+                        var _a, _b;
+                        (_a = rules.validateRequired) === null || _a === void 0 ? void 0 : _a.notvalidated(missingInputs);
+                        if (index === 0) {
+                            input.focus();
+                        }
+                        if (((_b = rules.validateRequired) === null || _b === void 0 ? void 0 : _b.action) === "input_red_border") {
+                            if (input.style.border) {
+                                input.style.borderColor = "red";
+                            }
+                            else {
+                                input.style.border = "1px solid red";
+                            }
+                        }
+                        else {
+                            // Default Action
+                        }
+                    });
+                }
+                else {
+                    form.submit();
+                }
+            });
+        };
+        if (rules) {
+            if (rules.validateRequired) {
+                runValidateRequired();
+            }
+        }
+    };
+    ValidateForm.prototype.render = function () {
+        return (react_1.default.createElement("div", { id: "_validation_wrapper" }, this.props.children));
+    };
+    return ValidateForm;
+}(react_1.Component));
 exports.default = ValidateForm;
 //# sourceMappingURL=index.js.map
