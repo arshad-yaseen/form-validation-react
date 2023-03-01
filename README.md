@@ -10,7 +10,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Validate Required Inputs](#validate-required-inputs)
-- [Validate Min & Max](#validate-min-max)
+- [Validate Min & Max](#validate-min-and-max)
 - [Example Reactjs Code](#example-reactjs-code)
 
 ## Installation 
@@ -61,12 +61,17 @@ Then, wrap your form with <ValidateForm> :
 
 ```javascript
 validateRequired: {
+
   message: "fill all required fields",
   applyOnly:["name","password"] // checking only this inputs are filled
   action: "input_red_border",
   notvalidated: (notFilledInputs) => {
   console.log("Not filled required inputs",notFilledInputs);
   }
+  onsuccess:()=> {
+    console.log("All required fields are filled");
+  }
+
 }
 
 ```
@@ -74,21 +79,23 @@ validateRequired: {
 If a required input is not filled, the rule will return a callback with an array of the not-filled inputs. You can add the action `input_red_border` to change the border color of the not-filled inputs to red.
 
 
-| Parameter | Type | Value | Optinal |
+| Parameter | Type | Value | Optional |
 | --- | --- | --- | --- |
 | `message` | `string` | Message | `yes` |
 | `applyOnly` | `array	` | **Name** of the inputs | `yes` |
 | `action` | `string` | input_red_border | `yes` |
 | `notvalidated` | `callback function` | notFilledInputs | `yes` | 
+| `onsuccess` | `callback function` | no values | `yes` | 
 
 
 # 
-## Validate Min & Max
+## Validate Min and Max
 
 #### Checking all **Min** and **Max** values of a form inputs and returning a callback and show error.
 
 ```javascript
 ValidateMinMax: {
+
     when: "typing"
     message : {
         min: "Min length 4",
@@ -100,6 +107,10 @@ ValidateMinMax: {
     exceedsMin: ()=> {
         console.log("Minimum length exceeded");
     }
+    onsuccess:(validatedInput)=> {
+        console.log("Length is in range of :",validatedInput);
+    }
+
 }
 
 
@@ -115,12 +126,13 @@ the `min` in message object is when exceeded minimum the message will show.
 the `max` in message object is when exceeded maximum the message will show
 
 
-| Parameter | Type | Value | Optinal |
+| Parameter | Type | Value | Optional |
 | --- | --- | --- | --- |
 | `when` | `string	` | `typing`,`onblur` | `no` |
 | `message` | `object	` | Messages | `yes` |
 | `exceedsMax` | `callback function` | when exceeded max | `yes` |
 | `exceedsMin` | `callback function` | when exceeded min | `yes` |
+| `onsuccess` | `callback function` | validatedInput | `yes` |
 
 # 
 # Example Reactjs Code
@@ -139,7 +151,6 @@ function App() {
         rules={{
 
           validateRequired: {
-            applyOnly: ["full_name", "email"],
             action: "input_red_border",
             notvalidated: (notFilledInputs) => {
               console.log("Not filled required inputs", notFilledInputs);
@@ -150,12 +161,6 @@ function App() {
             message : {
                 min: "Min length 4",
                 max: "Max length 8"
-            },
-            exceedsMax: ()=> {
-                console.log("Maximum length exceeded");
-            },
-            exceedsMin: ()=> {
-                console.log("Minimum length exceeded");
             }
           }
 
