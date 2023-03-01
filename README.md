@@ -10,7 +10,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Validate Required Inputs](#validate-required-inputs)
-- [Validate Min & Max](#validate-min-max)
+- [Validate Min & Max](#validate-min-and-max)
 - [Example Reactjs Code](#example-reactjs-code)
 
 ## Installation 
@@ -83,7 +83,7 @@ If a required input is not filled, the rule will return a callback with an array
 
 
 # 
-## Validate Min & Max
+## Validate Min and Max
 
 #### Checking all **Min** and **Max** values of a form inputs and returning a callback and show error.
 
