@@ -8,6 +8,7 @@ interface ValidateRequiredObj {
   message: string;
 }
 interface ValidateMinMaxObj {
+  when: String;
   message: {
     min: string;
     max: string;
@@ -40,18 +41,19 @@ class ValidateForm extends Component<Props> {
   init() {
     let { rules } = this.props;
     let { errorElement } = this.props;
-    let allowedKeys: Array<keyof Rules> = ["validateRequired"];
+    let allowedKeys: Array<keyof Rules> = ["validateRequired","ValidateMinMax"];
 
     let wrapper = document.getElementById("_validation_wrapper");
     let form = wrapper?.children[0] as HTMLFormElement;
+    let submit_button = form.querySelector('button[type="submit"]') as HTMLFormElement || form.querySelector('input[type="submit"]') as HTMLFormElement
     let errorText = document.querySelector(errorElement) as HTMLElement;
     let errorMessage = String
 
-    form.addEventListener("input", () => {
-      if(errorText){
-        errorText.innerText = ""
+    submit_button.addEventListener("submit",()=> {
+      if(errorText.innerText === ""){
+        form.submit()
       }
-    });
+    })
 
     const setErrorText = (message:string) => {
       if (errorText) {
@@ -61,6 +63,8 @@ class ValidateForm extends Component<Props> {
 
     const runValidateRequired = () => {
       // Check If All Required Feilds Filled
+
+
 
       form.addEventListener("input", (event) => {
         const input = event.target as HTMLInputElement;
@@ -122,17 +126,102 @@ class ValidateForm extends Component<Props> {
             } 
           });
         } else {
-          if(errorText.innerText === ""){
-            form.submit()
-          }
+          form.submit()
         }
       });
     };
 
     const runValidateMinMax = () => {
-      
       const inputs = form.querySelectorAll('input[min][max]');
 
+
+
+        if (rules.ValidateMinMax?.when === "typing") {
+          inputs.forEach(input => {
+            input.addEventListener('input', (event) => {
+              const input = event.target as HTMLInputElement;
+              const min = input.min;
+              const max = input.max;
+              const value = input.value;
+              const type = input.type;
+              const inputMinMessage = input.getAttribute("data-min-message");
+              const inputMaxMessage = input.getAttribute("data-max-message");
+              
+              if (min && max) {
+                if (type === "number") {
+                  if (value < min) {
+                    if(rules.ValidateMinMax?.exceedsMin){
+                      rules.ValidateMinMax?.exceedsMin(input);
+                    }
+                    if (input.style.border) {
+                      input.style.borderColor = "red";
+                    } else {
+                      input.style.border = "1px solid red";
+                    }
+                    if (inputMinMessage) {
+                      setErrorText(inputMinMessage);
+                    } else {
+                      setErrorText(rules.ValidateMinMax?.message.min!);
+                    }
+                  } else if (value > max) {
+                    if(rules.ValidateMinMax?.exceedsMax){
+                      rules.ValidateMinMax?.exceedsMax(input);
+                    }
+                    if (input.style.border) {
+                      input.style.borderColor = "red";
+                    } else {
+                      input.style.border = "1px solid red";
+                    }
+                    if (inputMaxMessage) {
+                      setErrorText(inputMaxMessage);
+                    } else {
+                      setErrorText(rules.ValidateMinMax?.message.max!);
+                    }
+                  } else {
+                    input.style.borderColor = "";
+                    errorText.innerText = ""
+                  }
+                } else if (type === "text") {
+                  if (value.length < Number(min)) {
+                    if(rules.ValidateMinMax?.exceedsMin){
+                      rules.ValidateMinMax?.exceedsMin(input);
+                    }
+                    if (input.style.border) {
+                      input.style.borderColor = "red";
+                    } else {
+                      input.style.border = "1px solid red";
+                    }
+                    if (inputMinMessage) {
+                      setErrorText(inputMinMessage);
+                    } else {
+                      setErrorText(rules.ValidateMinMax?.message.min!);
+                    }
+                  } else if (value.length > Number(max)) {
+                    if(rules.ValidateMinMax?.exceedsMax){
+                      rules.ValidateMinMax?.exceedsMax(input);
+                    }
+                    if (input.style.border) {
+                      input.style.borderColor = "red";
+                    } else {
+                      input.style.border = "1px solid red";
+                    }
+                    if (inputMaxMessage) {
+                      setErrorText(inputMaxMessage);
+                    } else {
+                      setErrorText(rules.ValidateMinMax?.message.max!);
+                    }
+                  } else {
+                    input.style.borderColor = "";
+                    errorText.innerText = ""
+                  }
+                }
+              }
+            });
+          });
+          
+        }
+        else if(rules.ValidateMinMax?.when === "onblur"){
+          
 inputs.forEach(input => {
   input.addEventListener('blur', (event) => {
     const input = event.target as HTMLInputElement;
@@ -212,6 +301,13 @@ inputs.forEach(input => {
     }
   });
 });
+        }
+
+      
+
+      
+      
+
 
       
     }

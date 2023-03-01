@@ -10,7 +10,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Validate Required Inputs](#validate-required-inputs)
-- [Validate Min & Max](#validate-min-and-max)
+- [Validate Min & Max](#validate-min-max)
 - [Example Reactjs Code](#example-reactjs-code)
 
 ## Installation 
@@ -83,12 +83,13 @@ If a required input is not filled, the rule will return a callback with an array
 
 
 # 
-## Validate Min and Max
+## Validate Min & Max
 
 #### Checking all **Min** and **Max** values of a form inputs and returning a callback and show error.
 
 ```javascript
 ValidateMinMax: {
+    when: "typing"
     message : {
         min: "Min length 4",
         max: "Max length 8"
@@ -116,6 +117,7 @@ the `max` in message object is when exceeded maximum the message will show
 
 | Parameter | Type | Value | Optinal |
 | --- | --- | --- | --- |
+| `when` | `string	` | `typing`,`onblur` | `no` |
 | `message` | `object	` | Messages | `yes` |
 | `exceedsMax` | `callback function` | when exceeded max | `yes` |
 | `exceedsMin` | `callback function` | when exceeded min | `yes` |
