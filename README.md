@@ -62,9 +62,9 @@ Then, wrap your form with <ValidateForm> :
 ```javascript
 validateRequired: {
 
+  action: "show_error_message",
   message: "fill all required fields",
   applyOnly:["name","password"] // checking only this inputs are filled
-  action: "input_red_border",
   notvalidated: (notFilledInputs) => {
   console.log("Not filled required inputs",notFilledInputs);
   }
@@ -79,11 +79,11 @@ validateRequired: {
 If a required input is not filled, the rule will return a callback with an array of the not-filled inputs. You can add the action `input_red_border` to change the border color of the not-filled inputs to red.
 
 
-| Parameter | Type | Value | Optional |
+| Parameter | Type | Parameter | Optional |
 | --- | --- | --- | --- |
+| `action` | `string` | `input_red_border`,`show_error_message`,`both` | `no` |
 | `message` | `string` | Message | `yes` |
 | `applyOnly` | `array	` | **Name** of the inputs | `yes` |
-| `action` | `string` | input_red_border | `yes` |
 | `notvalidated` | `callback function` | notFilledInputs | `yes` | 
 | `onsuccess` | `callback function` | no values | `yes` | 
 
@@ -98,8 +98,8 @@ ValidateMinMax: {
 
     when: "typing"
     message : {
-        min: "Min length 4",
-        max: "Max length 8"
+        min: "Password must be at least 4 characters",
+        max: "Password must be at most 8 characters"
     },
     exceedsMax: ()=> {
         console.log("Maximum length exceeded");
@@ -158,16 +158,17 @@ function App() {
           },
 
           ValidateMinMax: {
+            when: "onblur"
             message : {
-                min: "Min length 4",
-                max: "Max length 8"
+                min: "Password must be at least 4 characters",
+                max: "Password must be at most 8 characters"
             }
           }
 
         }}
       >
         <form>
-          <input min={4} max={8} type="password" name-"password" required />
+          <input min={4} max={8} type="password" name="password" required />
           <input required type="text" name="full_name" />
           <input required type="email" name="email" />
           <button type="submit">Submit</button>

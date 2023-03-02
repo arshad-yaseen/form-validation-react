@@ -55,14 +55,18 @@ var ValidateForm = /** @class */ (function (_super) {
     ValidateForm.prototype.init = function () {
         var rules = this.props.rules;
         var errorElement = this.props.errorElement;
-        var allowedKeys = ["validateRequired", "ValidateMinMax"];
+        var allowedKeys = [
+            "validateRequired",
+            "ValidateMinMax",
+        ];
         var wrapper = document.getElementById("_validation_wrapper");
         var form = wrapper === null || wrapper === void 0 ? void 0 : wrapper.children[0];
-        var submit_button = form.querySelector('button[type="submit"]') || form.querySelector('input[type="submit"]');
+        var submit_button = form.querySelector('button[type="submit"]') ||
+            form.querySelector('input[type="submit"]');
         var errorText = document.querySelector(errorElement);
         var errorMessage = String;
         submit_button.addEventListener("submit", function () {
-            if (errorText.innerText === "") {
+            if ((errorText === null || errorText === void 0 ? void 0 : errorText.innerText) === "") {
                 form.submit();
             }
         });
@@ -77,7 +81,8 @@ var ValidateForm = /** @class */ (function (_super) {
                 var input = event.target;
                 input.style.borderColor = "";
             });
-            var submit_button = (form === null || form === void 0 ? void 0 : form.querySelector('button[type="submit"]')) || (form === null || form === void 0 ? void 0 : form.querySelector('input[type="submit"]'));
+            var submit_button = (form === null || form === void 0 ? void 0 : form.querySelector('button[type="submit"]')) ||
+                (form === null || form === void 0 ? void 0 : form.querySelector('input[type="submit"]'));
             submit_button === null || submit_button === void 0 ? void 0 : submit_button.addEventListener("click", function (event) {
                 var _a, _b, _c, _d;
                 event.preventDefault();
@@ -100,14 +105,29 @@ var ValidateForm = /** @class */ (function (_super) {
                 });
                 if (missingInputs.length > 0) {
                     missingInputs.forEach(function (input, index) {
-                        var _a, _b;
-                        (_a = rules.validateRequired) === null || _a === void 0 ? void 0 : _a.notvalidated(missingInputs);
+                        var _a, _b, _c, _d, _e, _f, _g;
+                        if ((_a = rules.validateRequired) === null || _a === void 0 ? void 0 : _a.notvalidated) {
+                            (_b = rules.validateRequired) === null || _b === void 0 ? void 0 : _b.notvalidated(missingInputs);
+                        }
                         if (index === 0) {
                             input.focus();
                         }
-                        if (((_b = rules.validateRequired) === null || _b === void 0 ? void 0 : _b.action) === "input_red_border") {
+                        if (((_c = rules.validateRequired) === null || _c === void 0 ? void 0 : _c.action) === "input_red_border") {
+                            if (input.style.border) {
+                                input.style.borderColor = "red";
+                            }
+                            else {
+                                input.style.border = "1px solid red";
+                            }
+                        }
+                        else if (((_d = rules.validateRequired) === null || _d === void 0 ? void 0 : _d.action) === "show_error_message") {
                             if (rules.validateRequired.message) {
                                 setErrorText(rules.validateRequired.message);
+                            }
+                        }
+                        else if (((_e = rules.validateRequired) === null || _e === void 0 ? void 0 : _e.action) === "both") {
+                            if ((_f = rules.validateRequired) === null || _f === void 0 ? void 0 : _f.message) {
+                                setErrorText((_g = rules.validateRequired) === null || _g === void 0 ? void 0 : _g.message);
                             }
                             if (input.style.border) {
                                 input.style.borderColor = "red";
@@ -132,11 +152,11 @@ var ValidateForm = /** @class */ (function (_super) {
         };
         var runValidateMinMax = function () {
             var _a, _b;
-            var inputs = form.querySelectorAll('input[min][max]');
+            var inputs = form.querySelectorAll("input[min][max]");
             if (((_a = rules.ValidateMinMax) === null || _a === void 0 ? void 0 : _a.when) === "typing") {
                 inputs.forEach(function (input) {
-                    input.addEventListener('input', function (event) {
-                        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+                    input.addEventListener("input", function (event) {
+                        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
                         var input = event.target;
                         var min = input.min;
                         var max = input.max;
@@ -160,12 +180,14 @@ var ValidateForm = /** @class */ (function (_super) {
                                         setErrorText(inputMinMessage);
                                     }
                                     else {
-                                        setErrorText((_c = rules.ValidateMinMax) === null || _c === void 0 ? void 0 : _c.message.min);
+                                        if ((_c = rules.ValidateMinMax) === null || _c === void 0 ? void 0 : _c.message) {
+                                            setErrorText((_d = rules.ValidateMinMax) === null || _d === void 0 ? void 0 : _d.message.min);
+                                        }
                                     }
                                 }
                                 else if (value > max) {
-                                    if ((_d = rules.ValidateMinMax) === null || _d === void 0 ? void 0 : _d.exceedsMax) {
-                                        (_e = rules.ValidateMinMax) === null || _e === void 0 ? void 0 : _e.exceedsMax(input);
+                                    if ((_e = rules.ValidateMinMax) === null || _e === void 0 ? void 0 : _e.exceedsMax) {
+                                        (_f = rules.ValidateMinMax) === null || _f === void 0 ? void 0 : _f.exceedsMax(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
@@ -177,21 +199,25 @@ var ValidateForm = /** @class */ (function (_super) {
                                         setErrorText(inputMaxMessage);
                                     }
                                     else {
-                                        setErrorText((_f = rules.ValidateMinMax) === null || _f === void 0 ? void 0 : _f.message.max);
+                                        if ((_g = rules.ValidateMinMax) === null || _g === void 0 ? void 0 : _g.message) {
+                                            setErrorText((_h = rules.ValidateMinMax) === null || _h === void 0 ? void 0 : _h.message.max);
+                                        }
                                     }
                                 }
                                 else {
                                     input.style.borderColor = "";
-                                    errorText.innerText = "";
-                                    if ((_g = rules.ValidateMinMax) === null || _g === void 0 ? void 0 : _g.onsuccess) {
-                                        (_h = rules.ValidateMinMax) === null || _h === void 0 ? void 0 : _h.onsuccess(input);
+                                    if (errorText) {
+                                        errorText.innerText = "";
+                                    }
+                                    if ((_j = rules.ValidateMinMax) === null || _j === void 0 ? void 0 : _j.onsuccess) {
+                                        (_k = rules.ValidateMinMax) === null || _k === void 0 ? void 0 : _k.onsuccess(input);
                                     }
                                 }
                             }
                             else if (type === "text") {
                                 if (value.length < Number(min)) {
-                                    if ((_j = rules.ValidateMinMax) === null || _j === void 0 ? void 0 : _j.exceedsMin) {
-                                        (_k = rules.ValidateMinMax) === null || _k === void 0 ? void 0 : _k.exceedsMin(input);
+                                    if ((_l = rules.ValidateMinMax) === null || _l === void 0 ? void 0 : _l.exceedsMin) {
+                                        (_m = rules.ValidateMinMax) === null || _m === void 0 ? void 0 : _m.exceedsMin(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
@@ -203,12 +229,14 @@ var ValidateForm = /** @class */ (function (_super) {
                                         setErrorText(inputMinMessage);
                                     }
                                     else {
-                                        setErrorText((_l = rules.ValidateMinMax) === null || _l === void 0 ? void 0 : _l.message.min);
+                                        if ((_o = rules.ValidateMinMax) === null || _o === void 0 ? void 0 : _o.message) {
+                                            setErrorText((_p = rules.ValidateMinMax) === null || _p === void 0 ? void 0 : _p.message.min);
+                                        }
                                     }
                                 }
                                 else if (value.length > Number(max)) {
-                                    if ((_m = rules.ValidateMinMax) === null || _m === void 0 ? void 0 : _m.exceedsMax) {
-                                        (_o = rules.ValidateMinMax) === null || _o === void 0 ? void 0 : _o.exceedsMax(input);
+                                    if ((_q = rules.ValidateMinMax) === null || _q === void 0 ? void 0 : _q.exceedsMax) {
+                                        (_r = rules.ValidateMinMax) === null || _r === void 0 ? void 0 : _r.exceedsMax(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
@@ -220,14 +248,18 @@ var ValidateForm = /** @class */ (function (_super) {
                                         setErrorText(inputMaxMessage);
                                     }
                                     else {
-                                        setErrorText((_p = rules.ValidateMinMax) === null || _p === void 0 ? void 0 : _p.message.max);
+                                        if ((_s = rules.ValidateMinMax) === null || _s === void 0 ? void 0 : _s.message) {
+                                            setErrorText((_t = rules.ValidateMinMax) === null || _t === void 0 ? void 0 : _t.message.max);
+                                        }
                                     }
                                 }
                                 else {
                                     input.style.borderColor = "";
-                                    errorText.innerText = "";
-                                    if ((_q = rules.ValidateMinMax) === null || _q === void 0 ? void 0 : _q.onsuccess) {
-                                        (_r = rules.ValidateMinMax) === null || _r === void 0 ? void 0 : _r.onsuccess(input);
+                                    if (errorText) {
+                                        errorText.innerText = "";
+                                    }
+                                    if ((_u = rules.ValidateMinMax) === null || _u === void 0 ? void 0 : _u.onsuccess) {
+                                        (_v = rules.ValidateMinMax) === null || _v === void 0 ? void 0 : _v.onsuccess(input);
                                     }
                                 }
                             }
@@ -237,8 +269,8 @@ var ValidateForm = /** @class */ (function (_super) {
             }
             else if (((_b = rules.ValidateMinMax) === null || _b === void 0 ? void 0 : _b.when) === "onblur") {
                 inputs.forEach(function (input) {
-                    input.addEventListener('blur', function (event) {
-                        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+                    input.addEventListener("blur", function (event) {
+                        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
                         var input = event.target;
                         var min = input.min;
                         var max = input.max;
@@ -262,12 +294,14 @@ var ValidateForm = /** @class */ (function (_super) {
                                         setErrorText(inputMinMessage);
                                     }
                                     else {
-                                        setErrorText((_c = rules.ValidateMinMax) === null || _c === void 0 ? void 0 : _c.message.min);
+                                        if ((_c = rules.ValidateMinMax) === null || _c === void 0 ? void 0 : _c.message) {
+                                            setErrorText((_d = rules.ValidateMinMax) === null || _d === void 0 ? void 0 : _d.message.min);
+                                        }
                                     }
                                 }
                                 else if (value > max) {
-                                    if ((_d = rules.ValidateMinMax) === null || _d === void 0 ? void 0 : _d.exceedsMax) {
-                                        (_e = rules.ValidateMinMax) === null || _e === void 0 ? void 0 : _e.exceedsMax(input);
+                                    if ((_e = rules.ValidateMinMax) === null || _e === void 0 ? void 0 : _e.exceedsMax) {
+                                        (_f = rules.ValidateMinMax) === null || _f === void 0 ? void 0 : _f.exceedsMax(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
@@ -279,20 +313,25 @@ var ValidateForm = /** @class */ (function (_super) {
                                         setErrorText(inputMaxMessage);
                                     }
                                     else {
-                                        setErrorText((_f = rules.ValidateMinMax) === null || _f === void 0 ? void 0 : _f.message.max);
+                                        if ((_g = rules.ValidateMinMax) === null || _g === void 0 ? void 0 : _g.message) {
+                                            setErrorText((_h = rules.ValidateMinMax) === null || _h === void 0 ? void 0 : _h.message.max);
+                                        }
                                     }
                                 }
                                 else {
                                     input.style.borderColor = "";
-                                    if ((_g = rules.ValidateMinMax) === null || _g === void 0 ? void 0 : _g.onsuccess) {
-                                        (_h = rules.ValidateMinMax) === null || _h === void 0 ? void 0 : _h.onsuccess(input);
+                                    if (errorText) {
+                                        errorText.innerText = "";
+                                    }
+                                    if ((_j = rules.ValidateMinMax) === null || _j === void 0 ? void 0 : _j.onsuccess) {
+                                        (_k = rules.ValidateMinMax) === null || _k === void 0 ? void 0 : _k.onsuccess(input);
                                     }
                                 }
                             }
                             else if (type === "text") {
                                 if (value.length < Number(min)) {
-                                    if ((_j = rules.ValidateMinMax) === null || _j === void 0 ? void 0 : _j.exceedsMin) {
-                                        (_k = rules.ValidateMinMax) === null || _k === void 0 ? void 0 : _k.exceedsMin(input);
+                                    if ((_l = rules.ValidateMinMax) === null || _l === void 0 ? void 0 : _l.exceedsMin) {
+                                        (_m = rules.ValidateMinMax) === null || _m === void 0 ? void 0 : _m.exceedsMin(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
@@ -304,12 +343,14 @@ var ValidateForm = /** @class */ (function (_super) {
                                         setErrorText(inputMinMessage);
                                     }
                                     else {
-                                        setErrorText((_l = rules.ValidateMinMax) === null || _l === void 0 ? void 0 : _l.message.min);
+                                        if ((_o = rules.ValidateMinMax) === null || _o === void 0 ? void 0 : _o.message) {
+                                            setErrorText((_p = rules.ValidateMinMax) === null || _p === void 0 ? void 0 : _p.message.min);
+                                        }
                                     }
                                 }
                                 else if (value.length > Number(max)) {
-                                    if ((_m = rules.ValidateMinMax) === null || _m === void 0 ? void 0 : _m.exceedsMax) {
-                                        (_o = rules.ValidateMinMax) === null || _o === void 0 ? void 0 : _o.exceedsMax(input);
+                                    if ((_q = rules.ValidateMinMax) === null || _q === void 0 ? void 0 : _q.exceedsMax) {
+                                        (_r = rules.ValidateMinMax) === null || _r === void 0 ? void 0 : _r.exceedsMax(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
@@ -321,13 +362,18 @@ var ValidateForm = /** @class */ (function (_super) {
                                         setErrorText(inputMaxMessage);
                                     }
                                     else {
-                                        setErrorText((_p = rules.ValidateMinMax) === null || _p === void 0 ? void 0 : _p.message.max);
+                                        if ((_s = rules.ValidateMinMax) === null || _s === void 0 ? void 0 : _s.message) {
+                                            setErrorText((_t = rules.ValidateMinMax) === null || _t === void 0 ? void 0 : _t.message.max);
+                                        }
                                     }
                                 }
                                 else {
+                                    if (errorText) {
+                                        errorText.innerText = "";
+                                    }
                                     input.style.borderColor = "";
-                                    if ((_q = rules.ValidateMinMax) === null || _q === void 0 ? void 0 : _q.onsuccess) {
-                                        (_r = rules.ValidateMinMax) === null || _r === void 0 ? void 0 : _r.onsuccess(input);
+                                    if ((_u = rules.ValidateMinMax) === null || _u === void 0 ? void 0 : _u.onsuccess) {
+                                        (_v = rules.ValidateMinMax) === null || _v === void 0 ? void 0 : _v.onsuccess(input);
                                     }
                                 }
                             }
@@ -346,7 +392,7 @@ var ValidateForm = /** @class */ (function (_super) {
         }
     };
     ValidateForm.prototype.render = function () {
-        return (react_1.default.createElement("div", { id: "_validation_wrapper" }, this.props.children));
+        return react_1.default.createElement("div", { id: "_validation_wrapper" }, this.props.children);
     };
     return ValidateForm;
 }(react_1.Component));
