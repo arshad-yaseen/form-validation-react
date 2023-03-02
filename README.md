@@ -1,5 +1,7 @@
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K0J5VAD)
 
+![hero](https://i.postimg.cc/8kXtR7QM/Screenshot-2023-03-02-at-10-53-56-AM.png)
+
 # Form-Validation-React
 
 ### form-validation-react is an easy-to-use npm library that enables developers to add validation rules to form inputs in React. It supports required fields, email formats, and custom rules with various validation functions and options that can be tailored to specific needs.
@@ -12,7 +14,7 @@
 - [Validate Required Inputs](#validate-required-inputs)
 - [Validate Min & Max](#validate-min-and-max)
 - [Example Reactjs Code](#example-reactjs-code)
-- [Licence](#licence)
+- [Licence](#license)
 ## Installation 
 
 You can install the package using npm or yarn:
@@ -79,13 +81,13 @@ validateRequired: {
 If a required input is not filled, the rule will return a callback with an array of the not-filled inputs. You can add the action `input_red_border` to change the border color of the not-filled inputs to red.
 
 
-| Parameter | Type | Parameter | Optional |
+| Key | Type | Parameter | Optional |
 | --- | --- | --- | --- |
 | `action` | `string` | `input_red_border`,`show_error_message`,`both` | `no` |
 | `message` | `string` | Message | `yes` |
 | `applyOnly` | `array	` | **Name** of the inputs | `yes` |
 | `notvalidated` | `callback function` | notFilledInputs | `yes` | 
-| `onsuccess` | `callback function` | no values | `yes` | 
+| `onsuccess` | `callback function` | no params | `yes` | 
 
 
 # 
@@ -128,7 +130,7 @@ the `min` in message object is when exceeded minimum the message will show.
 the `max` in message object is when exceeded maximum the message will show
 
 
-| Parameter | Type | Value | Optional |
+| Key | Type | Parameter | Optional |
 | --- | --- | --- | --- |
 | `when` | `string	` | `typing`,`onblur` | `no` |
 | `message` | `object	` | Messages | `yes` |
