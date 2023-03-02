@@ -13,6 +13,8 @@
 - [Usage](#usage)
 - [Validate Required Inputs](#validate-required-inputs)
 - [Validate Min & Max](#validate-min-and-max)
+- [Validate Email](#validate-email)
+- [Validate Pattern](#validate-pattern)
 - [Example Reactjs Code](#example-reactjs-code)
 - [Licence](#license)
 ## Installation 
@@ -57,7 +59,7 @@ Then, wrap your form with <ValidateForm> :
 
 ```
 # Rules
-## Validate Required Inputs
+# Validate Required Inputs
 
 #### To check if all required input fields are filled, use the following rule:
 
@@ -91,7 +93,7 @@ If a required input is not filled, the rule will return a callback with an array
 
 
 # 
-## Validate Min and Max
+# Validate Min and Max
 
 #### Checking all **Min** and **Max** values of a form inputs and returning a callback and show error.
 
@@ -137,6 +139,105 @@ the `max` in message object is when exceeded maximum the message will show
 | `exceedsMax` | `callback function` | when exceeded max | `yes` |
 | `exceedsMin` | `callback function` | when exceeded min | `yes` |
 | `onsuccess` | `callback function` | validatedInput | `yes` |
+
+# 
+# Validate Email
+
+#### This is used to validate email addresses based on pre-defined patterns. It takes input from a form and checks it against a regular expression pattern
+
+```javascript
+ValidateEmail: {
+
+    type: "yahoo",
+    emailInput: "my_email",
+    message: "Please enter a valid yahoo email",
+    onsuccess: () => console.log("Email is valid"),
+    invalid: () => console.log("Email is invalid"),
+    when: "onblur",
+
+}
+```
+
+```html
+<input name="email" type="my_email" required />
+```
+
+## Parameters
+
+#### `type:` a string representing the type of email being validated (personal, business, yahoo, gmail, hotmail, aol, isp, education, government, nonprofit, international, domain-specific, or alias)
+#### `emailInput:` a string representing the name of the input element in the form that contains the email address
+#### `message:` a string representing the error message to be displayed if the email is invalid
+#### `onsuccess:` a callback function to be executed if the email is valid
+#### `invalid:` a callback function to be executed if the email is invalid
+#### `when:` a string specifying when the validation should occur (onblur or typing)
+#
+# Validate Pattern
+
+#### This function is used to validate input fields against a specific pattern, such as a regular expression or a wildcard pattern.
+
+
+```javascript
+validatePattern:{
+
+	input: 'email',
+  	pattern: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+  	type: 'regex',
+  	when: 'typing',
+  	allowEmpty: false,
+  	onsuccess: (inputElement) => console.log('Validation succeeded!’),
+  	invalid: () => console.log('Validation failed!’),
+  	errorMessage: 'Please enter a valid email address.'
+
+}
+```
+
+#### Validate using a regular expression pattern
+
+```javascript
+validatePattern:{
+	pattern: /^\S+@\S+\.\S+$/,
+  	modifiers: 'i',
+  	errorMessage: 'Please enter a valid email address',
+}
+```
+
+#### Validate using a wildcard pattern
+
+```javascript
+validatePattern:{
+	pattern: '*.com',
+  	type: 'wildcard',
+  	modifiers: 'i',
+  	errorMessage: 'Please enter an email address ending in .com'
+}
+```
+
+#### Allow empty input
+
+```javascript
+validatePattern:{
+	pattern: /^\S+@\S+\.\S+$/,
+  	modifiers: 'i',
+  	allowEmpty: true,
+}
+```
+
+## Parameters
+
+* #### `input` (required): The name of the input field to validate.
+* #### `pattern` (required): A string representing the pattern to validate against. It can be a regular expression or a wildcard pattern.
+* #### `type` (optional): A string representing the type of pattern used. It can be either `"regex"` or `"wildcard"`. If not specified, `"regex"` is used by default.
+* #### `modifiers` (optional): A string representing the modifiers for the regular expression. Only used when `type` is `"regex"`.
+* #### `when` (optional): A string representing the event that triggers the validation. It can be either `"onblur"` or `"typing"`. If not specified, `"onblur"` is used by default.
+* #### `allowEmpty` (optional): A boolean value indicating whether empty input should be considered valid. If not specified, `false` is used by default.
+* #### `onsuccess` (optional): A function that is called when the validation succeeds.
+* #### `invalid` (optional): A function that is called when the validation fails.
+* #### `errorMessage` (optional): A string representing the error message to display when the validation fails.
+
+
+We provide two different patterns - a regular expression pattern and a wildcard pattern - along with options for case-insensitivity (`modifiers: 'i'`) and custom error messages.
+
+We also use the `allowEmpty` option to allow the input to be empty, which can be useful for optional fields.
 
 # 
 # Example Reactjs Code

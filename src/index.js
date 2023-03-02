@@ -38,6 +38,8 @@ var ValidateForm = /** @class */ (function (_super) {
         var allowedKeys = [
             "validateRequired",
             "ValidateMinMax",
+            "ValidateEmail",
+            "ValidatePattern",
         ];
         var wrapper = document.getElementById("_validation_wrapper");
         var form = wrapper === null || wrapper === void 0 ? void 0 : wrapper.children[0];
@@ -365,12 +367,253 @@ var ValidateForm = /** @class */ (function (_super) {
                 });
             }
         };
+        var runValidateEmail = function () {
+            var _a, _b, _c, _d, _e, _f;
+            var emailPattern;
+            var type = (_a = rules.ValidateEmail) === null || _a === void 0 ? void 0 : _a.type;
+            var emailInput = form.querySelector("input[name=\"".concat((_b = rules.ValidateEmail) === null || _b === void 0 ? void 0 : _b.emailInput, "\"]"));
+            var message = (_c = rules.ValidateEmail) === null || _c === void 0 ? void 0 : _c.message;
+            var onsuccess = (_d = rules.ValidateEmail) === null || _d === void 0 ? void 0 : _d.onsuccess;
+            var invalid = (_e = rules.ValidateEmail) === null || _e === void 0 ? void 0 : _e.invalid;
+            var when = (_f = rules.ValidateEmail) === null || _f === void 0 ? void 0 : _f.when;
+            switch (type) {
+                case "personal":
+                    emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    break;
+                case "business":
+                    emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    break;
+                case "yahoo":
+                    emailPattern = /^[a-zA-Z0-9._%+-]+@yahoo\.com$/;
+                    break;
+                case "gmail":
+                    emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+                    break;
+                case "hotmail":
+                    emailPattern = /^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\.com$/;
+                    break;
+                case "aol":
+                    emailPattern = /^[a-zA-Z0-9._%+-]+@aol\.com$/;
+                    break;
+                case "isp":
+                    emailPattern =
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(comcast|verizon|att)\.com$/;
+                    break;
+                case "education":
+                    emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(edu)$/;
+                    break;
+                case "government":
+                    emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(gov)$/;
+                    break;
+                case "nonprofit":
+                    emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(org)$/;
+                    break;
+                case "international":
+                    emailPattern =
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}\.[a-zA-Z]{2}$/;
+                    break;
+                case "domain-specific":
+                    emailPattern =
+                        /^[a-zA-Z0-9._%+-]+@(support|sales|info)\.[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    break;
+                case "alias":
+                    emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    break;
+                default:
+                    return false;
+            }
+            if (when === "onblur") {
+                emailInput.addEventListener("blur", function () {
+                    var email = emailInput.value;
+                    if (emailPattern.test(email)) {
+                        if (onsuccess) {
+                            onsuccess(emailInput);
+                        }
+                        if (errorText) {
+                            errorText.innerText = "";
+                        }
+                        if (emailInput.style.border) {
+                            emailInput.style.borderColor = "";
+                        }
+                        else {
+                            emailInput.style.border = "";
+                        }
+                    }
+                    else {
+                        if (emailInput.style.border) {
+                            emailInput.style.borderColor = "red";
+                        }
+                        else {
+                            emailInput.style.border = "1px solid red";
+                        }
+                        if (invalid) {
+                            invalid();
+                        }
+                        if (errorText) {
+                            if (message) {
+                                errorText.innerText = message;
+                            }
+                        }
+                    }
+                });
+            }
+            else if (when === "typing") {
+                emailInput.addEventListener("input", function () {
+                    var email = emailInput.value;
+                    if (emailPattern.test(email)) {
+                        if (onsuccess) {
+                            onsuccess(emailInput);
+                        }
+                        if (errorText) {
+                            errorText.innerText = "";
+                        }
+                        if (emailInput.style.border) {
+                            emailInput.style.borderColor = "";
+                        }
+                        else {
+                            emailInput.style.border = "";
+                        }
+                    }
+                    else {
+                        if (emailInput.style.border) {
+                            emailInput.style.borderColor = "red";
+                        }
+                        else {
+                            emailInput.style.border = "1px solid red";
+                        }
+                        if (invalid) {
+                            invalid();
+                        }
+                        if (errorText) {
+                            if (message) {
+                                errorText.innerText = message;
+                            }
+                        }
+                    }
+                });
+            }
+        };
+        var runValidatePattern = function () {
+            var _a;
+            var inputElement = form.querySelector("input[name=\"".concat((_a = rules.ValidatePattern) === null || _a === void 0 ? void 0 : _a.input, "\"]"));
+            var options = rules.ValidatePattern;
+            if ((options === null || options === void 0 ? void 0 : options.when) === "onblur") {
+                inputElement.addEventListener("blur", function () {
+                    var input = inputElement.value;
+                    if ((options === null || options === void 0 ? void 0 : options.allowEmpty) && input.length === 0) {
+                        return true;
+                    }
+                    var regex;
+                    switch (options === null || options === void 0 ? void 0 : options.type) {
+                        case 'regex':
+                            regex = new RegExp(options === null || options === void 0 ? void 0 : options.pattern, options === null || options === void 0 ? void 0 : options.modifiers);
+                            break;
+                        case 'wildcard':
+                            regex = new RegExp('^' +
+                                (options === null || options === void 0 ? void 0 : options.pattern.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&').replace(/\\\*/g, '.*').replace(/\\\?/g, '.')) +
+                                '$', options === null || options === void 0 ? void 0 : options.modifiers);
+                            break;
+                        default:
+                            throw new Error('Invalid validation type');
+                    }
+                    var isValid = regex.test(input);
+                    if (isValid) {
+                        if (options === null || options === void 0 ? void 0 : options.onsuccess) {
+                            options === null || options === void 0 ? void 0 : options.onsuccess(inputElement);
+                        }
+                        if (errorText) {
+                            errorText.innerText = "";
+                        }
+                        if (inputElement.style.border) {
+                            inputElement.style.borderColor = "";
+                        }
+                        else {
+                            inputElement.style.border = "";
+                        }
+                    }
+                    else {
+                        if (inputElement.style.border) {
+                            inputElement.style.borderColor = "red";
+                        }
+                        else {
+                            inputElement.style.border = "1px solid red";
+                        }
+                        if (options === null || options === void 0 ? void 0 : options.invalid) {
+                            options === null || options === void 0 ? void 0 : options.invalid();
+                        }
+                        if (errorText) {
+                            if (options === null || options === void 0 ? void 0 : options.errorMessage) {
+                                errorText.innerText = options === null || options === void 0 ? void 0 : options.errorMessage;
+                            }
+                        }
+                    }
+                });
+            }
+            else if ((options === null || options === void 0 ? void 0 : options.when) === "typing") {
+                inputElement.addEventListener("input", function () {
+                    var input = inputElement.value;
+                    if ((options === null || options === void 0 ? void 0 : options.allowEmpty) && input.length === 0) {
+                        return true;
+                    }
+                    var regex;
+                    switch (options === null || options === void 0 ? void 0 : options.type) {
+                        case 'regex':
+                            regex = new RegExp(options === null || options === void 0 ? void 0 : options.pattern, options === null || options === void 0 ? void 0 : options.modifiers);
+                            break;
+                        case 'wildcard':
+                            regex = new RegExp('^' +
+                                (options === null || options === void 0 ? void 0 : options.pattern.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&').replace(/\\\*/g, '.*').replace(/\\\?/g, '.')) +
+                                '$', options === null || options === void 0 ? void 0 : options.modifiers);
+                            break;
+                        default:
+                            throw new Error('Invalid validation type');
+                    }
+                    var isValid = regex.test(input);
+                    if (isValid) {
+                        if (options === null || options === void 0 ? void 0 : options.onsuccess) {
+                            options === null || options === void 0 ? void 0 : options.onsuccess(inputElement);
+                        }
+                        if (errorText) {
+                            errorText.innerText = "";
+                        }
+                        if (inputElement.style.border) {
+                            inputElement.style.borderColor = "";
+                        }
+                        else {
+                            inputElement.style.border = "";
+                        }
+                    }
+                    else {
+                        if (inputElement.style.border) {
+                            inputElement.style.borderColor = "red";
+                        }
+                        else {
+                            inputElement.style.border = "1px solid red";
+                        }
+                        if (options === null || options === void 0 ? void 0 : options.invalid) {
+                            options === null || options === void 0 ? void 0 : options.invalid();
+                        }
+                        if (errorText) {
+                            if (options === null || options === void 0 ? void 0 : options.errorMessage) {
+                                errorText.innerText = options === null || options === void 0 ? void 0 : options.errorMessage;
+                            }
+                        }
+                    }
+                });
+            }
+        };
         if (rules) {
             if (rules.validateRequired) {
                 runValidateRequired();
             }
             if (rules.ValidateMinMax) {
                 runValidateMinMax();
+            }
+            if (rules.ValidateEmail) {
+                runValidateEmail();
+            }
+            if (rules.ValidatePattern) {
+                runValidatePattern();
             }
         }
     };
