@@ -93,13 +93,15 @@ If a required input is not filled, the rule will return a callback with an array
 
 #### Checking all **Min** and **Max** values of a form inputs and returning a callback and show error.
 
+#### **Note:** This rule is not work with type `password`. because password input is not readable or writable for security reasons. work only with `text`,`number` type
+
 ```javascript
 ValidateMinMax: {
 
     when: "typing"
     message : {
-        min: "Password must be at least 4 characters",
-        max: "Password must be at most 8 characters"
+        min: "Full name must be at least 4 characters",
+        max: "Full name must be at most 8 characters"
     },
     exceedsMax: ()=> {
         console.log("Maximum length exceeded");
@@ -117,7 +119,7 @@ ValidateMinMax: {
 ```
 
 ```html
- <input min={4} max={8} type="password" required />
+ <input min={4} max={8} type="number" required />
 
 ```
 
@@ -160,15 +162,15 @@ function App() {
           ValidateMinMax: {
             when: "onblur"
             message : {
-                min: "Password must be at least 4 characters",
-                max: "Password must be at most 8 characters"
+                min: "Full name must be at least 4 characters",
+                max: "Full name must be at most 8 characters"
             }
           }
 
         }}
       >
         <form>
-          <input min={4} max={8} type="password" name="password" required />
+          <input min={4} max={8} type="text" name="full_name" required />
           <input required type="text" name="full_name" />
           <input required type="email" name="email" />
           <button type="submit">Submit</button>

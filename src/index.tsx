@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 interface ValidateRequiredObj {
   applyOnly: Array<string>;
@@ -23,13 +23,17 @@ interface Rules {
   ValidateMinMax?: ValidateMinMaxObj;
 }
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   rules: Rules;
   errorElement: string;
 }
 
-class ValidateForm extends Component<Props> {
+interface ValidateForm{
+  props:Props
+}
+
+class ValidateForm extends React.Component<Props> {
   componentDidMount() {
     this.init();
   }
@@ -87,7 +91,7 @@ class ValidateForm extends Component<Props> {
         let requiredInputs: HTMLInputElement[] = [];
 
         if (rules.validateRequired?.applyOnly) {
-          rules.validateRequired?.applyOnly.forEach((inputName) => {
+          rules.validateRequired?.applyOnly.forEach((inputName:String) => {
             requiredInputs.push(
               form?.querySelector<HTMLInputElement>(
                 `[name="${inputName}"]`
@@ -372,7 +376,7 @@ class ValidateForm extends Component<Props> {
   }
 
   render() {
-    return <div id="_validation_wrapper">{this.props.children}</div>;
+    return <div id="_validation_wrapper" >{this.props.children}</div>;
   }
 }
 
