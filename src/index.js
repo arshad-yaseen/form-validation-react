@@ -79,6 +79,9 @@ var ValidateForm = /** @class */ (function (_super) {
             // Check If All Required Feilds Filled
             form.addEventListener("input", function (event) {
                 var input = event.target;
+                if (errorText) {
+                    errorText.innerText = "";
+                }
                 input.style.borderColor = "";
             });
             var submit_button = (form === null || form === void 0 ? void 0 : form.querySelector('button[type="submit"]')) ||

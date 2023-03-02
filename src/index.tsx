@@ -73,7 +73,9 @@ class ValidateForm extends Component<Props> {
 
       form.addEventListener("input", (event) => {
         const input = event.target as HTMLInputElement;
-
+        if (errorText) {
+          errorText.innerText = "";
+        }
         input.style.borderColor = "";
       });
 
