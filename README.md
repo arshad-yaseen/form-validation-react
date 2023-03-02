@@ -1,5 +1,5 @@
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K0J5VAD)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/arshad-yaseen/form-validation-react/blob/main/LICENCE) 
 # Form-Validation-React
 
 ### form-validation-react is an easy-to-use npm library that enables developers to add validation rules to form inputs in React. It supports required fields, email formats, and custom rules with various validation functions and options that can be tailored to specific needs.
@@ -12,7 +12,7 @@
 - [Validate Required Inputs](#validate-required-inputs)
 - [Validate Min & Max](#validate-min-and-max)
 - [Example Reactjs Code](#example-reactjs-code)
-
+- [Licence](#licence)
 ## Installation 
 
 You can install the package using npm or yarn:
@@ -185,3 +185,7 @@ export default App;
 
 
 ```
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/arshad-yaseen/form-validation-react/blob/main/LICENCE) 
+
