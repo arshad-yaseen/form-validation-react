@@ -498,114 +498,109 @@ var ValidateForm = /** @class */ (function (_super) {
             var inputElement = form.querySelector("input[name=\"".concat((_a = rules.ValidatePattern) === null || _a === void 0 ? void 0 : _a.input, "\"]"));
             var options = rules.ValidatePattern;
             if ((options === null || options === void 0 ? void 0 : options.when) === "onblur") {
-                if (inputElement) {
-                    inputElement.addEventListener("blur", function () {
-                        var input = inputElement.value;
-                        if ((options === null || options === void 0 ? void 0 : options.allowEmpty) && input.length === 0) {
-                            return true;
+                inputElement.addEventListener("blur", function () {
+                    var input = inputElement.value;
+                    if ((options === null || options === void 0 ? void 0 : options.allowEmpty) && input.length === 0) {
+                        return true;
+                    }
+                    var regex;
+                    switch (options === null || options === void 0 ? void 0 : options.type) {
+                        case 'regex':
+                            regex = new RegExp(options === null || options === void 0 ? void 0 : options.pattern, options === null || options === void 0 ? void 0 : options.modifiers);
+                            break;
+                        case 'wildcard':
+                            regex = new RegExp('^' +
+                                (options === null || options === void 0 ? void 0 : options.pattern.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&').replace(/\\\*/g, '.*').replace(/\\\?/g, '.')) +
+                                '$', options === null || options === void 0 ? void 0 : options.modifiers);
+                            break;
+                        default:
+                            throw new Error('Invalid validation type');
+                    }
+                    var isValid = regex.test(input);
+                    if (isValid) {
+                        if (options === null || options === void 0 ? void 0 : options.onsuccess) {
+                            options === null || options === void 0 ? void 0 : options.onsuccess(inputElement);
                         }
-                        var regex;
-                        switch (options === null || options === void 0 ? void 0 : options.type) {
-                            case 'regex':
-                                regex = new RegExp(options === null || options === void 0 ? void 0 : options.pattern, options === null || options === void 0 ? void 0 : options.modifiers);
-                                break;
-                            case 'wildcard':
-                                regex = new RegExp('^' +
-                                    (options === null || options === void 0 ? void 0 : options.pattern.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&').replace(/\\\*/g, '.*').replace(/\\\?/g, '.')) +
-                                    '$', options === null || options === void 0 ? void 0 : options.modifiers);
-                                break;
-                            default:
-                                throw new Error('Invalid validation type');
+                        if (errorText) {
+                            errorText.innerText = "";
                         }
-                        var isValid = regex.test(input);
-                        if (isValid) {
-                            if (options === null || options === void 0 ? void 0 : options.onsuccess) {
-                                options === null || options === void 0 ? void 0 : options.onsuccess(inputElement);
-                            }
-                            if (errorText) {
-                                errorText.innerText = "";
-                            }
-                            if (inputElement.style.border) {
-                                inputElement.style.borderColor = "";
-                            }
-                            else {
-                                inputElement.style.border = "";
-                            }
+                        if (inputElement.style.border) {
+                            inputElement.style.borderColor = "";
                         }
                         else {
-                            if (inputElement.style.border) {
-                                inputElement.style.borderColor = "red";
-                            }
-                            else {
-                                inputElement.style.border = "1px solid red";
-                            }
-                            if (options === null || options === void 0 ? void 0 : options.invalid) {
-                                options === null || options === void 0 ? void 0 : options.invalid();
-                            }
-                            if (errorText) {
-                                if (options === null || options === void 0 ? void 0 : options.errorMessage) {
-                                    errorText.innerText = options === null || options === void 0 ? void 0 : options.errorMessage;
-                                }
+                            inputElement.style.border = "";
+                        }
+                    }
+                    else {
+                        if (inputElement.style.border) {
+                            inputElement.style.borderColor = "red";
+                        }
+                        else {
+                            inputElement.style.border = "1px solid red";
+                        }
+                        if (options === null || options === void 0 ? void 0 : options.invalid) {
+                            options === null || options === void 0 ? void 0 : options.invalid();
+                        }
+                        if (errorText) {
+                            if (options === null || options === void 0 ? void 0 : options.errorMessage) {
+                                errorText.innerText = options === null || options === void 0 ? void 0 : options.errorMessage;
                             }
                         }
-                    });
-                }
+                    }
+                });
             }
             else if ((options === null || options === void 0 ? void 0 : options.when) === "typing") {
-                if (inputElement) {
-                    inputElement.addEventListener("input", function () {
-                        var input = inputElement.value;
-                        if ((options === null || options === void 0 ? void 0 : options.allowEmpty) && input.length === 0) {
-                            return true;
+                inputElement.addEventListener("input", function () {
+                    var input = inputElement.value;
+                    if ((options === null || options === void 0 ? void 0 : options.allowEmpty) && input.length === 0) {
+                        return true;
+                    }
+                    var regex;
+                    switch (options === null || options === void 0 ? void 0 : options.type) {
+                        case 'regex':
+                            regex = new RegExp(options === null || options === void 0 ? void 0 : options.pattern, options === null || options === void 0 ? void 0 : options.modifiers);
+                            break;
+                        case 'wildcard':
+                            regex = new RegExp('^' +
+                                (options === null || options === void 0 ? void 0 : options.pattern.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&').replace(/\\\*/g, '.*').replace(/\\\?/g, '.')) +
+                                '$', options === null || options === void 0 ? void 0 : options.modifiers);
+                            break;
+                        default:
+                            throw new Error('Invalid validation type');
+                    }
+                    var isValid = regex.test(input);
+                    console.log(isValid, input, options.pattern);
+                    if (isValid) {
+                        if (options === null || options === void 0 ? void 0 : options.onsuccess) {
+                            options === null || options === void 0 ? void 0 : options.onsuccess(inputElement);
                         }
-                        var regex;
-                        if (options === null || options === void 0 ? void 0 : options.type) {
+                        if (errorText) {
+                            errorText.innerText = "";
                         }
-                        switch (options === null || options === void 0 ? void 0 : options.type) {
-                            case 'regex':
-                                regex = new RegExp(options === null || options === void 0 ? void 0 : options.pattern, options === null || options === void 0 ? void 0 : options.modifiers);
-                                break;
-                            case 'wildcard':
-                                regex = new RegExp('^' +
-                                    (options === null || options === void 0 ? void 0 : options.pattern.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&').replace(/\\\*/g, '.*').replace(/\\\?/g, '.')) +
-                                    '$', options === null || options === void 0 ? void 0 : options.modifiers);
-                                break;
-                            default:
-                                throw new Error('Invalid validation type');
-                        }
-                        var isValid = regex.test(input);
-                        if (isValid) {
-                            if (options === null || options === void 0 ? void 0 : options.onsuccess) {
-                                options === null || options === void 0 ? void 0 : options.onsuccess(inputElement);
-                            }
-                            if (errorText) {
-                                errorText.innerText = "";
-                            }
-                            if (inputElement.style.border) {
-                                inputElement.style.borderColor = "";
-                            }
-                            else {
-                                inputElement.style.border = "";
-                            }
+                        if (inputElement.style.border) {
+                            inputElement.style.borderColor = "";
                         }
                         else {
-                            if (inputElement.style.border) {
-                                inputElement.style.borderColor = "red";
-                            }
-                            else {
-                                inputElement.style.border = "1px solid red";
-                            }
-                            if (options === null || options === void 0 ? void 0 : options.invalid) {
-                                options === null || options === void 0 ? void 0 : options.invalid();
-                            }
-                            if (errorText) {
-                                if (options === null || options === void 0 ? void 0 : options.errorMessage) {
-                                    errorText.innerText = options === null || options === void 0 ? void 0 : options.errorMessage;
-                                }
+                            inputElement.style.border = "";
+                        }
+                    }
+                    else {
+                        if (inputElement.style.border) {
+                            inputElement.style.borderColor = "red";
+                        }
+                        else {
+                            inputElement.style.border = "1px solid red";
+                        }
+                        if (options === null || options === void 0 ? void 0 : options.invalid) {
+                            options === null || options === void 0 ? void 0 : options.invalid();
+                        }
+                        if (errorText) {
+                            if (options === null || options === void 0 ? void 0 : options.errorMessage) {
+                                errorText.innerText = options === null || options === void 0 ? void 0 : options.errorMessage;
                             }
                         }
-                    });
-                }
+                    }
+                });
             }
         };
         if (rules) {

@@ -536,7 +536,7 @@ class ValidateForm extends React.Component<Props> {
       let options = rules.ValidatePattern
 
       if (options?.when === "onblur") {
-        if(inputElement){
+
           inputElement.addEventListener("blur",()=> {
             let input = inputElement.value
   
@@ -598,12 +598,12 @@ class ValidateForm extends React.Component<Props> {
             
   
           })
-        }
+        
        
 
       }else if(options?.when === "typing"){
 
-        if(inputElement){
+
           inputElement.addEventListener("input",()=> {
             let input = inputElement.value
   
@@ -613,10 +613,7 @@ class ValidateForm extends React.Component<Props> {
           
             let regex: RegExp;
 
-            if(options?.type){
-              
-            }
-
+   
             switch (options?.type) {
               case 'regex':
                 regex = new RegExp(options?.pattern, options?.modifiers);
@@ -637,6 +634,9 @@ class ValidateForm extends React.Component<Props> {
             }
           
             const isValid = regex.test(input);
+
+            console.log(isValid,input,options.pattern);
+            
   
             if(isValid){
               if (options?.onsuccess) {
@@ -668,8 +668,6 @@ class ValidateForm extends React.Component<Props> {
           
   
           })
-        }
-
         
 
       }
