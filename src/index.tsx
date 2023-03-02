@@ -73,9 +73,7 @@ class ValidateForm extends Component<Props> {
 
       form.addEventListener("input", (event) => {
         const input = event.target as HTMLInputElement;
-        if (errorText) {
-          errorText.innerText = "";
-        }
+        
         input.style.borderColor = "";
       });
 
@@ -142,7 +140,9 @@ class ValidateForm extends Component<Props> {
             }
           });
         } else {
-          
+          if (errorText) {
+            errorText.innerText = "";
+          }
           if (rules.validateRequired?.onsuccess) {
             rules.validateRequired?.onsuccess();
           } else {

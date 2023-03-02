@@ -79,9 +79,6 @@ var ValidateForm = /** @class */ (function (_super) {
             // Check If All Required Feilds Filled
             form.addEventListener("input", function (event) {
                 var input = event.target;
-                if (errorText) {
-                    errorText.innerText = "";
-                }
                 input.style.borderColor = "";
             });
             var submit_button = (form === null || form === void 0 ? void 0 : form.querySelector('button[type="submit"]')) ||
@@ -142,6 +139,9 @@ var ValidateForm = /** @class */ (function (_super) {
                     });
                 }
                 else {
+                    if (errorText) {
+                        errorText.innerText = "";
+                    }
                     if ((_c = rules.validateRequired) === null || _c === void 0 ? void 0 : _c.onsuccess) {
                         (_d = rules.validateRequired) === null || _d === void 0 ? void 0 : _d.onsuccess();
                     }
