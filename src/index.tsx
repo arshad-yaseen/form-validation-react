@@ -536,129 +536,141 @@ class ValidateForm extends React.Component<Props> {
       let options = rules.ValidatePattern
 
       if (options?.when === "onblur") {
-        inputElement.addEventListener("blur",()=> {
-          let input = inputElement.value
-
-          if (options?.allowEmpty && input.length === 0) {
-            return true;
-          }
-        
-          let regex: RegExp;
-          switch (options?.type) {
-            case 'regex':
-              regex = new RegExp(options?.pattern, options?.modifiers);
-              break;
-            case 'wildcard':
-              regex = new RegExp(
-                '^' +
-                  options?.pattern
-                    .replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
-                    .replace(/\\\*/g, '.*')
-                    .replace(/\\\?/g, '.') +
-                  '$',
-                options?.modifiers
-              );
-              break;
-            default:
-              throw new Error('Invalid validation type');
-          }
-        
-          const isValid = regex.test(input);
-
-          if(isValid){
-            if (options?.onsuccess) {
-              options?.onsuccess(inputElement);
+        if(inputElement){
+          inputElement.addEventListener("blur",()=> {
+            let input = inputElement.value
+  
+            if (options?.allowEmpty && input.length === 0) {
+              return true;
             }
-            if (errorText) {
-              errorText.innerText = "";
+          
+            let regex: RegExp;
+            switch (options?.type) {
+              case 'regex':
+                regex = new RegExp(options?.pattern, options?.modifiers);
+                break;
+              case 'wildcard':
+                regex = new RegExp(
+                  '^' +
+                    options?.pattern
+                      .replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
+                      .replace(/\\\*/g, '.*')
+                      .replace(/\\\?/g, '.') +
+                    '$',
+                  options?.modifiers
+                );
+                break;
+              default:
+                throw new Error('Invalid validation type');
             }
-            if (inputElement.style.border) {
-              inputElement.style.borderColor = "";
-            } else {
-              inputElement.style.border = "";
-            }
-          }else{
-            if (inputElement.style.border) {
-              inputElement.style.borderColor = "red";
-            } else {
-              inputElement.style.border = "1px solid red";
-            }
-            if (options?.invalid) {
-              options?.invalid();
-            }
-            if (errorText) {
-              if (options?.errorMessage) {
-                errorText.innerText = options?.errorMessage;
+          
+            const isValid = regex.test(input);
+  
+            if(isValid){
+              if (options?.onsuccess) {
+                options?.onsuccess(inputElement);
+              }
+              if (errorText) {
+                errorText.innerText = "";
+              }
+              if (inputElement.style.border) {
+                inputElement.style.borderColor = "";
+              } else {
+                inputElement.style.border = "";
+              }
+            }else{
+              if (inputElement.style.border) {
+                inputElement.style.borderColor = "red";
+              } else {
+                inputElement.style.border = "1px solid red";
+              }
+              if (options?.invalid) {
+                options?.invalid();
+              }
+              if (errorText) {
+                if (options?.errorMessage) {
+                  errorText.innerText = options?.errorMessage;
+                }
               }
             }
-          }
-        
-        
           
-
-        })
+          
+            
+  
+          })
+        }
+       
 
       }else if(options?.when === "typing"){
 
-        inputElement.addEventListener("input",()=> {
-          let input = inputElement.value
+        if(inputElement){
+          inputElement.addEventListener("input",()=> {
+            let input = inputElement.value
+  
+            if (options?.allowEmpty && input.length === 0) {
+              return true;
+            }
+          
+            let regex: RegExp;
 
-          if (options?.allowEmpty && input.length === 0) {
-            return true;
-          }
-        
-          let regex: RegExp;
-          switch (options?.type) {
-            case 'regex':
-              regex = new RegExp(options?.pattern, options?.modifiers);
-              break;
-            case 'wildcard':
-              regex = new RegExp(
-                '^' +
-                  options?.pattern
-                    .replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
-                    .replace(/\\\*/g, '.*')
-                    .replace(/\\\?/g, '.') +
-                  '$',
-                options?.modifiers
-              );
-              break;
-            default:
-              throw new Error('Invalid validation type');
-          }
-        
-          const isValid = regex.test(input);
+            if(options?.type){
+              
+            }
 
-          if(isValid){
-            if (options?.onsuccess) {
-              options?.onsuccess(inputElement);
+            switch (options?.type) {
+              case 'regex':
+                regex = new RegExp(options?.pattern, options?.modifiers);
+                break;
+              case 'wildcard':
+                regex = new RegExp(
+                  '^' +
+                    options?.pattern
+                      .replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
+                      .replace(/\\\*/g, '.*')
+                      .replace(/\\\?/g, '.') +
+                    '$',
+                  options?.modifiers
+                );
+                break;
+              default:
+                throw new Error('Invalid validation type');
             }
-            if (errorText) {
-              errorText.innerText = "";
-            }
-            if (inputElement.style.border) {
-              inputElement.style.borderColor = "";
-            } else {
-              inputElement.style.border = "";
-            }
-          }else{
-            if (inputElement.style.border) {
-              inputElement.style.borderColor = "red";
-            } else {
-              inputElement.style.border = "1px solid red";
-            }
-            if (options?.invalid) {
-              options?.invalid();
-            }
-            if (errorText) {
-              if (options?.errorMessage) {
-                errorText.innerText = options?.errorMessage;
+          
+            const isValid = regex.test(input);
+  
+            if(isValid){
+              if (options?.onsuccess) {
+                options?.onsuccess(inputElement);
+              }
+              if (errorText) {
+                errorText.innerText = "";
+              }
+              if (inputElement.style.border) {
+                inputElement.style.borderColor = "";
+              } else {
+                inputElement.style.border = "";
+              }
+            }else{
+              if (inputElement.style.border) {
+                inputElement.style.borderColor = "red";
+              } else {
+                inputElement.style.border = "1px solid red";
+              }
+              if (options?.invalid) {
+                options?.invalid();
+              }
+              if (errorText) {
+                if (options?.errorMessage) {
+                  errorText.innerText = options?.errorMessage;
+                }
               }
             }
-          }
-        
+          
+  
+          })
+        }
 
-        })
+        
 
       }
       

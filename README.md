@@ -226,7 +226,7 @@ validatePattern:{
 
 * #### `input` (required): The name of the input field to validate.
 * #### `pattern` (required): A string representing the pattern to validate against. It can be a regular expression or a wildcard pattern.
-* #### `type` (optional): A string representing the type of pattern used. It can be either `"regex"` or `"wildcard"`. If not specified, `"regex"` is used by default.
+* #### `type` (required): A string representing the type of pattern used. It can be either `"regex"` or `"wildcard"`.
 * #### `modifiers` (optional): A string representing the modifiers for the regular expression. Only used when `type` is `"regex"`.
 * #### `when` (optional): A string representing the event that triggers the validation. It can be either `"onblur"` or `"typing"`. If not specified, `"onblur"` is used by default.
 * #### `allowEmpty` (optional): A boolean value indicating whether empty input should be considered valid. If not specified, `false` is used by default.
