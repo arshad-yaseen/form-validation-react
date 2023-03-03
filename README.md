@@ -1,8 +1,6 @@
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K0J5VAD)
 
-![hero](https://i.postimg.cc/DfpgcC7D/Screenshot-2023-03-02-at-10-56-55-PM.png)
+![hero](https://i.postimg.cc/rwWKV7X7/Twitter-header-1-page-0001.jpg)
 
-# Form-Validation-React
 
 ### form-validation-react is an easy-to-use npm library that enables developers to add validation rules to form inputs in React. It supports required fields, email formats, and custom rules with various validation functions and options that can be tailored to specific needs.
 
@@ -15,6 +13,7 @@
 - [Validate Min & Max](#validate-min-and-max)
 - [Validate Email](#validate-email)
 - [Validate Pattern](#validate-pattern)
+- [Validate Phone Number](#validate-phone-number)
 - [Example Reactjs Code](#example-reactjs-code)
 - [Licence](#license)
 ## Installation 
@@ -238,6 +237,41 @@ validatePattern:{
 We provide two different patterns - a regular expression pattern and a wildcard pattern - along with options for case-insensitivity (`modifiers: 'i'`) and custom error messages.
 
 We also use the `allowEmpty` option to allow the input to be empty, which can be useful for optional fields.
+
+# 
+# Validate Phone Number
+
+#### A function that validates a phone number input field based on specified country.
+
+```javascript
+ValidatePhone: {
+
+    phoneInput: 'phone_input', // required
+    countryCode: 'US', // required
+    when: 'onblur', // required
+    
+    onsuccess: (input) => console.log(`${input.value} is a valid phone number`),
+    invalid: () => console.log('Invalid phone number'),
+    message: 'Please enter a valid US phone number',
+    isLandlineNumber: (isLandline) => console.log(`Is a landline: ${isLandline}`),
+    isMobileNumber: (isMobile) => console.log(`Is a mobile: ${isMobile}`)
+
+}
+```
+
+```html
+<input type="number" name="phone_input" />
+```
+
+ #### `phoneInput`: the name of the input field to validate.
+ #### `countryCode`: an optional country code to use in the validation process.
+ #### `when`: the event to trigger the validation process. Can be set to either "onblur" or "typing".
+ #### `onsuccess`: a function to execute when the validation is successful.
+ #### `invalid`: a function to execute when the validation is unsuccessful.
+ #### `message`: an error message to display when the validation is unsuccessful.
+ #### `isLandlineNumber`: a function that receives a boolean value indicating if the input is a landline number.
+ #### `isMobileNumber`: a function that receives a boolean value indicating if the input is a mobile number.
+
 
 # 
 # Example Reactjs Code
