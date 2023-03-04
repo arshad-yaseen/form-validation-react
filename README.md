@@ -14,6 +14,7 @@
 - [Validate Email](#validate-email)
 - [Validate Pattern](#validate-pattern)
 - [Validate Phone Number](#validate-phone-number)
+- [Validate Number](#validate-number-input)
 - [Example Reactjs Code](#example-reactjs-code)
 - [Licence](#license)
 ## Installation 
@@ -272,6 +273,55 @@ ValidatePhone: {
  #### `isLandlineNumber`: a function that receives a boolean value indicating if the input is a landline number.
  #### `isMobileNumber`: a function that receives a boolean value indicating if the input is a mobile number.
 
+# 
+# Validate Number Input
+
+#### This is a function to validate numbers input. This function can validate a number within a specified range, with a specified number of decimal places, and check whether it's an integer. This function also supports negative numbers and numbers in a specific base.
+
+```javascript
+ValidateNumber: {
+
+    input: "my-number-input", // required
+    when: "typing", // required
+
+    min: 0,
+    max: 100,
+    decimalPlaces: 2,
+    allowNegative: false,
+    integersOnly: false,
+    base: 10,
+    customErrorMessages: {
+      invalidNumber: "Invalid number",
+      range: "Number must be between 0 and 100",
+      decimalPlaces: "Number must have no more than 2 decimal places",
+      negative: "Negative numbers are not allowed",
+      integersOnly: "Only integers are allowed",
+      base: "Number must be in base 10",
+    },
+    onsuccess: () => {
+      console.log("Validation succeeded!");
+    },
+    invalid: () => {
+      console.log("Validation failed!");
+
+},
+```
+
+```html
+<input type="number" name="my-number-input" />
+```
+
+ #### `min` (optional): The minimum value of the number.
+ #### `max` (optional): The maximum value of the number.
+ #### `input`: The name of the input field to validate.
+ #### `when`: The timing of the validation. Valid values are "onblur" and "typing".
+ #### `decimalPlaces` (optional): The number of decimal places
+ #### `allowNegative` (optional): A boolean value indicating whether negative numbers are allowed. Defaults to true.
+ #### `integersOnly` (optional): A boolean value indicating whether the number must be an integer. Defaults to false.
+ #### `base` (optional): The base of the number.
+ #### `customErrorMessages` (optional): An object containing custom error messages. Valid properties are invalidNumber, range, decimalPlaces, negative, integersOnly, and base.
+ #### `onsuccess` (optional): A callback function to execute when validation succeeds.
+ #### `invalid` (optional): A callback function to execute when validation fails.
 
 # 
 # Example Reactjs Code

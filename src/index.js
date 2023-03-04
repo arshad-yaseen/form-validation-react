@@ -124,6 +124,7 @@ var ValidateForm = /** @class */ (function (_super) {
             "ValidateEmail",
             "ValidatePattern",
             "ValidatePhone",
+            "ValidateNumber",
         ];
         var wrapper = document.getElementById("_validation_wrapper");
         var form = wrapper === null || wrapper === void 0 ? void 0 : wrapper.children[0];
@@ -559,12 +560,6 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                     }
                     else {
-                        if (emailInput.style.border) {
-                            emailInput.style.borderColor = "red";
-                        }
-                        else {
-                            emailInput.style.border = "1px solid red";
-                        }
                         if (invalid) {
                             invalid();
                         }
@@ -669,12 +664,6 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                     }
                     else {
-                        if (inputElement.style.border) {
-                            inputElement.style.borderColor = "red";
-                        }
-                        else {
-                            inputElement.style.border = "1px solid red";
-                        }
                         if (options === null || options === void 0 ? void 0 : options.invalid) {
                             options === null || options === void 0 ? void 0 : options.invalid();
                         }
@@ -784,12 +773,6 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                     }
                     else {
-                        if (phoneInput.style.border) {
-                            phoneInput.style.borderColor = "red";
-                        }
-                        else {
-                            phoneInput.style.border = "1px solid red";
-                        }
                         if (invalid) {
                             invalid();
                         }
@@ -804,6 +787,178 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if ((_b = rules.ValidatePhone) === null || _b === void 0 ? void 0 : _b.isMobileNumber) {
                         rules.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber));
+                    }
+                });
+            }
+        };
+        var runValidateNumber = function () {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+            var min = (_a = rules.ValidateNumber) === null || _a === void 0 ? void 0 : _a.min;
+            var max = (_b = rules.ValidateNumber) === null || _b === void 0 ? void 0 : _b.max;
+            var inputName = (_c = rules.ValidateNumber) === null || _c === void 0 ? void 0 : _c.input;
+            var when = (_d = rules.ValidateNumber) === null || _d === void 0 ? void 0 : _d.when;
+            var decimalPlaces = (_e = rules.ValidateNumber) === null || _e === void 0 ? void 0 : _e.decimalPlaces;
+            var allowNegative = (_f = rules.ValidateNumber) === null || _f === void 0 ? void 0 : _f.allowNegative;
+            var integersOnly = (_g = rules.ValidateNumber) === null || _g === void 0 ? void 0 : _g.integersOnly;
+            var base = (_h = rules.ValidateNumber) === null || _h === void 0 ? void 0 : _h.base;
+            var customErrorMessages = (_j = rules.ValidateNumber) === null || _j === void 0 ? void 0 : _j.customErrorMessages;
+            var inputElement = form.querySelector("input[name='".concat(inputName, "']"));
+            var errorMessage;
+            var onsuccess = (_k = rules.ValidateNumber) === null || _k === void 0 ? void 0 : _k.onsuccess;
+            var invalid = (_l = rules.ValidateNumber) === null || _l === void 0 ? void 0 : _l.invalid;
+            if (when === "onblur") {
+                inputElement.addEventListener("blur", function () {
+                    var input = inputElement.value;
+                    var num = Number(input);
+                    // If the input is not a valid number, return an error message
+                    if (isNaN(num)) {
+                        return {
+                            isValid: false,
+                            errorMessage: (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.invalidNumber) || "Invalid number",
+                        };
+                    }
+                    // Check if the number is within the specified range
+                    if ((min !== undefined && num < min) ||
+                        (max !== undefined && num > max)) {
+                        errorMessage =
+                            (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.range) ||
+                                "Number must be between ".concat(min, " and ").concat(max);
+                    }
+                    // Check if the number has the specified number of decimal places
+                    if (decimalPlaces !== undefined) {
+                        var numStr = num.toString();
+                        var decimalIndex = numStr.indexOf(".");
+                        var numDecimalPlaces = decimalIndex !== -1 ? numStr.length - decimalIndex - 1 : 0;
+                        if (numDecimalPlaces > decimalPlaces) {
+                            errorMessage =
+                                (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.decimalPlaces) ||
+                                    "Number must have no more than ".concat(decimalPlaces, " decimal places");
+                        }
+                    }
+                    // Check if the number is negative (if negative numbers are not allowed)
+                    if (!allowNegative && num < 0) {
+                        errorMessage =
+                            (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.negative) ||
+                                "Negative numbers are not allowed";
+                    }
+                    // Check if the number is not an integer (if integers only are required)
+                    if (integersOnly && !Number.isInteger(num)) {
+                        errorMessage =
+                            (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.integersOnly) || "Only integers are allowed";
+                    }
+                    // Check if the number is in the specified base (if a base is specified)
+                    if (base !== undefined) {
+                        var parsedNum = parseInt(input, base);
+                        if (isNaN(parsedNum)) {
+                            errorMessage =
+                                (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.base) || "Number must be in base ".concat(base);
+                        }
+                    }
+                    // If no error message was set, the validation passed
+                    if (errorMessage === undefined) {
+                        if (onsuccess) {
+                            onsuccess(inputElement);
+                        }
+                        if (errorText) {
+                            errorText.innerText = "";
+                        }
+                        if (inputElement.style.border) {
+                            inputElement.style.borderColor = "";
+                        }
+                        else {
+                            inputElement.style.border = "";
+                        }
+                    }
+                    else {
+                        if (inputElement.style.border) {
+                            inputElement.style.borderColor = "red";
+                        }
+                        else {
+                            inputElement.style.border = "1px solid red";
+                        }
+                        if (invalid) {
+                            invalid();
+                        }
+                        if (errorText) {
+                            if (errorMessage) {
+                                errorText.innerText = errorMessage;
+                            }
+                        }
+                    }
+                });
+            }
+            else if (when === "typing") {
+                inputElement.addEventListener("input", function () {
+                    var input = inputElement.value;
+                    var num = Number(input);
+                    // If the input is not a valid number, return an error message
+                    if (isNaN(num)) {
+                        return {
+                            isValid: false,
+                            errorMessage: (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.invalidNumber) || "Invalid number",
+                        };
+                    }
+                    // Check if the number is within the specified range
+                    if ((min !== undefined && num < min) ||
+                        (max !== undefined && num > max)) {
+                        errorMessage =
+                            (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.range) ||
+                                "Number must be between ".concat(min, " and ").concat(max);
+                    }
+                    // Check if the number has the specified number of decimal places
+                    if (decimalPlaces !== undefined) {
+                        var numStr = num.toString();
+                        var decimalIndex = numStr.indexOf(".");
+                        var numDecimalPlaces = decimalIndex !== -1 ? numStr.length - decimalIndex - 1 : 0;
+                        if (numDecimalPlaces > decimalPlaces) {
+                            errorMessage =
+                                (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.decimalPlaces) ||
+                                    "Number must have no more than ".concat(decimalPlaces, " decimal places");
+                        }
+                    }
+                    // Check if the number is negative (if negative numbers are not allowed)
+                    if (!allowNegative && num < 0) {
+                        errorMessage =
+                            (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.negative) ||
+                                "Negative numbers are not allowed";
+                    }
+                    // Check if the number is not an integer (if integers only are required)
+                    if (integersOnly && !Number.isInteger(num)) {
+                        errorMessage =
+                            (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.integersOnly) || "Only integers are allowed";
+                    }
+                    // Check if the number is in the specified base (if a base is specified)
+                    if (base !== undefined) {
+                        var parsedNum = parseInt(input, base);
+                        if (isNaN(parsedNum)) {
+                            errorMessage =
+                                (customErrorMessages === null || customErrorMessages === void 0 ? void 0 : customErrorMessages.base) || "Number must be in base ".concat(base);
+                        }
+                    }
+                    // If no error message was set, the validation passed
+                    if (errorMessage == undefined) {
+                        if (onsuccess) {
+                            onsuccess(inputElement);
+                        }
+                        if (errorText) {
+                            errorText.innerText = "";
+                        }
+                        if (inputElement.style.border) {
+                            inputElement.style.borderColor = "";
+                        }
+                        else {
+                            inputElement.style.border = "";
+                        }
+                    }
+                    else {
+                        if (invalid) {
+                            invalid();
+                        }
+                        if (errorText) {
+                            if (errorMessage) {
+                                errorText.innerText = errorMessage;
+                            }
+                        }
                     }
                 });
             }
@@ -823,6 +978,9 @@ var ValidateForm = /** @class */ (function (_super) {
             }
             if (rules.ValidatePhone) {
                 runValidatePhone();
+            }
+            if (rules.ValidateNumber) {
+                runValidateNumber();
             }
         }
     };

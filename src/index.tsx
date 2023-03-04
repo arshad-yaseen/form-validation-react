@@ -30,13 +30,94 @@ interface ValidatePatternObj {
 }
 interface ValidatePhoneObj {
   when: "onblur" | "typing";
-  countryCode: "US" | "CA" | "MX" | "GB" | "FR" | "DE" | "JP" | "AU" | "NZ" | "IN" | "CN" | "HK" | "SG" | "TW" | "KR" | "TH" | "PH" | "VN" | "MY" | "BE" | "NL" | "IT" | "ES" | "PT" | "AT" | "CH" | "SE" | "NO" | "DK" | "FI" | "BR" | "AR" | "CO" | "PE" | "CL" | "VE" | "CR" | "PA" | "DO" | "GT" | "EC" | "UY" | "PY" | "BO" | "HN" | "NI" | "SV" | "PR" | "JM" | "BB" | "KY" | "VG" | "TT" | "DM" | "GD" | "GH" | "KE" | "NG" | "UG" | "RW" | "CM" | "SN" | "TZ" | "CI" | "MG" | "ZM" | "ZW" | "MW" | "LS" | "SZ" | "KM" | "DJ" | "RE" | "YT" | "WF" | "NU" | "TK" | "FM" | "MH" | "SA" | "RU"
+  countryCode:
+    | "US"
+    | "CA"
+    | "MX"
+    | "GB"
+    | "FR"
+    | "DE"
+    | "JP"
+    | "AU"
+    | "NZ"
+    | "IN"
+    | "CN"
+    | "HK"
+    | "SG"
+    | "TW"
+    | "KR"
+    | "TH"
+    | "PH"
+    | "VN"
+    | "MY"
+    | "BE"
+    | "NL"
+    | "IT"
+    | "ES"
+    | "PT"
+    | "AT"
+    | "CH"
+    | "SE"
+    | "NO"
+    | "DK"
+    | "FI"
+    | "BR"
+    | "AR"
+    | "CO"
+    | "PE"
+    | "CL"
+    | "VE"
+    | "CR"
+    | "PA"
+    | "DO"
+    | "GT"
+    | "EC"
+    | "UY"
+    | "PY"
+    | "BO"
+    | "HN"
+    | "NI"
+    | "SV"
+    | "PR"
+    | "JM"
+    | "BB"
+    | "KY"
+    | "VG"
+    | "TT"
+    | "DM"
+    | "GD"
+    | "GH"
+    | "KE"
+    | "NG"
+    | "UG"
+    | "RW"
+    | "CM"
+    | "SN"
+    | "TZ"
+    | "CI"
+    | "MG"
+    | "ZM"
+    | "ZW"
+    | "MW"
+    | "LS"
+    | "SZ"
+    | "KM"
+    | "DJ"
+    | "RE"
+    | "YT"
+    | "WF"
+    | "NU"
+    | "TK"
+    | "FM"
+    | "MH"
+    | "SA"
+    | "RU";
   phoneInput: string;
   onsuccess: Function;
   invalid: Function;
   message: string;
   isLandlineNumber: Function;
-  isMobileNumber: Function
+  isMobileNumber: Function;
 }
 
 interface ValidateEmailObj {
@@ -61,12 +142,29 @@ interface ValidateEmailObj {
     | "alias";
 }
 
+interface ValidateNumberObj {
+  when: "onblur" | "typing";
+  input: string;
+  min?: number;
+  max?: number;
+  decimalPlaces?: number;
+  allowNegative?: boolean;
+  integersOnly?: boolean;
+  base?: number;
+  customErrorMessages: {
+    [key: string]: string;
+  };
+  onsuccess?: Function;
+  invalid?: Function;
+}
+
 interface Rules {
   validateRequired?: ValidateRequiredObj;
   ValidateMinMax?: ValidateMinMaxObj;
   ValidateEmail?: ValidateEmailObj;
   ValidatePattern?: ValidatePatternObj;
   ValidatePhone?: ValidatePhoneObj;
+  ValidateNumber?: ValidateNumberObj;
 }
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -187,6 +285,7 @@ class ValidateForm extends React.Component<Props> {
       "ValidateEmail",
       "ValidatePattern",
       "ValidatePhone",
+      "ValidateNumber",
     ];
 
     let wrapper = document.getElementById("_validation_wrapper");
@@ -610,11 +709,6 @@ class ValidateForm extends React.Component<Props> {
               emailInput.style.border = "";
             }
           } else {
-            if (emailInput.style.border) {
-              emailInput.style.borderColor = "red";
-            } else {
-              emailInput.style.border = "1px solid red";
-            }
             if (invalid) {
               invalid();
             }
@@ -738,11 +832,6 @@ class ValidateForm extends React.Component<Props> {
               inputElement.style.border = "";
             }
           } else {
-            if (inputElement.style.border) {
-              inputElement.style.borderColor = "red";
-            } else {
-              inputElement.style.border = "1px solid red";
-            }
             if (options?.invalid) {
               options?.invalid();
             }
@@ -766,7 +855,8 @@ class ValidateForm extends React.Component<Props> {
       let invalid = rules.ValidatePhone?.invalid;
       let message = rules.ValidatePhone?.message;
 
-      const mobileRegex = /^(\+?254|0)?([17](0|1|[3-9])[0-9]{6}|([2-9]|[4-6][0-9])[0-9]{6,7})$/;
+      const mobileRegex =
+        /^(\+?254|0)?([17](0|1|[3-9])[0-9]{6}|([2-9]|[4-6][0-9])[0-9]{6,7})$/;
       const landlineRegex = /^(\+?254|0)?([2-69][0-9]{6,7})$/;
 
       if (when === "onblur") {
@@ -798,7 +888,7 @@ class ValidateForm extends React.Component<Props> {
             } else {
               phoneInput.style.border = "";
             }
-          }else{
+          } else {
             if (phoneInput.style.border) {
               phoneInput.style.borderColor = "red";
             } else {
@@ -814,13 +904,14 @@ class ValidateForm extends React.Component<Props> {
             }
           }
 
-          if(rules.ValidatePhone?.isLandlineNumber){
-            rules.ValidatePhone.isLandlineNumber(landlineRegex.test(phoneNumber))
+          if (rules.ValidatePhone?.isLandlineNumber) {
+            rules.ValidatePhone.isLandlineNumber(
+              landlineRegex.test(phoneNumber)
+            );
           }
-          if(rules.ValidatePhone?.isMobileNumber){
-            rules.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber))
+          if (rules.ValidatePhone?.isMobileNumber) {
+            rules.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber));
           }
-
         });
       } else if (when === "typing") {
         phoneInput.addEventListener("input", () => {
@@ -851,12 +942,7 @@ class ValidateForm extends React.Component<Props> {
             } else {
               phoneInput.style.border = "";
             }
-          }else{
-            if (phoneInput.style.border) {
-              phoneInput.style.borderColor = "red";
-            } else {
-              phoneInput.style.border = "1px solid red";
-            }
+          } else {
             if (invalid) {
               invalid();
             }
@@ -867,13 +953,207 @@ class ValidateForm extends React.Component<Props> {
             }
           }
 
-          if(rules.ValidatePhone?.isLandlineNumber){
-            rules.ValidatePhone.isLandlineNumber(landlineRegex.test(phoneNumber))
+          if (rules.ValidatePhone?.isLandlineNumber) {
+            rules.ValidatePhone.isLandlineNumber(
+              landlineRegex.test(phoneNumber)
+            );
           }
-          if(rules.ValidatePhone?.isMobileNumber){
-            rules.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber))
+          if (rules.ValidatePhone?.isMobileNumber) {
+            rules.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber));
+          }
+        });
+      }
+    };
+
+    const runValidateNumber = () => {
+      let min = rules.ValidateNumber?.min;
+      let max = rules.ValidateNumber?.max;
+      let inputName = rules.ValidateNumber?.input;
+      let when = rules.ValidateNumber?.when;
+      let decimalPlaces = rules.ValidateNumber?.decimalPlaces;
+      let allowNegative = rules.ValidateNumber?.allowNegative;
+      let integersOnly = rules.ValidateNumber?.integersOnly;
+      let base = rules.ValidateNumber?.base;
+      let customErrorMessages = rules.ValidateNumber?.customErrorMessages;
+      let inputElement = form.querySelector(
+        `input[name='${inputName}']`
+      ) as HTMLInputElement;
+      let errorMessage: string | undefined;
+      let onsuccess = rules.ValidateNumber?.onsuccess;
+      let invalid = rules.ValidateNumber?.invalid;
+
+      if (when === "onblur") {
+        inputElement.addEventListener("blur", () => {
+          let input = inputElement.value;
+          let num = Number(input);
+
+          // If the input is not a valid number, return an error message
+          if (isNaN(num)) {
+            return {
+              isValid: false,
+              errorMessage:
+                customErrorMessages?.invalidNumber || "Invalid number",
+            };
           }
 
+          // Check if the number is within the specified range
+          if (
+            (min !== undefined && num < min) ||
+            (max !== undefined && num > max)
+          ) {
+            errorMessage =
+              customErrorMessages?.range ||
+              `Number must be between ${min} and ${max}`;
+          }
+
+          // Check if the number has the specified number of decimal places
+          if (decimalPlaces !== undefined) {
+            const numStr = num.toString();
+            const decimalIndex = numStr.indexOf(".");
+            const numDecimalPlaces =
+              decimalIndex !== -1 ? numStr.length - decimalIndex - 1 : 0;
+            if (numDecimalPlaces > decimalPlaces) {
+              errorMessage =
+                customErrorMessages?.decimalPlaces ||
+                `Number must have no more than ${decimalPlaces} decimal places`;
+            }
+          }
+
+          // Check if the number is negative (if negative numbers are not allowed)
+          if (!allowNegative && num < 0) {
+            errorMessage =
+              customErrorMessages?.negative ||
+              "Negative numbers are not allowed";
+          }
+
+          // Check if the number is not an integer (if integers only are required)
+          if (integersOnly && !Number.isInteger(num)) {
+            errorMessage =
+              customErrorMessages?.integersOnly || "Only integers are allowed";
+          }
+
+          // Check if the number is in the specified base (if a base is specified)
+          if (base !== undefined) {
+            const parsedNum = parseInt(input as string, base);
+            if (isNaN(parsedNum)) {
+              errorMessage =
+                customErrorMessages?.base || `Number must be in base ${base}`;
+            }
+          }
+
+          // If no error message was set, the validation passed
+
+          if (errorMessage === undefined) {
+            if (onsuccess) {
+              onsuccess(inputElement);
+            }
+            if (errorText) {
+              errorText.innerText = "";
+            }
+            if (inputElement.style.border) {
+              inputElement.style.borderColor = "";
+            } else {
+              inputElement.style.border = "";
+            }
+          } else {
+            if (inputElement.style.border) {
+              inputElement.style.borderColor = "red";
+            } else {
+              inputElement.style.border = "1px solid red";
+            }
+            if (invalid) {
+              invalid();
+            }
+            if (errorText) {
+              if (errorMessage) {
+                errorText.innerText = errorMessage;
+              }
+            }
+          }
+        });
+      } else if (when === "typing") {
+        inputElement.addEventListener("input", () => {
+          let input = inputElement.value;
+          let num = Number(input);
+
+          // If the input is not a valid number, return an error message
+          if (isNaN(num)) {
+            return {
+              isValid: false,
+              errorMessage:
+                customErrorMessages?.invalidNumber || "Invalid number",
+            };
+          }
+
+          // Check if the number is within the specified range
+          if (
+            (min !== undefined && num < min) ||
+            (max !== undefined && num > max)
+          ) {
+            errorMessage =
+              customErrorMessages?.range ||
+              `Number must be between ${min} and ${max}`;
+          }
+
+          // Check if the number has the specified number of decimal places
+          if (decimalPlaces !== undefined) {
+            const numStr = num.toString();
+            const decimalIndex = numStr.indexOf(".");
+            const numDecimalPlaces =
+              decimalIndex !== -1 ? numStr.length - decimalIndex - 1 : 0;
+            if (numDecimalPlaces > decimalPlaces) {
+              errorMessage =
+                customErrorMessages?.decimalPlaces ||
+                `Number must have no more than ${decimalPlaces} decimal places`;
+            }
+          }
+
+          // Check if the number is negative (if negative numbers are not allowed)
+          if (!allowNegative && num < 0) {
+            errorMessage =
+              customErrorMessages?.negative ||
+              "Negative numbers are not allowed";
+          }
+
+          // Check if the number is not an integer (if integers only are required)
+          if (integersOnly && !Number.isInteger(num)) {
+            errorMessage =
+              customErrorMessages?.integersOnly || "Only integers are allowed";
+          }
+
+          // Check if the number is in the specified base (if a base is specified)
+          if (base !== undefined) {
+            const parsedNum = parseInt(input as string, base);
+            if (isNaN(parsedNum)) {
+              errorMessage =
+                customErrorMessages?.base || `Number must be in base ${base}`;
+            }
+          }
+
+          // If no error message was set, the validation passed
+
+          if (errorMessage == undefined) {
+            if (onsuccess) {
+              onsuccess(inputElement);
+            }
+            if (errorText) {
+              errorText.innerText = "";
+            }
+            if (inputElement.style.border) {
+              inputElement.style.borderColor = "";
+            } else {
+              inputElement.style.border = "";
+            }
+          } else {
+            if (invalid) {
+              invalid();
+            }
+            if (errorText) {
+              if (errorMessage) {
+                errorText.innerText = errorMessage;
+              }
+            }
+          }
         });
       }
     };
@@ -893,6 +1173,9 @@ class ValidateForm extends React.Component<Props> {
       }
       if (rules.ValidatePhone) {
         runValidatePhone();
+      }
+      if (rules.ValidateNumber) {
+        runValidateNumber();
       }
     }
   }
