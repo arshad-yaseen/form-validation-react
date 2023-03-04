@@ -16,7 +16,6 @@
 - [Validate Phone Number](#validate-phone-number)
 - [Validate Number](#validate-number-input)
 - [Example Reactjs Code](#example-reactjs-code)
-- [Licence](#license)
 ## Installation 
 
 You can install the package using npm or yarn:
@@ -44,20 +43,25 @@ Then, wrap your form with <ValidateForm> :
 
 ```javascript
 <ValidateForm
+  onSubmit={(event)=> {
+    console.log("Form submitted",event);
+  }}
   errorElement="#error_show_element" // optional
-  rules={
-    {
+  rules={{
       // add the rules here
-    }
-  }
+  }}
 >
+
   <form>
     <h1 id="error_show_element" > // The error message will appear in this element </h1>
     <input type="text" required />
   </form>
+
 </ValidateForm>;
 
 ```
+#### `onSubmit`: This function executes when click on submit button with no validation errors. If you not call this function the form will submit when no validation errors
+
 # Rules
 # Validate Required Inputs
 

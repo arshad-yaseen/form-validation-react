@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 
 interface ValidateRequiredObj {
   applyOnly: Array<string>;
@@ -171,6 +171,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   rules: Rules;
   errorElement: string;
+  onSubmit: FunctionComponent;
 }
 
 interface ValidateForm {
@@ -277,7 +278,7 @@ class ValidateForm extends React.Component<Props> {
   }
 
   init() {
-    let { rules } = this.props;
+    let { rules, onSubmit } = this.props;
     let { errorElement } = this.props;
     let allowedKeys: Array<keyof Rules> = [
       "validateRequired",
@@ -296,11 +297,18 @@ class ValidateForm extends React.Component<Props> {
     let errorText = document.querySelector(errorElement) as HTMLElement;
     let errorMessage = String;
 
-    submit_button.addEventListener("submit", () => {
-      if (errorText?.innerText === "") {
-        form.submit();
-      }
-    });
+    if (submit_button) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (errorText.innerHTML === "") {
+          if (onSubmit) {
+            onSubmit(e);
+          } else {
+            form.submit();
+          }
+        }
+      });
+    }
 
     const setErrorText = (message: string) => {
       if (errorText) {
@@ -387,10 +395,6 @@ class ValidateForm extends React.Component<Props> {
           }
           if (rules.validateRequired?.onsuccess) {
             rules.validateRequired?.onsuccess();
-          } else {
-            if (errorText.innerText === "") {
-              form.submit();
-            }
           }
         }
       });
@@ -984,6 +988,10 @@ class ValidateForm extends React.Component<Props> {
 
       if (when === "onblur") {
         inputElement.addEventListener("blur", () => {
+          errorMessage = undefined;
+          if (errorText) {
+            errorText.innerText = "";
+          }
           let input = inputElement.value;
           let num = Number(input);
 
@@ -1073,6 +1081,8 @@ class ValidateForm extends React.Component<Props> {
         });
       } else if (when === "typing") {
         inputElement.addEventListener("input", () => {
+          errorMessage = undefined;
+
           let input = inputElement.value;
           let num = Number(input);
 

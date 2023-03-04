@@ -116,7 +116,7 @@ var ValidateForm = /** @class */ (function (_super) {
         }
     };
     ValidateForm.prototype.init = function () {
-        var rules = this.props.rules;
+        var _a = this.props, rules = _a.rules, onSubmit = _a.onSubmit;
         var errorElement = this.props.errorElement;
         var allowedKeys = [
             "validateRequired",
@@ -132,11 +132,19 @@ var ValidateForm = /** @class */ (function (_super) {
             form.querySelector('input[type="submit"]');
         var errorText = document.querySelector(errorElement);
         var errorMessage = String;
-        submit_button.addEventListener("submit", function () {
-            if ((errorText === null || errorText === void 0 ? void 0 : errorText.innerText) === "") {
-                form.submit();
-            }
-        });
+        if (submit_button) {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                if (errorText.innerHTML === "") {
+                    if (onSubmit) {
+                        onSubmit(e);
+                    }
+                    else {
+                        form.submit();
+                    }
+                }
+            });
+        }
         var setErrorText = function (message) {
             if (errorText) {
                 errorText.innerText = message;
@@ -211,11 +219,6 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if ((_c = rules.validateRequired) === null || _c === void 0 ? void 0 : _c.onsuccess) {
                         (_d = rules.validateRequired) === null || _d === void 0 ? void 0 : _d.onsuccess();
-                    }
-                    else {
-                        if (errorText.innerText === "") {
-                            form.submit();
-                        }
                     }
                 }
             });
@@ -808,6 +811,10 @@ var ValidateForm = /** @class */ (function (_super) {
             var invalid = (_l = rules.ValidateNumber) === null || _l === void 0 ? void 0 : _l.invalid;
             if (when === "onblur") {
                 inputElement.addEventListener("blur", function () {
+                    errorMessage = undefined;
+                    if (errorText) {
+                        errorText.innerText = "";
+                    }
                     var input = inputElement.value;
                     var num = Number(input);
                     // If the input is not a valid number, return an error message
@@ -889,6 +896,7 @@ var ValidateForm = /** @class */ (function (_super) {
             }
             else if (when === "typing") {
                 inputElement.addEventListener("input", function () {
+                    errorMessage = undefined;
                     var input = inputElement.value;
                     var num = Number(input);
                     // If the input is not a valid number, return an error message
