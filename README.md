@@ -15,6 +15,12 @@
 - [Validate Pattern](#validate-pattern)
 - [Validate Phone Number](#validate-phone-number)
 - [Validate Number](#validate-number-input)
+- [Validate Integer](#validate-integer)
+- [Validate Float](#validate-float)
+- [Validate Date](#validate-date)
+- [Validate Time](#validate-time)
+- [Validate Url](#validate-URL)
+- [Validate Credit Card](#validate-credit-card)
 - [Example Reactjs Code](#example-reactjs-code)
 ## Installation 
 
@@ -307,6 +313,7 @@ ValidateNumber: {
     },
     invalid: () => {
       console.log("Validation failed!");
+    }
 
 },
 ```
@@ -328,6 +335,256 @@ ValidateNumber: {
  #### `invalid` (optional): A callback function to execute when validation fails.
 
 # 
+# Validate Integer
+
+#### This is used for validating integer values of an input based on a set of defined rules.
+
+```javascript
+ValidateInteger: {
+    when: 'onblur', // or 'typing'
+    input: 'age', // name of the input element to validate
+    minValue: 0,
+    maxValue: 100,
+    uniqueValues: [10, 20, 30],
+    positiveOnly: true,
+    evenOnly: true,
+    divisibleBy: 5,
+    invalid: () => {
+      console.log('Invalid input');
+    },
+    customErrorMessages: {
+      notANumber: 'Please enter a number',
+      notAnInteger: 'Please enter an integer',
+      outOfRange: 'Please enter a value between 0 and 100',
+      notUnique: 'Please enter a unique value',
+      notPositive: 'Please enter a positive value',
+      notEven: 'Please enter an even value',
+      notDivisible: 'Please enter a value divisible by 5',
+    },
+  },
+```
+
+* `when` **(required)**: A string indicating when to run the validation. Possible values are 'onblur' (validate on blur) and 'typing' (validate while typing).
+* `input`: **(required)** A string representing the name of the input element to validate.
+* `minValue` (optional): An integer representing the minimum value that the input element can have.
+* `maxValue` (optional): An integer representing the maximum value that the input element can have. 
+* `uniqueValues` (optional): An array of integers representing values that should be unique.
+* `positiveOnly` (optional): A boolean indicating whether the input element can only have positive values.
+
+* `evenOnly` (optional): A boolean indicating whether the input element can only have even values.
+* `divisibleBy` (optional): An integer representing a number by which the input element should be divisible.
+* `invalid` (optional): A function to call if the input element is invalid.
+* `customErrorMessages` (optional): An object containing custom error messages to display.
+
+#
+# Validate Float
+
+#### This function provides a method for validating float values.
+
+```javascript
+ValidateFloat: {
+
+    when: 'onblur', // when to validate input - onblur or typing
+    input: 'input-name', // name of input field to validate
+
+    required: true, // whether the input is required or not
+    min: 0, // minimum value for input
+    max: 100, // maximum value for input
+    precision: 2, // maximum number of decimal places allowed
+    customErrorMessages: {
+      required: 'This field is required!',
+      invalid: 'Please enter a valid number!',
+      min: 'Please enter a number greater than or equal to {min}!',
+      max: 'Please enter a number less than or equal to {max}!',
+      precision: 'Please enter a number with at most {precision} decimal places!',
+    },
+    
+},
+```
+
+#
+# Validate Date
+
+#### This function is used for validate date input
+
+```javascript
+ValidateDate: {
+
+    when: 'typing', // required
+    input: 'dob', // required
+
+    minDate: new Date('2000-01-01'),
+    maxDate: new Date('2023-03-07'),
+    allowOnlyBusinessDay: true,
+    allowOnlyWeekend: false,
+    customFormat: 'dd-MM-yyyy',
+    timeZone: 'Asia/Kolkata',
+    customErrorMessages: {
+      invalidDate: 'Invalid date format. Please enter a valid date.',
+      minDate: 'Date should not be earlier than 1st January 2000.',
+      maxDate: 'Date should not be later than 7th March 2023.',
+      businessDay: 'Selected date is not a business day.',
+      notWeekend: 'Selected date is not a weekend.',
+      invalidFormat: 'Date format is not valid. Please enter the date in dd-MM-yyyy format.',
+      invalidTimeZone: 'Invalid time zone. Please enter a valid time zone.',
+    }
+
+  }
+```
+
+#### `when`
+The when rule determines when the validation should occur. It can be set to "typing" or "onblur".
+
+#### `input`
+The input rule specifies the name of the input field to validate.
+
+#### `minDate`
+The minDate rule specifies the minimum date that is allowed. Dates before this minimum date are considered invalid.
+
+#### `maxDate`
+The maxDate rule specifies the maximum date that is allowed. Dates after this maximum date are considered invalid.
+
+#### `allowOnlyBusinessDay`
+The allowOnlyBusinessDay rule determines whether or not only business days are allowed. Business days are weekdays (Monday to Friday).
+
+#### `allowOnlyWeekend`
+The allowOnlyWeekend rule determines whether or not only weekends are allowed. Weekends are Saturday and Sunday.
+
+#### `customFormat`
+The customFormat rule specifies the custom format for the date. If not specified, the date will be validated in the default format.
+
+#### `timeZone`
+The timeZone rule specifies the time zone for the date. If not specified, the date will be validated in the local time zone.
+
+#### `customErrorMessages`
+The customErrorMessages rule allows you to specify custom error messages for different validation rules. If not specified, default error messages will be used.
+
+
+#
+# Validate Time
+
+#### This function is designed to validate time inputs according to the specified rules. It checks for valid time format, valid time range, valid timezone and whether the time falls within a specified interval.
+
+```javascript
+ValidateTime: {
+
+  when: 'onblur', // required
+  input: 'time-input', // required
+
+  customErrorMessages: {
+    invalidFormat: 'Invalid time format, please enter time in the format HH:mm',
+    invalidRange: 'Time is out of range, please enter a valid time',
+    invalidInterval: 'Time is not within the specified interval, please enter a valid time',
+    invalidTimezone: 'Invalid timezone, please enter a valid timezone',
+  },
+  timeRange: {
+    startTime: '08:00',
+    endTime: '17:00',
+  },
+  timeInterval: {
+    startInterval: 480,
+    endInterval: 1020,
+  },
+  timezone: 'America/New_York'
+
+}
+```
+
+* `when` : A string value that specifies when to perform the validation. It can be either 'typing' or 'onblur'.
+* `input` : A string value that specifies the name of the input element to validate.
+* `customErrorMessages` : An object that specifies custom error messages to use for the validation.
+
+* `timeRange` : An object that specifies a time range that the input value should fall within.
+* `timeInterval` : An object that specifies an interval that the input value should fall within.
+* `timezone` : A string value that specifies the timezone to use for the validation. If not specified, the local timezone is used.
+
+# 
+# Validate URL
+
+#### This function validates the URL. It checks the URL for well-formedness, protocol validity, domain validity, IP address validity, accessibility, and invalid characters.
+
+```javascript
+
+ValidateUrl: {
+
+    when: "typing", // required 
+    input: "urlInput", // required 
+    
+    CustomErrorMessages: {
+      invalidUrl: "Invalid URL",
+      invalidProtocol: "Invalid Protocol",
+      invalidDomain: "Invalid Domain",
+      invalidIpAddress: "Invalid IP Address",
+      inaccessibleUrl: "Inaccessible URL",
+      invalidCharacters: "Invalid Characters",
+      protocolNotAllowed: "Protocol not allowed",
+    },
+    checkUrl: true,
+    checkProtocol: true,
+    checkDomain: true,
+    checkIpAddress: true,
+    checkInAccessibleUrl: true,
+    checkCharacters: true,
+    protocols: ["https", "http"],
+
+  },
+
+```
+
+* `when`: When to validate the URL input. This can be either "typing" or "onblur".
+* `input`: The name of the input field to validate.
+* `CustomErrorMessages`: Custom error messages for each type of validation error. This is an optional property.
+* `checkUrl`: Whether to check the URL for well-formedness.
+* `checkProtocol`: Whether to check the protocol of the URL.
+* `checkDomain`: Whether to check the domain name of the URL.
+* `checkIpAddress`: Whether to check the IP address of the URL.
+* `checkInAccessibleUrl`: Whether to check if the URL is accessible.
+* `checkCharacters`: Whether to check for invalid characters in the URL.
+
+* `protocols`: An array of allowed protocols. This is used when checkProtocol is set to true. If this property is not specified, any protocol is allowed.
+
+
+# 
+# Validate Credit Card
+
+#### This function that can be used to validate credit card information
+
+```javascript
+
+ValidateCreditCard: {
+
+    when: "typing", // required
+    cardNumber: "card-input", // required
+
+    allowedCards: ["Visa", "Mastercard"],
+    expirationDate: "expiration-date",
+    cvv: "cvv",
+    billingZip: "billing-zip",
+    customErrorMessages: {
+      invalidCardNumber: "Invalid credit card number",
+      onlyAllowedCards: "Only Visa and Mastercard are allowed",
+      invalidExpirationDate: "Invalid expiration date",
+      invalidCVV: "Invalid CVV code",
+      invalidBillingZip: "Invalid billing zip code",
+    },
+    getCardType: (cardType) => console.log(cardType); // Visa
+
+  }
+
+```
+
+* `when` - When to validate. This can be either "typing" or "onblur".
+* `allowedCards` - An optional array of strings that contains the card types that are allowed. If this property is not set, all card types are allowed.
+* `cardNumber` - A string that contains the name of the input element that contains the credit card number.
+* `expirationDate` - A string that contains the name of the input element that contains the expiration date.
+* `cvv` - A string that contains the name of the input element that contains the CVV code.
+* `billingZip` - A string that contains the name of the input element that contains the billing zip code.
+
+* `customErrorMessages` - An optional object that contains custom error messages for each validation rule. The keys should match the validation function names, and the values should be strings that represent the error message.
+* `getCardType` - An optional function that can be used to determine the card type based on the credit card number.
+
+
+
 # Example Reactjs Code
 
 Here is an example of how to use the library in a ReactJS component:
@@ -376,6 +633,11 @@ export default App;
 
 
 ```
+## Thanks to Contributors
+
+
+![hero](https://i.postimg.cc/CMtCrcH1/contributors-removebg-preview-1.png)
+
 ## License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/arshad-yaseen/form-validation-react/blob/main/LICENCE) 
