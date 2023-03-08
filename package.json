@@ -1,6 +1,6 @@
 {
   "name": "form-validation-react",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "description": "form-validation-react is a lightweight and easy-to-use npm library built for validating forms in React applications. With this library, you can quickly and easily add validation rules to your form inputs, including required fields, email formats, and custom rules. The library provides a range of validation functions and options, allowing you to customize the validation rules to meet your specific needs",
   "main": "src/index.js",
   "scripts": {
