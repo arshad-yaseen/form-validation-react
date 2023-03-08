@@ -8,19 +8,33 @@
 
 # Table of Contents
 - [Installation](#installation)
+
 - [Usage](#usage)
-- [Validate Required Inputs](#validate-required-inputs)
-- [Validate Min & Max](#validate-min-and-max)
-- [Validate Email](#validate-email)
-- [Validate Pattern](#validate-pattern)
-- [Validate Phone Number](#validate-phone-number)
-- [Validate Number](#validate-number-input)
-- [Validate Integer](#validate-integer)
-- [Validate Float](#validate-float)
-- [Validate Date](#validate-date)
-- [Validate Time](#validate-time)
-- [Validate Url](#validate-URL)
-- [Validate Credit Card](#validate-credit-card)
+
+- [Validate Required Inputs](#validate-required-inputs) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-required)
+
+- [Validate Min & Max](#validate-min-and-max) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-min-max)
+
+- [Validate Email](#validate-email) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-email)
+
+- [Validate Pattern](#validate-pattern) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-patterns)
+
+- [Validate Phone Number](#validate-phone-number) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-phone-number)
+
+- [Validate Number](#validate-number-input) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-number)
+
+- [Validate Integer](#validate-integer) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-integer)
+
+- [Validate Float](#validate-float) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-float)
+
+- [Validate Date](#validate-date) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-date)
+
+- [Validate Time](#validate-time) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-time)
+
+- [Validate Url](#validate-URL) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-url)
+
+- [Validate Credit Card](#validate-credit-card) - [**Demo** ↗](https://form-validator-react.vercel.app/rules/validate-credit-card)
+
 - [Example Reactjs Code](#example-reactjs-code)
 ## Installation 
 
@@ -63,7 +77,7 @@ Then, wrap your form with <ValidateForm> :
     <input type="text" required />
   </form>
 
-</ValidateForm>;
+</ValidateForm>
 
 ```
 #### `onSubmit`: This function executes when click on submit button with no validation errors. If you not call this function the form will submit when no validation errors
@@ -169,7 +183,7 @@ ValidateEmail: {
 ```
 
 ```html
-<input name="email" type="my_email" required />
+<input name="my_email" type="email" required />
 ```
 
 ## Parameters
@@ -207,6 +221,9 @@ validatePattern:{
 validatePattern:{
 	pattern: /^\S+@\S+\.\S+$/,
   	modifiers: 'i',
+    input: 'email',
+  	type: 'regex',
+  	when: 'typing',
   	errorMessage: 'Please enter a valid email address',
 }
 ```
@@ -218,6 +235,8 @@ validatePattern:{
 	pattern: '*.com',
   	type: 'wildcard',
   	modifiers: 'i',
+    input: 'email-input',
+  	when: 'typing',
   	errorMessage: 'Please enter an email address ending in .com'
 }
 ```
@@ -228,6 +247,9 @@ validatePattern:{
 validatePattern:{
 	pattern: /^\S+@\S+\.\S+$/,
   	modifiers: 'i',
+    input: 'email',
+  	type: 'regex',
+  	when: 'typing',
   	allowEmpty: true,
 }
 ```

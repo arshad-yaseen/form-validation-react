@@ -1340,6 +1340,7 @@ class ValidateForm extends React.Component<Props> {
           }
 
           const errorMessage = {
+            ...customErrorMessages,
             notANumber: "The value must be a number",
             notAnInteger: "The value must be an integer",
             outOfRange: `The value must be between ${minValue} and ${maxValue}`,
@@ -1347,7 +1348,6 @@ class ValidateForm extends React.Component<Props> {
             notPositive: "The value must be positive",
             notEven: "The value must be even",
             notDivisible: `The value must be divisible by ${divisibleBy}`,
-            ...customErrorMessages,
           };
 
           // Check that the input value is actually a number
@@ -1486,6 +1486,7 @@ class ValidateForm extends React.Component<Props> {
           }
 
           const errorMessage = {
+            ...customErrorMessages,
             notANumber: "The value must be a number",
             notAnInteger: "The value must be an integer",
             outOfRange: `The value must be between ${minValue} and ${maxValue}`,
@@ -1493,7 +1494,6 @@ class ValidateForm extends React.Component<Props> {
             notPositive: "The value must be positive",
             notEven: "The value must be even",
             notDivisible: `The value must be divisible by ${divisibleBy}`,
-            ...customErrorMessages,
           };
 
           // Check that the input value is actually a number
@@ -1862,8 +1862,8 @@ class ValidateForm extends React.Component<Props> {
       };
 
       const errorMessages = {
-        ...defaultErrorMessages,
         ...customErrorMessages,
+        ...defaultErrorMessages,
       };
 
       if (when === "typing") {
@@ -1933,12 +1933,6 @@ class ValidateForm extends React.Component<Props> {
           }
 
           if (allowOnlyWeekend && !isWeekendCheck(inputDate)) {
-            if (inputElement.style.border) {
-              inputElement.style.borderColor = "green";
-            } else {
-              inputElement.style.border = "1px solid green";
-            }
-          } else {
             if (inputElement.style.border) {
               inputElement.style.borderColor = "red";
             } else {
@@ -2040,12 +2034,6 @@ class ValidateForm extends React.Component<Props> {
 
           if (allowOnlyWeekend && !isWeekendCheck(inputDate)) {
             if (inputElement.style.border) {
-              inputElement.style.borderColor = "green";
-            } else {
-              inputElement.style.border = "1px solid green";
-            }
-          } else {
-            if (inputElement.style.border) {
               inputElement.style.borderColor = "red";
             } else {
               inputElement.style.border = "1px solid red";
@@ -2099,8 +2087,8 @@ class ValidateForm extends React.Component<Props> {
       };
 
       const errorMessages = {
-        ...defaultErrorMessages,
         ...customErrorMessages,
+        ...defaultErrorMessages,
       };
 
       const inputElement = form.querySelector(
@@ -2345,7 +2333,7 @@ class ValidateForm extends React.Component<Props> {
         invalidCharacters: "The URL contains invalid characters",
         protocolNotAllowed: `The URL must use the ${protocols} protocol`,
       };
-      const errorMessages = { ...defaultErrorMessages, ...customErrorMessages };
+      const errorMessages = { ...customErrorMessages, ...defaultErrorMessages };
 
       if (when === "typing") {
         inputElement.addEventListener("input", () => {
@@ -2672,8 +2660,8 @@ class ValidateForm extends React.Component<Props> {
       };
 
       const errorMessages = {
-        ...defaultErrorMessages,
         ...customErrorMessages,
+        ...defaultErrorMessages,
       };
 
       function GetCardType(cardNumber: string): string {
@@ -2843,7 +2831,9 @@ class ValidateForm extends React.Component<Props> {
               }
             }
 
-            getCardType(GetCardType(value));
+            if(getCardType){
+              getCardType(GetCardType(value));
+            }
           });
         }
 
@@ -2954,7 +2944,9 @@ class ValidateForm extends React.Component<Props> {
               }
             }
 
-            getCardType(GetCardType(value));
+            if(getCardType){
+              getCardType(GetCardType(value));
+            }
           });
         }
 
