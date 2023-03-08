@@ -1,14 +1,14 @@
 {
-  "name": "reactvalidator-form",
+  "name": "form-validation-react",
   "version": "1.4.4",
-  "description": "reactvalidator-form is a lightweight and easy-to-use npm library built for validating forms in React applications. With this library, you can quickly and easily add validation rules to your form inputs, including required fields, email formats, and custom rules. The library provides a range of validation functions and options, allowing you to customize the validation rules to meet your specific needs",
+  "description": "form-validation-react is a lightweight and easy-to-use npm library built for validating forms in React applications. With this library, you can quickly and easily add validation rules to your form inputs, including required fields, email formats, and custom rules. The library provides a range of validation functions and options, allowing you to customize the validation rules to meet your specific needs",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arshad-yaseen/reactvalidator-form.git"
+    "url": "git+https://github.com/arshad-yaseen/form-validation-react.git"
   },
   "keywords": [
     "React form validation",
@@ -78,9 +78,9 @@
   "author": "Arshad Yaseen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/arshad-yaseen/reactvalidator-form/issues"
+    "url": "https://github.com/arshad-yaseen/form-validation-react/issues"
   },
-  "homepage": "https://github.com/arshad-yaseen/reactvalidator-form#readme",
+  "homepage": "https://github.com/arshad-yaseen/form-validation-react#readme",
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
