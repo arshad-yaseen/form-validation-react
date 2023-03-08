@@ -1,39 +1,39 @@
 
-![hero](https://i.postimg.cc/rwWKV7X7/Twitter-header-1-page-0001.jpg)
+![hero](https://i.postimg.cc/qvrfZj93/Twitter-header-1-page-0001-3.jpg)
 
 
 ### form-validation-react is an easy-to-use npm library that enables developers to add validation rules to form inputs in React. It supports required fields, email formats, and custom rules with various validation functions and options that can be tailored to specific needs.
 
-**Note:** This library is under development. We will be publishing all functions soon. For now, you can use the available functions.
+Check this website - [reactvalidator.tech](https://reactvalidator.tech/)
 
 # Table of Contents
 - [Installation](#installation)
 
 - [Usage](#usage)
 
-- [Validate Required Inputs](#validate-required-inputs) → [Demo](https://form-validator-react.vercel.app/rules/validate-required)
+- [Validate Required Inputs](#validate-required-inputs) → [Demo](https://reactvalidator.tech/rules/validate-required)
 
-- [Validate Min & Max](#validate-min-and-max) → [Demo](https://form-validator-react.vercel.app/rules/validate-min-max)
+- [Validate Min & Max](#validate-min-and-max) → [Demo](https://reactvalidator.tech/rules/validate-min-max)
 
-- [Validate Email](#validate-email) → [Demo](https://form-validator-react.vercel.app/rules/validate-email)
+- [Validate Email](#validate-email) → [Demo](https://reactvalidator.tech/rules/validate-email)
 
-- [Validate Pattern](#validate-pattern) → [Demo](https://form-validator-react.vercel.app/rules/validate-patterns)
+- [Validate Pattern](#validate-pattern) → [Demo](https://reactvalidator.tech/rules/validate-patterns)
 
-- [Validate Phone Number](#validate-phone-number) → [Demo](https://form-validator-react.vercel.app/rules/validate-phone-number)
+- [Validate Phone Number](#validate-phone-number) → [Demo](https://reactvalidator.tech/rules/validate-phone-number)
 
-- [Validate Number](#validate-number-input) → [Demo](https://form-validator-react.vercel.app/rules/validate-number)
+- [Validate Number](#validate-number-input) → [Demo](https://reactvalidator.tech/rules/validate-number)
 
-- [Validate Integer](#validate-integer) → [Demo](https://form-validator-react.vercel.app/rules/validate-integer)
+- [Validate Integer](#validate-integer) → [Demo](https://reactvalidator.tech/rules/validate-integer)
 
-- [Validate Float](#validate-float) → [Demo](https://form-validator-react.vercel.app/rules/validate-float)
+- [Validate Float](#validate-float) → [Demo](https://reactvalidator.tech/rules/validate-float)
 
-- [Validate Date](#validate-date) → [Demo](https://form-validator-react.vercel.app/rules/validate-date)
+- [Validate Date](#validate-date) → [Demo](https://reactvalidator.tech/rules/validate-date)
 
-- [Validate Time](#validate-time) → [Demo](https://form-validator-react.vercel.app/rules/validate-time)
+- [Validate Time](#validate-time) → [Demo](https://reactvalidator.tech/rules/validate-time)
 
-- [Validate Url](#validate-URL) → [Demo](https://form-validator-react.vercel.app/rules/validate-url)
+- [Validate Url](#validate-URL) → [Demo](https://reactvalidator.tech/rules/validate-url)
 
-- [Validate Credit Card](#validate-credit-card) → [Demo](https://form-validator-react.vercel.app/rules/validate-credit-card)
+- [Validate Credit Card](#validate-credit-card) → [Demo](https://reactvalidator.tech/rules/validate-credit-card)
 
 - [Example Reactjs Code](#example-reactjs-code)
 ## Installation 
