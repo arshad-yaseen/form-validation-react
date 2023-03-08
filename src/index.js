@@ -1025,7 +1025,7 @@ var ValidateForm = /** @class */ (function (_super) {
                     else {
                         inputElement.style.border = "";
                     }
-                    var errorMessage = __assign({ notANumber: "The value must be a number", notAnInteger: "The value must be an integer", outOfRange: "The value must be between ".concat(minValue, " and ").concat(maxValue), notUnique: "The value must be unique", notPositive: "The value must be positive", notEven: "The value must be even", notDivisible: "The value must be divisible by ".concat(divisibleBy) }, customErrorMessages);
+                    var errorMessage = __assign(__assign({}, customErrorMessages), { notANumber: "The value must be a number", notAnInteger: "The value must be an integer", outOfRange: "The value must be between ".concat(minValue, " and ").concat(maxValue), notUnique: "The value must be unique", notPositive: "The value must be positive", notEven: "The value must be even", notDivisible: "The value must be divisible by ".concat(divisibleBy) });
                     // Check that the input value is actually a number
                     if (typeof value !== "number" || isNaN(value)) {
                         if (inputElement.style.border) {
@@ -1160,7 +1160,7 @@ var ValidateForm = /** @class */ (function (_super) {
                     else {
                         inputElement.style.border = "";
                     }
-                    var errorMessage = __assign({ notANumber: "The value must be a number", notAnInteger: "The value must be an integer", outOfRange: "The value must be between ".concat(minValue, " and ").concat(maxValue), notUnique: "The value must be unique", notPositive: "The value must be positive", notEven: "The value must be even", notDivisible: "The value must be divisible by ".concat(divisibleBy) }, customErrorMessages);
+                    var errorMessage = __assign(__assign({}, customErrorMessages), { notANumber: "The value must be a number", notAnInteger: "The value must be an integer", outOfRange: "The value must be between ".concat(minValue, " and ").concat(maxValue), notUnique: "The value must be unique", notPositive: "The value must be positive", notEven: "The value must be even", notDivisible: "The value must be divisible by ".concat(divisibleBy) });
                     // Check that the input value is actually a number
                     if (typeof value !== "number" || isNaN(value)) {
                         if (inputElement.style.border) {
@@ -1499,7 +1499,7 @@ var ValidateForm = /** @class */ (function (_super) {
                 invalidFormat: "Date is not in the expected format",
                 invalidTimeZone: "Time zone is not valid",
             };
-            var errorMessages = __assign(__assign({}, defaultErrorMessages), customErrorMessages);
+            var errorMessages = __assign(__assign({}, customErrorMessages), defaultErrorMessages);
             if (when === "typing") {
                 inputElement.addEventListener("input", function () {
                     if (errorText) {
@@ -1566,14 +1566,6 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                     }
                     if (allowOnlyWeekend && !isWeekendCheck(inputDate)) {
-                        if (inputElement.style.border) {
-                            inputElement.style.borderColor = "green";
-                        }
-                        else {
-                            inputElement.style.border = "1px solid green";
-                        }
-                    }
-                    else {
                         if (inputElement.style.border) {
                             inputElement.style.borderColor = "red";
                         }
@@ -1674,14 +1666,6 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if (allowOnlyWeekend && !isWeekendCheck(inputDate)) {
                         if (inputElement.style.border) {
-                            inputElement.style.borderColor = "green";
-                        }
-                        else {
-                            inputElement.style.border = "1px solid green";
-                        }
-                    }
-                    else {
-                        if (inputElement.style.border) {
                             inputElement.style.borderColor = "red";
                         }
                         else {
@@ -1723,7 +1707,7 @@ var ValidateForm = /** @class */ (function (_super) {
                 invalidTimezone: "Invalid timezone",
                 invalidInterval: "Time is not within the specified interval",
             };
-            var errorMessages = __assign(__assign({}, defaultErrorMessages), customErrorMessages);
+            var errorMessages = __assign(__assign({}, customErrorMessages), defaultErrorMessages);
             var inputElement = form.querySelector("input[name=\"".concat(input, "\"]"));
             if (when === "typing") {
                 inputElement.addEventListener("input", function () {
@@ -1945,7 +1929,7 @@ var ValidateForm = /** @class */ (function (_super) {
                 invalidCharacters: "The URL contains invalid characters",
                 protocolNotAllowed: "The URL must use the ".concat(protocols, " protocol"),
             };
-            var errorMessages = __assign(__assign({}, defaultErrorMessages), customErrorMessages);
+            var errorMessages = __assign(__assign({}, customErrorMessages), defaultErrorMessages);
             if (when === "typing") {
                 inputElement.addEventListener("input", function () {
                     if (errorText) {
@@ -2254,7 +2238,7 @@ var ValidateForm = /** @class */ (function (_super) {
                 invalidCVV: "Invalid CVV code",
                 invalidBillingZip: "Invalid billing zip code",
             };
-            var errorMessages = __assign(__assign({}, defaultErrorMessages), customErrorMessages);
+            var errorMessages = __assign(__assign({}, customErrorMessages), defaultErrorMessages);
             function GetCardType(cardNumber) {
                 // This function determines the card type based on the first digits of the card number
                 // You can implement your own logic to determine the card type
@@ -2414,7 +2398,9 @@ var ValidateForm = /** @class */ (function (_super) {
                                 }
                             }
                         }
-                        getCardType(GetCardType(value));
+                        if (getCardType) {
+                            getCardType(GetCardType(value));
+                        }
                     });
                 }
                 if (expirationDateElement) {
@@ -2530,7 +2516,9 @@ var ValidateForm = /** @class */ (function (_super) {
                                 }
                             }
                         }
-                        getCardType(GetCardType(value));
+                        if (getCardType) {
+                            getCardType(GetCardType(value));
+                        }
                     });
                 }
                 if (expirationDateElement) {
