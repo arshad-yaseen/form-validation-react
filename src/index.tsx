@@ -1,32 +1,32 @@
 import React, { FunctionComponent } from "react";
 
 interface ValidateRequiredObj {
-  applyOnly: Array<string>;
+  applyOnly?: Array<string>;
   action: "both" | "input_red_border" | "show_error_message";
-  notvalidated: Function;
-  onsuccess: Function;
-  message: string;
+  notvalidated?: Function;
+  onsuccess?: Function;
+  message?: string;
 }
 interface ValidateMinMaxObj {
-  when: "onblur" | "typing";
-  message: {
-    min: string;
-    max: string;
+  when?: "onblur" | "typing";
+  message?: {
+    min?: string;
+    max?: string;
   };
-  onsuccess: Function;
-  exceedsMax: Function;
-  exceedsMin: Function;
+  onsuccess?: Function;
+  exceedsMax?: Function;
+  exceedsMin?: Function;
 }
 interface ValidatePatternObj {
-  when: "onblur" | "typing";
-  input: string;
+  when?: "onblur" | "typing";
+  input?: string;
   pattern: string;
   type?: "regex" | "wildcard";
   modifiers?: string;
   errorMessage?: string;
   allowEmpty?: boolean;
-  onsuccess: Function;
-  invalid: Function;
+  onsuccess?: Function;
+  invalid?: Function;
 }
 interface ValidatePhoneObj {
   when: "onblur" | "typing";
@@ -112,21 +112,21 @@ interface ValidatePhoneObj {
     | "MH"
     | "SA"
     | "RU";
-  phoneInput: string;
-  onsuccess: Function;
-  invalid: Function;
-  message: string;
-  isLandlineNumber: Function;
-  isMobileNumber: Function;
+  phoneInput?: string;
+  onsuccess?: Function;
+  invalid?: Function;
+  message?: string;
+  isLandlineNumber?: Function;
+  isMobileNumber?: Function;
 }
 
 interface ValidateEmailObj {
-  when: "onblur" | "typing";
-  message: string;
-  onsuccess: Function;
-  invalid: Function;
-  emailInput: string;
-  type:
+  when?: "onblur" | "typing";
+  message?: string;
+  onsuccess?: Function;
+  invalid?: Function;
+  emailInput?: string;
+  type?:
     | "personal"
     | "business"
     | "yahoo"
@@ -143,23 +143,23 @@ interface ValidateEmailObj {
 }
 
 interface ValidateNumberObj {
-  when: "onblur" | "typing";
-  input: string;
+  when?: "onblur" | "typing";
+  input?: string;
   min?: number;
   max?: number;
   decimalPlaces?: number;
   allowNegative?: boolean;
   integersOnly?: boolean;
   base?: number;
-  customErrorMessages: {
+  customErrorMessages?: {
     [key: string]: string;
   };
   onsuccess?: Function;
   invalid?: Function;
 }
 interface ValidateIntegerObj {
-  when: "onblur" | "typing";
-  input: string;
+  when?: "onblur" | "typing";
+  input?: string;
   minValue?: number;
   maxValue?: number;
   uniqueValues?: number[];
@@ -179,8 +179,8 @@ interface ValidateIntegerObj {
 }
 
 interface ValidateFloatObj {
-  when: "onblur" | "typing";
-  input: string;
+  when?: "onblur" | "typing";
+  input?: string;
   invalid?: string;
   required?: boolean;
   min?: number;
@@ -195,8 +195,8 @@ interface ValidateFloatObj {
   };
 }
 interface ValidateDateObj {
-  when: "onblur" | "typing";
-  input: string | Date;
+  when?: "onblur" | "typing";
+  input?: string | Date;
   minDate?: Date;
   maxDate?: Date;
   allowOnlyBusinessDay?: boolean;
@@ -215,88 +215,92 @@ interface ValidateDateObj {
 }
 
 interface TimeRange {
-  startTime: string;
-  endTime: string;
+  startTime?: string;
+  endTime?: string;
 }
 
 interface TimeInterval {
-  startInterval: number;
-  endInterval: number;
+  startInterval?: number;
+  endInterval?: number;
 }
 
 interface Timezone {
-  name: string;
-  offset: number;
+  name?: string;
+  offset?: number;
 }
 interface ValidateTimeObj {
-  when: "onblur" | "typing";
-  input: string;
+  when?: "onblur" | "typing";
+  input?: string;
   timezone?: Timezone;
   timeRange?: TimeRange;
   timeInterval?: TimeInterval;
-  customErrorMessages: {
-    invalidFormat: string;
-    invalidRange: string;
-    invalidTimezone: string;
-    invalidInterval: string;
+  customErrorMessages?: {
+    invalidFormat?: string;
+    invalidRange?: string;
+    invalidTimezone?: string;
+    invalidInterval?: string;
   };
 }
 
 interface ValidateUrlObj {
-  when: "onblur" | "typing";
-  input: string;
-  CustomErrorMessages: {
-    invalidUrl: string;
-    invalidProtocol: string;
-    invalidDomain: string;
-    invalidIpAddress: string;
-    inaccessibleUrl: string;
-    invalidCharacters: string;
+  when?: "onblur" | "typing";
+  input?: string;
+  CustomErrorMessages?: {
+    invalidUrl?: string;
+    invalidProtocol?: string;
+    invalidDomain?: string;
+    invalidIpAddress?: string;
+    inaccessibleUrl?: string;
+    invalidCharacters?: string;
   };
-  checkUrl: boolean;
-  checkProtocol: boolean;
-  checkDomain: boolean;
-  checkIpAddress: boolean;
-  checkAccessibleUrl: boolean;
-  checkCharacters: boolean;
-  protocols: string[];
+  checkUrl?: boolean;
+  checkProtocol?: boolean;
+  checkDomain?: boolean;
+  checkIpAddress?: boolean;
+  checkAccessibleUrl?: boolean;
+  checkCharacters?: boolean;
+  protocols?: string[];
 }
 interface ValidateCreditCardObj {
-  when: "onblur" | "typing";
-  allowedCards: string[];
-  cardNumber: string;
-  expirationDate: string;
-  cvv: string;
-  billingZip: string;
-  getCardType: FunctionComponent;
-  customErrorMessages: {
-    onlyAllowedCards: string;
-    invalidCardNumber: string;
-    invalidExpirationDate: string;
-    invalidCVV: string;
-    invalidBillingZip: string;
+  when?: "onblur" | "typing";
+  allowedCards?: string[];
+  cardNumber?: string;
+  expirationDate?: string;
+  cvv?: string;
+  billingZip?: string;
+  getCardType?: FunctionComponent;
+  customErrorMessages?: {
+    onlyAllowedCards?: string;
+    invalidCardNumber?: string;
+    invalidExpirationDate?: string;
+    invalidCVV?: string;
+    invalidBillingZip?: string;
   };
 }
+
+interface onSubmitFunction {
+  (event?: React.FormEvent<HTMLFormElement>): void;
+}
 interface Rules {
-  validateRequired: ValidateRequiredObj;
-  ValidateMinMax: ValidateMinMaxObj;
-  ValidateEmail: ValidateEmailObj;
-  ValidatePattern: ValidatePatternObj;
-  ValidatePhone: ValidatePhoneObj;
-  ValidateNumber: ValidateNumberObj;
-  ValidateInteger: ValidateIntegerObj;
-  ValidateFloat: ValidateFloatObj;
-  ValidateDate: ValidateDateObj;
-  ValidateTime: ValidateTimeObj;
-  ValidateUrl: ValidateUrlObj;
-  ValidateCreditCard: ValidateCreditCardObj;
+  validateRequired?: ValidateRequiredObj;
+  ValidateMinMax?: ValidateMinMaxObj;
+  ValidateEmail?: ValidateEmailObj;
+  ValidatePattern?: ValidatePatternObj;
+  ValidatePhone?: ValidatePhoneObj;
+  ValidateNumber?: ValidateNumberObj;
+  ValidateInteger?: ValidateIntegerObj;
+  ValidateFloat?: ValidateFloatObj;
+  ValidateDate?: ValidateDateObj;
+  ValidateTime?: ValidateTimeObj;
+  ValidateUrl?: ValidateUrlObj;
+  ValidateCreditCard?: ValidateCreditCardObj;
 }
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props {
   children: React.ReactNode;
-  rules: Rules;
-  errorElement: string;
-  onSubmit: FunctionComponent;
+  rules?: Rules;
+  errorElement?: string;
+  onSubmit?: onSubmitFunction;
 }
 
 interface ValidateForm {
@@ -403,30 +407,15 @@ class ValidateForm extends React.Component<Props> {
   }
 
   init() {
-    let { rules, onSubmit } = this.props;
-    let { errorElement } = this.props;
-    let allowedKeys: Array<keyof Rules> = [
-      "validateRequired",
-      "ValidateMinMax",
-      "ValidateEmail",
-      "ValidatePattern",
-      "ValidatePhone",
-      "ValidateNumber",
-      "ValidateInteger",
-      "ValidateFloat",
-      "ValidateDate",
-      "ValidateTime",
-      "ValidateUrl",
-      "ValidateCreditCard"
-    ];
-
+    let { rules, onSubmit, errorElement } = this.props;
     let wrapper = document.getElementById("_validation_wrapper");
     let form = wrapper?.children[0] as HTMLFormElement;
     let submit_button =
       (form.querySelector('button[type="submit"]') as HTMLFormElement) ||
       (form.querySelector('input[type="submit"]') as HTMLFormElement);
-    let errorText = document.querySelector(errorElement) as HTMLElement;
+    let errorText = document.querySelector(errorElement!) as HTMLElement;
     let errorMessage = String;
+    let isInputRedBorder = false;
 
     form.querySelectorAll("input").forEach((input, index) => {
       if (input.style.transition === "") {
@@ -438,9 +427,10 @@ class ValidateForm extends React.Component<Props> {
     if (submit_button) {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
-        if (errorText.innerHTML === "") {
+
+        if (errorText.innerHTML === "" && !isInputRedBorder) {
           if (onSubmit) {
-            onSubmit(e);
+            onSubmit();
           } else {
             form.submit();
           }
@@ -461,6 +451,7 @@ class ValidateForm extends React.Component<Props> {
         const input = event.target as HTMLInputElement;
 
         input.style.borderColor = "";
+        isInputRedBorder = false;
       });
 
       const submit_button =
@@ -472,8 +463,8 @@ class ValidateForm extends React.Component<Props> {
 
         let requiredInputs: HTMLInputElement[] = [];
 
-        if (rules.validateRequired?.applyOnly) {
-          rules.validateRequired?.applyOnly.forEach((inputName: String) => {
+        if (rules?.validateRequired?.applyOnly) {
+          rules?.validateRequired?.applyOnly.forEach((inputName: String) => {
             requiredInputs.push(
               form?.querySelector<HTMLInputElement>(
                 `[name="${inputName}"]`
@@ -498,32 +489,36 @@ class ValidateForm extends React.Component<Props> {
 
         if (missingInputs.length > 0) {
           missingInputs.forEach((input, index) => {
-            if (rules.validateRequired?.notvalidated) {
-              rules.validateRequired?.notvalidated(missingInputs);
+            if (rules?.validateRequired?.notvalidated) {
+              rules?.validateRequired?.notvalidated(missingInputs);
             }
             if (index === 0) {
               input.focus();
             }
-            if (rules.validateRequired?.action === "input_red_border") {
+            if (rules?.validateRequired?.action === "input_red_border") {
               if (input.style.border) {
                 input.style.borderColor = "red";
+                isInputRedBorder = true;
               } else {
                 input.style.border = "1px solid red";
+                isInputRedBorder = true;
               }
             } else if (
-              rules.validateRequired?.action === "show_error_message"
+              rules?.validateRequired?.action === "show_error_message"
             ) {
-              if (rules.validateRequired.message) {
-                setErrorText(rules.validateRequired.message);
+              if (rules?.validateRequired.message) {
+                setErrorText(rules?.validateRequired.message);
               }
-            } else if (rules.validateRequired?.action === "both") {
-              if (rules.validateRequired?.message) {
-                setErrorText(rules.validateRequired?.message);
+            } else if (rules?.validateRequired?.action === "both") {
+              if (rules?.validateRequired?.message) {
+                setErrorText(rules?.validateRequired?.message);
               }
               if (input.style.border) {
                 input.style.borderColor = "red";
+                isInputRedBorder = true;
               } else {
                 input.style.border = "1px solid red";
+                isInputRedBorder = true;
               }
             }
           });
@@ -531,8 +526,8 @@ class ValidateForm extends React.Component<Props> {
           if (errorText) {
             errorText.innerText = "";
           }
-          if (rules.validateRequired?.onsuccess) {
-            rules.validateRequired?.onsuccess();
+          if (rules?.validateRequired?.onsuccess) {
+            rules?.validateRequired?.onsuccess();
           }
         }
       });
@@ -541,7 +536,7 @@ class ValidateForm extends React.Component<Props> {
     const runValidateMinMax = () => {
       const inputs = form.querySelectorAll("input[min][max]");
 
-      if (rules.ValidateMinMax?.when === "typing") {
+      if (rules?.ValidateMinMax?.when === "typing") {
         inputs.forEach((input) => {
           input.addEventListener("input", (event) => {
             const input = event.target as HTMLInputElement;
@@ -555,94 +550,104 @@ class ValidateForm extends React.Component<Props> {
             if (min && max) {
               if (type === "number") {
                 if (value < min) {
-                  if (rules.ValidateMinMax?.exceedsMin) {
-                    rules.ValidateMinMax?.exceedsMin(input);
+                  if (rules?.ValidateMinMax?.exceedsMin) {
+                    rules?.ValidateMinMax?.exceedsMin(input);
                   }
                   if (input.style.border) {
                     input.style.borderColor = "red";
+                    isInputRedBorder = true;
                   } else {
                     input.style.border = "1px solid red";
+                    isInputRedBorder = true;
                   }
                   if (inputMinMessage) {
                     setErrorText(inputMinMessage);
                   } else {
-                    if (rules.ValidateMinMax?.message) {
-                      setErrorText(rules.ValidateMinMax?.message.min);
+                    if (rules?.ValidateMinMax?.message) {
+                      setErrorText(rules?.ValidateMinMax?.message.min!!);
                     }
                   }
                 } else if (value > max) {
-                  if (rules.ValidateMinMax?.exceedsMax) {
-                    rules.ValidateMinMax?.exceedsMax(input);
+                  if (rules?.ValidateMinMax?.exceedsMax) {
+                    rules?.ValidateMinMax?.exceedsMax(input);
                   }
                   if (input.style.border) {
                     input.style.borderColor = "red";
+                    isInputRedBorder = true;
                   } else {
                     input.style.border = "1px solid red";
+                    isInputRedBorder = true;
                   }
                   if (inputMaxMessage) {
                     setErrorText(inputMaxMessage);
                   } else {
-                    if (rules.ValidateMinMax?.message) {
-                      setErrorText(rules.ValidateMinMax?.message.max);
+                    if (rules?.ValidateMinMax?.message) {
+                      setErrorText(rules?.ValidateMinMax?.message.max!!);
                     }
                   }
                 } else {
                   input.style.borderColor = "";
+                  isInputRedBorder = false;
                   if (errorText) {
                     errorText.innerText = "";
                   }
-                  if (rules.ValidateMinMax?.onsuccess) {
-                    rules.ValidateMinMax?.onsuccess(input);
+                  if (rules?.ValidateMinMax?.onsuccess) {
+                    rules?.ValidateMinMax?.onsuccess(input);
                   }
                 }
               } else if (type === "text") {
                 if (value.length < Number(min)) {
-                  if (rules.ValidateMinMax?.exceedsMin) {
-                    rules.ValidateMinMax?.exceedsMin(input);
+                  if (rules?.ValidateMinMax?.exceedsMin) {
+                    rules?.ValidateMinMax?.exceedsMin(input);
                   }
                   if (input.style.border) {
                     input.style.borderColor = "red";
+                    isInputRedBorder = true;
                   } else {
                     input.style.border = "1px solid red";
+                    isInputRedBorder = true;
                   }
                   if (inputMinMessage) {
                     setErrorText(inputMinMessage);
                   } else {
-                    if (rules.ValidateMinMax?.message) {
-                      setErrorText(rules.ValidateMinMax?.message.min);
+                    if (rules?.ValidateMinMax?.message) {
+                      setErrorText(rules?.ValidateMinMax?.message.min!);
                     }
                   }
                 } else if (value.length > Number(max)) {
-                  if (rules.ValidateMinMax?.exceedsMax) {
-                    rules.ValidateMinMax?.exceedsMax(input);
+                  if (rules?.ValidateMinMax?.exceedsMax) {
+                    rules?.ValidateMinMax?.exceedsMax(input);
                   }
                   if (input.style.border) {
                     input.style.borderColor = "red";
+                    isInputRedBorder = true;
                   } else {
                     input.style.border = "1px solid red";
+                    isInputRedBorder = true;
                   }
                   if (inputMaxMessage) {
                     setErrorText(inputMaxMessage);
                   } else {
-                    if (rules.ValidateMinMax?.message) {
-                      setErrorText(rules.ValidateMinMax?.message.max);
+                    if (rules?.ValidateMinMax?.message) {
+                      setErrorText(rules?.ValidateMinMax?.message.max!);
                     }
                   }
                 } else {
                   input.style.borderColor = "";
+                  isInputRedBorder = false;
                   if (errorText) {
                     errorText.innerText = "";
                   }
 
-                  if (rules.ValidateMinMax?.onsuccess) {
-                    rules.ValidateMinMax?.onsuccess(input);
+                  if (rules?.ValidateMinMax?.onsuccess) {
+                    rules?.ValidateMinMax?.onsuccess(input);
                   }
                 }
               }
             }
           });
         });
-      } else if (rules.ValidateMinMax?.when === "onblur") {
+      } else if (rules?.ValidateMinMax?.when === "onblur") {
         inputs.forEach((input) => {
           input.addEventListener("blur", (event) => {
             const input = event.target as HTMLInputElement;
@@ -656,77 +661,86 @@ class ValidateForm extends React.Component<Props> {
             if (min && max) {
               if (type === "number") {
                 if (value < min) {
-                  if (rules.ValidateMinMax?.exceedsMin) {
-                    rules.ValidateMinMax?.exceedsMin(input);
+                  if (rules?.ValidateMinMax?.exceedsMin) {
+                    rules?.ValidateMinMax?.exceedsMin(input);
                   }
                   if (input.style.border) {
                     input.style.borderColor = "red";
+                    isInputRedBorder = true;
                   } else {
                     input.style.border = "1px solid red";
+                    isInputRedBorder = true;
                   }
                   if (inputMinMessage) {
                     setErrorText(inputMinMessage);
                   } else {
-                    if (rules.ValidateMinMax?.message) {
-                      setErrorText(rules.ValidateMinMax?.message.min);
+                    if (rules?.ValidateMinMax?.message) {
+                      setErrorText(rules?.ValidateMinMax?.message.min!);
                     }
                   }
                 } else if (value > max) {
-                  if (rules.ValidateMinMax?.exceedsMax) {
-                    rules.ValidateMinMax?.exceedsMax(input);
+                  if (rules?.ValidateMinMax?.exceedsMax) {
+                    rules?.ValidateMinMax?.exceedsMax(input);
                   }
                   if (input.style.border) {
                     input.style.borderColor = "red";
+                    isInputRedBorder = true;
                   } else {
                     input.style.border = "1px solid red";
+                    isInputRedBorder = true;
                   }
                   if (inputMaxMessage) {
                     setErrorText(inputMaxMessage);
                   } else {
-                    if (rules.ValidateMinMax?.message) {
-                      setErrorText(rules.ValidateMinMax?.message.max);
+                    if (rules?.ValidateMinMax?.message) {
+                      setErrorText(rules?.ValidateMinMax?.message.max!);
                     }
                   }
                 } else {
                   input.style.borderColor = "";
+                  isInputRedBorder = false;
                   if (errorText) {
                     errorText.innerText = "";
                   }
-                  if (rules.ValidateMinMax?.onsuccess) {
-                    rules.ValidateMinMax?.onsuccess(input);
+                  if (rules?.ValidateMinMax?.onsuccess) {
+                    rules?.ValidateMinMax?.onsuccess(input);
                   }
                 }
               } else if (type === "text") {
                 if (value.length < Number(min)) {
-                  if (rules.ValidateMinMax?.exceedsMin) {
-                    rules.ValidateMinMax?.exceedsMin(input);
+                  if (rules?.ValidateMinMax?.exceedsMin) {
+                    rules?.ValidateMinMax?.exceedsMin(input);
                   }
                   if (input.style.border) {
                     input.style.borderColor = "red";
+                    isInputRedBorder = true;
                   } else {
                     input.style.border = "1px solid red";
+                    isInputRedBorder = true;
                   }
                   if (inputMinMessage) {
                     setErrorText(inputMinMessage);
                   } else {
-                    if (rules.ValidateMinMax?.message) {
-                      setErrorText(rules.ValidateMinMax?.message.min);
+                    if (rules?.ValidateMinMax?.message) {
+                      setErrorText(rules?.ValidateMinMax?.message.min!);
                     }
                   }
                 } else if (value.length > Number(max)) {
-                  if (rules.ValidateMinMax?.exceedsMax) {
-                    rules.ValidateMinMax?.exceedsMax(input);
+                  if (rules?.ValidateMinMax?.exceedsMax) {
+                    rules?.ValidateMinMax?.exceedsMax(input);
                   }
                   if (input.style.border) {
                     input.style.borderColor = "red";
+                    isInputRedBorder = true;
                   } else {
                     input.style.border = "1px solid red";
+                    isInputRedBorder = true;
                   }
                   if (inputMaxMessage) {
                     setErrorText(inputMaxMessage);
                   } else {
-                    if (rules.ValidateMinMax?.message) {
-                      setErrorText(rules.ValidateMinMax?.message.max);
+                    if (rules?.ValidateMinMax?.message) {
+                      setErrorText(rules?.ValidateMinMax?.message.max!);
                     }
                   }
                 } else {
@@ -734,8 +748,9 @@ class ValidateForm extends React.Component<Props> {
                     errorText.innerText = "";
                   }
                   input.style.borderColor = "";
-                  if (rules.ValidateMinMax?.onsuccess) {
-                    rules.ValidateMinMax?.onsuccess(input);
+                  isInputRedBorder = false;
+                  if (rules?.ValidateMinMax?.onsuccess) {
+                    rules?.ValidateMinMax?.onsuccess(input);
                   }
                 }
               }
@@ -747,14 +762,14 @@ class ValidateForm extends React.Component<Props> {
 
     const runValidateEmail = () => {
       let emailPattern: RegExp;
-      let type = rules.ValidateEmail?.type;
+      let type = rules?.ValidateEmail?.type;
       let emailInput = form.querySelector(
-        `input[name="${rules.ValidateEmail?.emailInput}"]`
+        `input[name="${rules?.ValidateEmail?.emailInput}"]`
       ) as HTMLInputElement;
-      let message = rules.ValidateEmail?.message;
-      let onsuccess = rules.ValidateEmail?.onsuccess;
-      let invalid = rules.ValidateEmail?.invalid;
-      let when = rules.ValidateEmail?.when;
+      let message = rules?.ValidateEmail?.message;
+      let onsuccess = rules?.ValidateEmail?.onsuccess;
+      let invalid = rules?.ValidateEmail?.invalid;
+      let when = rules?.ValidateEmail?.when || "typing";
 
       switch (type) {
         case "personal":
@@ -817,14 +832,18 @@ class ValidateForm extends React.Component<Props> {
             }
             if (emailInput.style.border) {
               emailInput.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               emailInput.style.border = "";
+              isInputRedBorder = false;
             }
           } else {
             if (emailInput.style.border) {
               emailInput.style.borderColor = "red";
+              isInputRedBorder = true;
             } else {
               emailInput.style.border = "1px solid red";
+              isInputRedBorder = true;
             }
             if (invalid) {
               invalid();
@@ -848,14 +867,18 @@ class ValidateForm extends React.Component<Props> {
             }
             if (emailInput.style.border) {
               emailInput.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               emailInput.style.border = "";
+              isInputRedBorder = false;
             }
           } else {
             if (emailInput.style.border) {
               emailInput.style.borderColor = "red";
+              isInputRedBorder = true;
             } else {
               emailInput.style.border = "1px solid red";
+              isInputRedBorder = true;
             }
             if (invalid) {
               invalid();
@@ -872,9 +895,9 @@ class ValidateForm extends React.Component<Props> {
 
     const runValidatePattern = () => {
       let inputElement = form.querySelector(
-        `input[name="${rules.ValidatePattern?.input}"]`
+        `input[name="${rules?.ValidatePattern?.input}"]`
       ) as HTMLInputElement;
-      let options = rules.ValidatePattern;
+      let options = rules?.ValidatePattern;
 
       if (options?.when === "onblur") {
         inputElement.addEventListener("blur", () => {
@@ -915,8 +938,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (inputElement.style.border) {
               inputElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               inputElement.style.border = "";
+              isInputRedBorder = false;
             }
           } else {
             if (inputElement.style.border) {
@@ -974,8 +999,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (inputElement.style.border) {
               inputElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               inputElement.style.border = "";
+              isInputRedBorder = false;
             }
           } else {
             if (options?.invalid) {
@@ -993,13 +1020,13 @@ class ValidateForm extends React.Component<Props> {
 
     const runValidatePhone = () => {
       let phoneInput = form.querySelector(
-        `input[name="${rules.ValidatePhone?.phoneInput}"]`
+        `input[name="${rules?.ValidatePhone?.phoneInput}"]`
       ) as HTMLInputElement;
-      let countryCode = rules.ValidatePhone?.countryCode;
-      let when = rules.ValidatePhone?.when;
-      let onsuccess = rules.ValidatePhone?.onsuccess;
-      let invalid = rules.ValidatePhone?.invalid;
-      let message = rules.ValidatePhone?.message;
+      let countryCode = rules?.ValidatePhone?.countryCode;
+      let when = rules?.ValidatePhone?.when;
+      let onsuccess = rules?.ValidatePhone?.onsuccess;
+      let invalid = rules?.ValidatePhone?.invalid;
+      let message = rules?.ValidatePhone?.message;
 
       const mobileRegex =
         /^(\+?254|0)?([17](0|1|[3-9])[0-9]{6}|([2-9]|[4-6][0-9])[0-9]{6,7})$/;
@@ -1031,14 +1058,18 @@ class ValidateForm extends React.Component<Props> {
             }
             if (phoneInput.style.border) {
               phoneInput.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               phoneInput.style.border = "";
+              isInputRedBorder = false;
             }
           } else {
             if (phoneInput.style.border) {
               phoneInput.style.borderColor = "red";
+              isInputRedBorder = true;
             } else {
               phoneInput.style.border = "1px solid red";
+              isInputRedBorder = true;
             }
             if (invalid) {
               invalid();
@@ -1050,13 +1081,13 @@ class ValidateForm extends React.Component<Props> {
             }
           }
 
-          if (rules.ValidatePhone?.isLandlineNumber) {
-            rules.ValidatePhone.isLandlineNumber(
+          if (rules?.ValidatePhone?.isLandlineNumber) {
+            rules?.ValidatePhone.isLandlineNumber(
               landlineRegex.test(phoneNumber)
             );
           }
-          if (rules.ValidatePhone?.isMobileNumber) {
-            rules.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber));
+          if (rules?.ValidatePhone?.isMobileNumber) {
+            rules?.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber));
           }
         });
       } else if (when === "typing") {
@@ -1085,8 +1116,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (phoneInput.style.border) {
               phoneInput.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               phoneInput.style.border = "";
+              isInputRedBorder = false;
             }
           } else {
             if (invalid) {
@@ -1099,34 +1132,34 @@ class ValidateForm extends React.Component<Props> {
             }
           }
 
-          if (rules.ValidatePhone?.isLandlineNumber) {
-            rules.ValidatePhone.isLandlineNumber(
+          if (rules?.ValidatePhone?.isLandlineNumber) {
+            rules?.ValidatePhone.isLandlineNumber(
               landlineRegex.test(phoneNumber)
             );
           }
-          if (rules.ValidatePhone?.isMobileNumber) {
-            rules.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber));
+          if (rules?.ValidatePhone?.isMobileNumber) {
+            rules?.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber));
           }
         });
       }
     };
 
     const runValidateNumber = () => {
-      let min = rules.ValidateNumber?.min;
-      let max = rules.ValidateNumber?.max;
-      let inputName = rules.ValidateNumber?.input;
-      let when = rules.ValidateNumber?.when;
-      let decimalPlaces = rules.ValidateNumber?.decimalPlaces;
-      let allowNegative = rules.ValidateNumber?.allowNegative;
-      let integersOnly = rules.ValidateNumber?.integersOnly;
-      let base = rules.ValidateNumber?.base;
-      let customErrorMessages = rules.ValidateNumber?.customErrorMessages;
+      let min = rules?.ValidateNumber?.min;
+      let max = rules?.ValidateNumber?.max;
+      let inputName = rules?.ValidateNumber?.input;
+      let when = rules?.ValidateNumber?.when;
+      let decimalPlaces = rules?.ValidateNumber?.decimalPlaces;
+      let allowNegative = rules?.ValidateNumber?.allowNegative;
+      let integersOnly = rules?.ValidateNumber?.integersOnly;
+      let base = rules?.ValidateNumber?.base;
+      let customErrorMessages = rules?.ValidateNumber?.customErrorMessages;
       let inputElement = form.querySelector(
         `input[name='${inputName}']`
       ) as HTMLInputElement;
       let errorMessage: string | undefined;
-      let onsuccess = rules.ValidateNumber?.onsuccess;
-      let invalid = rules.ValidateNumber?.invalid;
+      let onsuccess = rules?.ValidateNumber?.onsuccess;
+      let invalid = rules?.ValidateNumber?.invalid;
 
       if (when === "onblur") {
         inputElement.addEventListener("blur", () => {
@@ -1202,8 +1235,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (inputElement.style.border) {
               inputElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               inputElement.style.border = "";
+              isInputRedBorder = false;
             }
           } else {
             if (inputElement.style.border) {
@@ -1293,8 +1328,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (inputElement.style.border) {
               inputElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               inputElement.style.border = "";
+              isInputRedBorder = false;
             }
           } else {
             if (invalid) {
@@ -1311,16 +1348,16 @@ class ValidateForm extends React.Component<Props> {
     };
 
     const runValidateInteger = () => {
-      let when = rules.ValidateInteger?.when;
-      let input = rules.ValidateInteger?.input;
-      let minValue = rules.ValidateInteger?.minValue;
-      let maxValue = rules.ValidateInteger?.maxValue;
-      let uniqueValues = rules.ValidateInteger?.uniqueValues;
-      let positiveOnly = rules.ValidateInteger?.positiveOnly;
-      let evenOnly = rules.ValidateInteger?.evenOnly;
-      let divisibleBy = rules.ValidateInteger?.divisibleBy;
-      let invalid = rules.ValidateInteger?.invalid;
-      let customErrorMessages = rules.ValidateInteger?.customErrorMessages;
+      let when = rules?.ValidateInteger?.when;
+      let input = rules?.ValidateInteger?.input;
+      let minValue = rules?.ValidateInteger?.minValue;
+      let maxValue = rules?.ValidateInteger?.maxValue;
+      let uniqueValues = rules?.ValidateInteger?.uniqueValues;
+      let positiveOnly = rules?.ValidateInteger?.positiveOnly;
+      let evenOnly = rules?.ValidateInteger?.evenOnly;
+      let divisibleBy = rules?.ValidateInteger?.divisibleBy;
+      let invalid = rules?.ValidateInteger?.invalid;
+      let customErrorMessages = rules?.ValidateInteger?.customErrorMessages;
 
       let inputElement = form.querySelector(
         `input[name="${input}"]`
@@ -1335,8 +1372,10 @@ class ValidateForm extends React.Component<Props> {
           }
           if (inputElement.style.border) {
             inputElement.style.borderColor = "";
+            isInputRedBorder = false;
           } else {
             inputElement.style.border = "";
+            isInputRedBorder = false;
           }
 
           const errorMessage = {
@@ -1481,8 +1520,10 @@ class ValidateForm extends React.Component<Props> {
           }
           if (inputElement.style.border) {
             inputElement.style.borderColor = "";
+            isInputRedBorder = false;
           } else {
             inputElement.style.border = "";
+            isInputRedBorder = false;
           }
 
           const errorMessage = {
@@ -1622,9 +1663,9 @@ class ValidateForm extends React.Component<Props> {
     };
 
     const runValidateFloat = () => {
-      let when = rules.ValidateFloat?.when;
-      let input = rules.ValidateFloat?.input;
-      let customErrorMessages = rules.ValidateFloat?.customErrorMessages;
+      let when = rules?.ValidateFloat?.when;
+      let input = rules?.ValidateFloat?.input;
+      let customErrorMessages = rules?.ValidateFloat?.customErrorMessages;
 
       let inputElement = form.querySelector(
         `input[name="${input}"]`
@@ -1633,9 +1674,9 @@ class ValidateForm extends React.Component<Props> {
       const defaultErrorMessages = {
         required: "This field is required",
         invalid: "Please enter a valid number",
-        min: `Please enter a number greater than or equal to ${rules.ValidateFloat?.min}`,
-        max: `Please enter a number less than or equal to ${rules.ValidateFloat?.max}`,
-        precision: `Please enter a number with at most ${rules.ValidateFloat?.precision} decimal places`,
+        min: `Please enter a number greater than or equal to ${rules?.ValidateFloat?.min}`,
+        max: `Please enter a number less than or equal to ${rules?.ValidateFloat?.max}`,
+        precision: `Please enter a number with at most ${rules?.ValidateFloat?.precision} decimal places`,
         ...customErrorMessages,
       };
       const errorMessages = defaultErrorMessages;
@@ -1647,14 +1688,16 @@ class ValidateForm extends React.Component<Props> {
           }
           if (inputElement.style.border) {
             inputElement.style.borderColor = "";
+            isInputRedBorder = false;
           } else {
             inputElement.style.border = "";
+            isInputRedBorder = false;
           }
 
           let value = inputElement.value;
 
           const isEmpty = !value.trim();
-          if (rules.ValidateFloat?.required && isEmpty) {
+          if (rules?.ValidateFloat?.required && isEmpty) {
             if (inputElement.style.border) {
               inputElement.style.borderColor = "red";
             } else {
@@ -1682,8 +1725,8 @@ class ValidateForm extends React.Component<Props> {
           }
 
           if (
-            rules.ValidateFloat?.min !== undefined &&
-            numberValue < rules.ValidateFloat.min
+            rules?.ValidateFloat?.min !== undefined &&
+            numberValue < rules?.ValidateFloat.min
           ) {
             if (inputElement.style.border) {
               inputElement.style.borderColor = "red";
@@ -1698,8 +1741,8 @@ class ValidateForm extends React.Component<Props> {
           }
 
           if (
-            rules.ValidateFloat?.max !== undefined &&
-            numberValue > rules.ValidateFloat.max
+            rules?.ValidateFloat?.max !== undefined &&
+            numberValue > rules?.ValidateFloat.max
           ) {
             if (inputElement.style.border) {
               inputElement.style.borderColor = "red";
@@ -1713,11 +1756,11 @@ class ValidateForm extends React.Component<Props> {
             }
           }
 
-          if (rules.ValidateFloat?.precision !== undefined) {
+          if (rules?.ValidateFloat?.precision !== undefined) {
             const parts = value.split(".");
             if (
               parts.length === 2 &&
-              parts[1].length > rules.ValidateFloat.precision
+              parts[1].length > rules?.ValidateFloat.precision
             ) {
               if (inputElement.style.border) {
                 inputElement.style.borderColor = "red";
@@ -1740,12 +1783,14 @@ class ValidateForm extends React.Component<Props> {
           }
           if (inputElement.style.border) {
             inputElement.style.borderColor = "";
+            isInputRedBorder = false;
           } else {
             inputElement.style.border = "";
+            isInputRedBorder = false;
           }
 
           const isEmpty = !value.trim();
-          if (rules.ValidateFloat?.required && isEmpty) {
+          if (rules?.ValidateFloat?.required && isEmpty) {
             if (inputElement.style.border) {
               inputElement.style.borderColor = "red";
             } else {
@@ -1773,8 +1818,8 @@ class ValidateForm extends React.Component<Props> {
           }
 
           if (
-            rules.ValidateFloat?.min !== undefined &&
-            numberValue < rules.ValidateFloat.min
+            rules?.ValidateFloat?.min !== undefined &&
+            numberValue < rules?.ValidateFloat.min
           ) {
             if (inputElement.style.border) {
               inputElement.style.borderColor = "red";
@@ -1789,8 +1834,8 @@ class ValidateForm extends React.Component<Props> {
           }
 
           if (
-            rules.ValidateFloat?.max !== undefined &&
-            numberValue > rules.ValidateFloat.max
+            rules?.ValidateFloat?.max !== undefined &&
+            numberValue > rules?.ValidateFloat.max
           ) {
             if (inputElement.style.border) {
               inputElement.style.borderColor = "red";
@@ -1804,11 +1849,11 @@ class ValidateForm extends React.Component<Props> {
             }
           }
 
-          if (rules.ValidateFloat?.precision !== undefined) {
+          if (rules?.ValidateFloat?.precision !== undefined) {
             const parts = value.split(".");
             if (
               parts.length === 2 &&
-              parts[1].length > rules.ValidateFloat.precision
+              parts[1].length > rules?.ValidateFloat.precision
             ) {
               if (inputElement.style.border) {
                 inputElement.style.borderColor = "red";
@@ -1827,15 +1872,15 @@ class ValidateForm extends React.Component<Props> {
     };
 
     const runValidateDate = () => {
-      let when = rules.ValidateDate?.when;
-      let inputValue = rules.ValidateDate?.input;
-      let minDate = rules.ValidateDate?.minDate;
-      let maxDate = rules.ValidateDate?.maxDate;
-      let allowOnlyBusinessDay = rules.ValidateDate?.allowOnlyBusinessDay;
-      let allowOnlyWeekend = rules.ValidateDate?.allowOnlyWeekend;
-      let customFormat = rules.ValidateDate?.customFormat;
-      let timeZone = rules.ValidateDate?.timeZone;
-      let customErrorMessages = rules.ValidateDate?.customErrorMessages;
+      let when = rules?.ValidateDate?.when;
+      let inputValue = rules?.ValidateDate?.input;
+      let minDate = rules?.ValidateDate?.minDate;
+      let maxDate = rules?.ValidateDate?.maxDate;
+      let allowOnlyBusinessDay = rules?.ValidateDate?.allowOnlyBusinessDay;
+      let allowOnlyWeekend = rules?.ValidateDate?.allowOnlyWeekend;
+      let customFormat = rules?.ValidateDate?.customFormat;
+      let timeZone = rules?.ValidateDate?.timeZone;
+      let customErrorMessages = rules?.ValidateDate?.customErrorMessages;
       let inputElement = form.querySelector(
         `input[name="${inputValue}"]`
       ) as HTMLInputElement;
@@ -1853,8 +1898,8 @@ class ValidateForm extends React.Component<Props> {
 
       const defaultErrorMessages = {
         invalidDate: "Invalid date format",
-        minDate: `The date must be on or after ${rules.ValidateDate?.minDate?.toLocaleDateString()}`,
-        maxDate: `The date must be on or before ${rules.ValidateDate?.maxDate?.toLocaleDateString()}`,
+        minDate: `The date must be on or after ${rules?.ValidateDate?.minDate?.toLocaleDateString()}`,
+        maxDate: `The date must be on or before ${rules?.ValidateDate?.maxDate?.toLocaleDateString()}`,
         businessDay: "Date is not a business day",
         notWeekend: "Date is not a weekend",
         invalidFormat: "Date is not in the expected format",
@@ -1873,8 +1918,10 @@ class ValidateForm extends React.Component<Props> {
           }
           if (inputElement.style.border) {
             inputElement.style.borderColor = "";
+            isInputRedBorder = false;
           } else {
             inputElement.style.border = "";
+            isInputRedBorder = false;
           }
 
           let input = inputElement.value;
@@ -1973,8 +2020,10 @@ class ValidateForm extends React.Component<Props> {
           }
           if (inputElement.style.border) {
             inputElement.style.borderColor = "";
+            isInputRedBorder = false;
           } else {
             inputElement.style.border = "";
+            isInputRedBorder = false;
           }
 
           let input = inputElement.value;
@@ -2070,14 +2119,12 @@ class ValidateForm extends React.Component<Props> {
     };
 
     const runValidateTime = () => {
-      const {
-        when,
-        input,
-        customErrorMessages,
-        timeRange,
-        timeInterval,
-        timezone,
-      } = rules.ValidateTime;
+      const when = rules?.ValidateTime?.when;
+      const input = rules?.ValidateTime?.input;
+      const customErrorMessages = rules?.ValidateTime?.customErrorMessages;
+      const timeRange = rules?.ValidateTime?.timeRange;
+      const timeInterval = rules?.ValidateTime?.timeInterval;
+      const timezone = rules?.ValidateTime?.timezone;
 
       const defaultErrorMessages = {
         invalidFormat: "Invalid time format",
@@ -2102,8 +2149,10 @@ class ValidateForm extends React.Component<Props> {
           }
           if (inputElement.style.border) {
             inputElement.style.borderColor = "";
+            isInputRedBorder = false;
           } else {
             inputElement.style.border = "";
+            isInputRedBorder = false;
           }
 
           let timeString = inputElement.value;
@@ -2184,8 +2233,8 @@ class ValidateForm extends React.Component<Props> {
               .map((part) => parseInt(part, 10));
             const totalMinutes = timeParts[0] * 60 + timeParts[1];
             if (
-              totalMinutes < timeInterval.startInterval ||
-              totalMinutes > timeInterval.endInterval
+              totalMinutes < timeInterval.startInterval! ||
+              totalMinutes > timeInterval.endInterval!
             ) {
               if (inputElement.style.border) {
                 inputElement.style.borderColor = "red";
@@ -2209,8 +2258,10 @@ class ValidateForm extends React.Component<Props> {
           }
           if (inputElement.style.border) {
             inputElement.style.borderColor = "";
+            isInputRedBorder = false;
           } else {
             inputElement.style.border = "";
+            isInputRedBorder = false;
           }
 
           // Helper function to pad a number with leading zeros
@@ -2289,8 +2340,8 @@ class ValidateForm extends React.Component<Props> {
               .map((part) => parseInt(part, 10));
             const totalMinutes = timeParts[0] * 60 + timeParts[1];
             if (
-              totalMinutes < timeInterval.startInterval ||
-              totalMinutes > timeInterval.endInterval
+              totalMinutes < timeInterval.startInterval! ||
+              totalMinutes > timeInterval.endInterval!
             ) {
               if (inputElement.style.border) {
                 inputElement.style.borderColor = "red";
@@ -2309,16 +2360,16 @@ class ValidateForm extends React.Component<Props> {
     };
 
     const runValidateUrl = () => {
-      const when = rules.ValidateUrl.when;
-      const input = rules.ValidateUrl.input;
-      const customErrorMessages = rules.ValidateUrl.CustomErrorMessages;
-      const checkUrl = rules.ValidateUrl.checkUrl;
-      const checkProtocol = rules.ValidateUrl.checkProtocol;
-      const checkDomain = rules.ValidateUrl.checkDomain;
-      const checkIpAddress = rules.ValidateUrl.checkIpAddress;
-      const checkInAccessibleUrl = rules.ValidateUrl.checkAccessibleUrl;
-      const checkCharacters = rules.ValidateUrl.checkCharacters;
-      const protocols = rules.ValidateUrl.protocols;
+      const when = rules?.ValidateUrl?.when;
+      const input = rules?.ValidateUrl?.input;
+      const customErrorMessages = rules?.ValidateUrl?.CustomErrorMessages;
+      const checkUrl = rules?.ValidateUrl?.checkUrl;
+      const checkProtocol = rules?.ValidateUrl?.checkProtocol;
+      const checkDomain = rules?.ValidateUrl?.checkDomain;
+      const checkIpAddress = rules?.ValidateUrl?.checkIpAddress;
+      const checkInAccessibleUrl = rules?.ValidateUrl?.checkAccessibleUrl;
+      const checkCharacters = rules?.ValidateUrl?.checkCharacters;
+      const protocols = rules?.ValidateUrl?.protocols;
 
       const inputElement = form.querySelector(
         `input[name="${input}"]`
@@ -2342,8 +2393,10 @@ class ValidateForm extends React.Component<Props> {
           }
           if (inputElement.style.border) {
             inputElement.style.borderColor = "";
+            isInputRedBorder = false;
           } else {
             inputElement.style.border = "";
+            isInputRedBorder = false;
           }
 
           let url = inputElement.value;
@@ -2487,8 +2540,10 @@ class ValidateForm extends React.Component<Props> {
           }
           if (inputElement.style.border) {
             inputElement.style.borderColor = "";
+            isInputRedBorder = false;
           } else {
             inputElement.style.border = "";
+            isInputRedBorder = false;
           }
 
           let url = inputElement.value;
@@ -2629,14 +2684,15 @@ class ValidateForm extends React.Component<Props> {
     };
 
     const runValidateCreditCard = () => {
-      const when = rules.ValidateCreditCard?.when;
-      const allowedCards = rules.ValidateCreditCard?.allowedCards;
-      const cardNumberValue = rules.ValidateCreditCard?.cardNumber;
-      const expirationDateValue = rules.ValidateCreditCard?.expirationDate;
-      const cvvValue = rules.ValidateCreditCard?.cvv;
-      const billingZipValue = rules.ValidateCreditCard?.billingZip;
-      const customErrorMessages = rules.ValidateCreditCard?.customErrorMessages;
-      const getCardType = rules.ValidateCreditCard?.getCardType;
+      const when = rules?.ValidateCreditCard?.when;
+      const allowedCards = rules?.ValidateCreditCard?.allowedCards;
+      const cardNumberValue = rules?.ValidateCreditCard?.cardNumber;
+      const expirationDateValue = rules?.ValidateCreditCard?.expirationDate;
+      const cvvValue = rules?.ValidateCreditCard?.cvv;
+      const billingZipValue = rules?.ValidateCreditCard?.billingZip;
+      const customErrorMessages =
+        rules?.ValidateCreditCard?.customErrorMessages;
+      const getCardType = rules?.ValidateCreditCard?.getCardType;
 
       let cardNumberElement = form.querySelector(
         `input[name="${cardNumberValue}"]`
@@ -2803,8 +2859,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (cardNumberElement.style.border) {
               cardNumberElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               cardNumberElement.style.border = "";
+              isInputRedBorder = false;
             }
             let value = cardNumberElement.value;
             if (checkCardNumber(value) !== "") {
@@ -2831,7 +2889,7 @@ class ValidateForm extends React.Component<Props> {
               }
             }
 
-            if(getCardType){
+            if (getCardType) {
               getCardType(GetCardType(value));
             }
           });
@@ -2844,8 +2902,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (expirationDateElement.style.border) {
               expirationDateElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               expirationDateElement.style.border = "";
+              isInputRedBorder = false;
             }
             let value = expirationDateElement.value;
             if (checkExpirationDate(value) !== "") {
@@ -2868,8 +2928,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (cvvElement.style.border) {
               cvvElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               cvvElement.style.border = "";
+              isInputRedBorder = false;
             }
             let value = cvvElement.value;
             if (checkCvv(value) !== "") {
@@ -2892,8 +2954,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (billingZipElement.style.border) {
               billingZipElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               billingZipElement.style.border = "";
+              isInputRedBorder = false;
             }
             let value = billingZipElement.value;
             if (checkBillingZip(value) !== "") {
@@ -2916,8 +2980,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (cardNumberElement.style.border) {
               cardNumberElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               cardNumberElement.style.border = "";
+              isInputRedBorder = false;
             }
             let value = cardNumberElement.value;
             if (checkCardNumber(value) !== "") {
@@ -2944,7 +3010,7 @@ class ValidateForm extends React.Component<Props> {
               }
             }
 
-            if(getCardType){
+            if (getCardType) {
               getCardType(GetCardType(value));
             }
           });
@@ -2957,8 +3023,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (expirationDateElement.style.border) {
               expirationDateElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               expirationDateElement.style.border = "";
+              isInputRedBorder = false;
             }
             let value = expirationDateElement.value;
             if (checkExpirationDate(value) !== "") {
@@ -2981,8 +3049,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (cvvElement.style.border) {
               cvvElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               cvvElement.style.border = "";
+              isInputRedBorder = false;
             }
             let value = cvvElement.value;
             if (checkCvv(value) !== "") {
@@ -3005,8 +3075,10 @@ class ValidateForm extends React.Component<Props> {
             }
             if (billingZipElement.style.border) {
               billingZipElement.style.borderColor = "";
+              isInputRedBorder = false;
             } else {
               billingZipElement.style.border = "";
+              isInputRedBorder = false;
             }
             let value = billingZipElement.value;
             if (checkBillingZip(value) !== "") {
@@ -3024,32 +3096,30 @@ class ValidateForm extends React.Component<Props> {
       }
     };
 
-  
-
     if (rules) {
-      if (rules.validateRequired) {
+      if (rules?.validateRequired) {
         runValidateRequired();
-      } else if (rules.ValidateMinMax) {
+      } else if (rules?.ValidateMinMax) {
         runValidateMinMax();
-      } else if (rules.ValidateEmail) {
+      } else if (rules?.ValidateEmail) {
         runValidateEmail();
-      } else if (rules.ValidatePattern) {
+      } else if (rules?.ValidatePattern) {
         runValidatePattern();
-      } else if (rules.ValidatePhone) {
+      } else if (rules?.ValidatePhone) {
         runValidatePhone();
-      } else if (rules.ValidateNumber) {
+      } else if (rules?.ValidateNumber) {
         runValidateNumber();
-      } else if (rules.ValidateInteger) {
+      } else if (rules?.ValidateInteger) {
         runValidateInteger();
-      } else if (rules.ValidateFloat) {
+      } else if (rules?.ValidateFloat) {
         runValidateFloat();
-      } else if (rules.ValidateDate) {
+      } else if (rules?.ValidateDate) {
         runValidateDate();
-      } else if (rules.ValidateTime) {
+      } else if (rules?.ValidateTime) {
         runValidateTime();
-      } else if (rules.ValidateUrl) {
+      } else if (rules?.ValidateUrl) {
         runValidateUrl();
-      } else if (rules.ValidateCreditCard) {
+      } else if (rules?.ValidateCreditCard) {
         runValidateCreditCard();
       }
     }
