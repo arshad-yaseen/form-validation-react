@@ -127,28 +127,14 @@ var ValidateForm = /** @class */ (function (_super) {
         }
     };
     ValidateForm.prototype.init = function () {
-        var _a = this.props, rules = _a.rules, onSubmit = _a.onSubmit;
-        var errorElement = this.props.errorElement;
-        var allowedKeys = [
-            "validateRequired",
-            "ValidateMinMax",
-            "ValidateEmail",
-            "ValidatePattern",
-            "ValidatePhone",
-            "ValidateNumber",
-            "ValidateInteger",
-            "ValidateFloat",
-            "ValidateDate",
-            "ValidateTime",
-            "ValidateUrl",
-            "ValidateCreditCard"
-        ];
+        var _a = this.props, rules = _a.rules, onSubmit = _a.onSubmit, errorElement = _a.errorElement;
         var wrapper = document.getElementById("_validation_wrapper");
         var form = wrapper === null || wrapper === void 0 ? void 0 : wrapper.children[0];
         var submit_button = form.querySelector('button[type="submit"]') ||
             form.querySelector('input[type="submit"]');
         var errorText = document.querySelector(errorElement);
         var errorMessage = String;
+        var isInputRedBorder = false;
         form.querySelectorAll("input").forEach(function (input, index) {
             if (input.style.transition === "") {
                 input.style.transition = "0.3s ease";
@@ -158,9 +144,9 @@ var ValidateForm = /** @class */ (function (_super) {
         if (submit_button) {
             form.addEventListener("submit", function (e) {
                 e.preventDefault();
-                if (errorText.innerHTML === "") {
+                if (errorText.innerHTML === "" && !isInputRedBorder) {
                     if (onSubmit) {
-                        onSubmit(e);
+                        onSubmit();
                     }
                     else {
                         form.submit();
@@ -178,6 +164,7 @@ var ValidateForm = /** @class */ (function (_super) {
             form.addEventListener("input", function (event) {
                 var input = event.target;
                 input.style.borderColor = "";
+                isInputRedBorder = false;
             });
             var submit_button = (form === null || form === void 0 ? void 0 : form.querySelector('button[type="submit"]')) ||
                 (form === null || form === void 0 ? void 0 : form.querySelector('input[type="submit"]'));
@@ -185,8 +172,8 @@ var ValidateForm = /** @class */ (function (_super) {
                 var _a, _b, _c, _d;
                 event.preventDefault();
                 var requiredInputs = [];
-                if ((_a = rules.validateRequired) === null || _a === void 0 ? void 0 : _a.applyOnly) {
-                    (_b = rules.validateRequired) === null || _b === void 0 ? void 0 : _b.applyOnly.forEach(function (inputName) {
+                if ((_a = rules === null || rules === void 0 ? void 0 : rules.validateRequired) === null || _a === void 0 ? void 0 : _a.applyOnly) {
+                    (_b = rules === null || rules === void 0 ? void 0 : rules.validateRequired) === null || _b === void 0 ? void 0 : _b.applyOnly.forEach(function (inputName) {
                         requiredInputs.push(form === null || form === void 0 ? void 0 : form.querySelector("[name=\"".concat(inputName, "\"]")));
                     });
                 }
@@ -204,34 +191,38 @@ var ValidateForm = /** @class */ (function (_super) {
                 if (missingInputs.length > 0) {
                     missingInputs.forEach(function (input, index) {
                         var _a, _b, _c, _d, _e, _f, _g;
-                        if ((_a = rules.validateRequired) === null || _a === void 0 ? void 0 : _a.notvalidated) {
-                            (_b = rules.validateRequired) === null || _b === void 0 ? void 0 : _b.notvalidated(missingInputs);
+                        if ((_a = rules === null || rules === void 0 ? void 0 : rules.validateRequired) === null || _a === void 0 ? void 0 : _a.notvalidated) {
+                            (_b = rules === null || rules === void 0 ? void 0 : rules.validateRequired) === null || _b === void 0 ? void 0 : _b.notvalidated(missingInputs);
                         }
                         if (index === 0) {
                             input.focus();
                         }
-                        if (((_c = rules.validateRequired) === null || _c === void 0 ? void 0 : _c.action) === "input_red_border") {
+                        if (((_c = rules === null || rules === void 0 ? void 0 : rules.validateRequired) === null || _c === void 0 ? void 0 : _c.action) === "input_red_border") {
                             if (input.style.border) {
                                 input.style.borderColor = "red";
+                                isInputRedBorder = true;
                             }
                             else {
                                 input.style.border = "1px solid red";
+                                isInputRedBorder = true;
                             }
                         }
-                        else if (((_d = rules.validateRequired) === null || _d === void 0 ? void 0 : _d.action) === "show_error_message") {
-                            if (rules.validateRequired.message) {
-                                setErrorText(rules.validateRequired.message);
+                        else if (((_d = rules === null || rules === void 0 ? void 0 : rules.validateRequired) === null || _d === void 0 ? void 0 : _d.action) === "show_error_message") {
+                            if (rules === null || rules === void 0 ? void 0 : rules.validateRequired.message) {
+                                setErrorText(rules === null || rules === void 0 ? void 0 : rules.validateRequired.message);
                             }
                         }
-                        else if (((_e = rules.validateRequired) === null || _e === void 0 ? void 0 : _e.action) === "both") {
-                            if ((_f = rules.validateRequired) === null || _f === void 0 ? void 0 : _f.message) {
-                                setErrorText((_g = rules.validateRequired) === null || _g === void 0 ? void 0 : _g.message);
+                        else if (((_e = rules === null || rules === void 0 ? void 0 : rules.validateRequired) === null || _e === void 0 ? void 0 : _e.action) === "both") {
+                            if ((_f = rules === null || rules === void 0 ? void 0 : rules.validateRequired) === null || _f === void 0 ? void 0 : _f.message) {
+                                setErrorText((_g = rules === null || rules === void 0 ? void 0 : rules.validateRequired) === null || _g === void 0 ? void 0 : _g.message);
                             }
                             if (input.style.border) {
                                 input.style.borderColor = "red";
+                                isInputRedBorder = true;
                             }
                             else {
                                 input.style.border = "1px solid red";
+                                isInputRedBorder = true;
                             }
                         }
                     });
@@ -240,8 +231,8 @@ var ValidateForm = /** @class */ (function (_super) {
                     if (errorText) {
                         errorText.innerText = "";
                     }
-                    if ((_c = rules.validateRequired) === null || _c === void 0 ? void 0 : _c.onsuccess) {
-                        (_d = rules.validateRequired) === null || _d === void 0 ? void 0 : _d.onsuccess();
+                    if ((_c = rules === null || rules === void 0 ? void 0 : rules.validateRequired) === null || _c === void 0 ? void 0 : _c.onsuccess) {
+                        (_d = rules === null || rules === void 0 ? void 0 : rules.validateRequired) === null || _d === void 0 ? void 0 : _d.onsuccess();
                     }
                 }
             });
@@ -249,7 +240,7 @@ var ValidateForm = /** @class */ (function (_super) {
         var runValidateMinMax = function () {
             var _a, _b;
             var inputs = form.querySelectorAll("input[min][max]");
-            if (((_a = rules.ValidateMinMax) === null || _a === void 0 ? void 0 : _a.when) === "typing") {
+            if (((_a = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _a === void 0 ? void 0 : _a.when) === "typing") {
                 inputs.forEach(function (input) {
                     input.addEventListener("input", function (event) {
                         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
@@ -263,99 +254,109 @@ var ValidateForm = /** @class */ (function (_super) {
                         if (min && max) {
                             if (type === "number") {
                                 if (value < min) {
-                                    if ((_a = rules.ValidateMinMax) === null || _a === void 0 ? void 0 : _a.exceedsMin) {
-                                        (_b = rules.ValidateMinMax) === null || _b === void 0 ? void 0 : _b.exceedsMin(input);
+                                    if ((_a = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _a === void 0 ? void 0 : _a.exceedsMin) {
+                                        (_b = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _b === void 0 ? void 0 : _b.exceedsMin(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
+                                        isInputRedBorder = true;
                                     }
                                     else {
                                         input.style.border = "1px solid red";
+                                        isInputRedBorder = true;
                                     }
                                     if (inputMinMessage) {
                                         setErrorText(inputMinMessage);
                                     }
                                     else {
-                                        if ((_c = rules.ValidateMinMax) === null || _c === void 0 ? void 0 : _c.message) {
-                                            setErrorText((_d = rules.ValidateMinMax) === null || _d === void 0 ? void 0 : _d.message.min);
+                                        if ((_c = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _c === void 0 ? void 0 : _c.message) {
+                                            setErrorText((_d = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _d === void 0 ? void 0 : _d.message.min);
                                         }
                                     }
                                 }
                                 else if (value > max) {
-                                    if ((_e = rules.ValidateMinMax) === null || _e === void 0 ? void 0 : _e.exceedsMax) {
-                                        (_f = rules.ValidateMinMax) === null || _f === void 0 ? void 0 : _f.exceedsMax(input);
+                                    if ((_e = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _e === void 0 ? void 0 : _e.exceedsMax) {
+                                        (_f = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _f === void 0 ? void 0 : _f.exceedsMax(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
+                                        isInputRedBorder = true;
                                     }
                                     else {
                                         input.style.border = "1px solid red";
+                                        isInputRedBorder = true;
                                     }
                                     if (inputMaxMessage) {
                                         setErrorText(inputMaxMessage);
                                     }
                                     else {
-                                        if ((_g = rules.ValidateMinMax) === null || _g === void 0 ? void 0 : _g.message) {
-                                            setErrorText((_h = rules.ValidateMinMax) === null || _h === void 0 ? void 0 : _h.message.max);
+                                        if ((_g = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _g === void 0 ? void 0 : _g.message) {
+                                            setErrorText((_h = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _h === void 0 ? void 0 : _h.message.max);
                                         }
                                     }
                                 }
                                 else {
                                     input.style.borderColor = "";
+                                    isInputRedBorder = false;
                                     if (errorText) {
                                         errorText.innerText = "";
                                     }
-                                    if ((_j = rules.ValidateMinMax) === null || _j === void 0 ? void 0 : _j.onsuccess) {
-                                        (_k = rules.ValidateMinMax) === null || _k === void 0 ? void 0 : _k.onsuccess(input);
+                                    if ((_j = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _j === void 0 ? void 0 : _j.onsuccess) {
+                                        (_k = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _k === void 0 ? void 0 : _k.onsuccess(input);
                                     }
                                 }
                             }
                             else if (type === "text") {
                                 if (value.length < Number(min)) {
-                                    if ((_l = rules.ValidateMinMax) === null || _l === void 0 ? void 0 : _l.exceedsMin) {
-                                        (_m = rules.ValidateMinMax) === null || _m === void 0 ? void 0 : _m.exceedsMin(input);
+                                    if ((_l = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _l === void 0 ? void 0 : _l.exceedsMin) {
+                                        (_m = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _m === void 0 ? void 0 : _m.exceedsMin(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
+                                        isInputRedBorder = true;
                                     }
                                     else {
                                         input.style.border = "1px solid red";
+                                        isInputRedBorder = true;
                                     }
                                     if (inputMinMessage) {
                                         setErrorText(inputMinMessage);
                                     }
                                     else {
-                                        if ((_o = rules.ValidateMinMax) === null || _o === void 0 ? void 0 : _o.message) {
-                                            setErrorText((_p = rules.ValidateMinMax) === null || _p === void 0 ? void 0 : _p.message.min);
+                                        if ((_o = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _o === void 0 ? void 0 : _o.message) {
+                                            setErrorText((_p = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _p === void 0 ? void 0 : _p.message.min);
                                         }
                                     }
                                 }
                                 else if (value.length > Number(max)) {
-                                    if ((_q = rules.ValidateMinMax) === null || _q === void 0 ? void 0 : _q.exceedsMax) {
-                                        (_r = rules.ValidateMinMax) === null || _r === void 0 ? void 0 : _r.exceedsMax(input);
+                                    if ((_q = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _q === void 0 ? void 0 : _q.exceedsMax) {
+                                        (_r = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _r === void 0 ? void 0 : _r.exceedsMax(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
+                                        isInputRedBorder = true;
                                     }
                                     else {
                                         input.style.border = "1px solid red";
+                                        isInputRedBorder = true;
                                     }
                                     if (inputMaxMessage) {
                                         setErrorText(inputMaxMessage);
                                     }
                                     else {
-                                        if ((_s = rules.ValidateMinMax) === null || _s === void 0 ? void 0 : _s.message) {
-                                            setErrorText((_t = rules.ValidateMinMax) === null || _t === void 0 ? void 0 : _t.message.max);
+                                        if ((_s = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _s === void 0 ? void 0 : _s.message) {
+                                            setErrorText((_t = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _t === void 0 ? void 0 : _t.message.max);
                                         }
                                     }
                                 }
                                 else {
                                     input.style.borderColor = "";
+                                    isInputRedBorder = false;
                                     if (errorText) {
                                         errorText.innerText = "";
                                     }
-                                    if ((_u = rules.ValidateMinMax) === null || _u === void 0 ? void 0 : _u.onsuccess) {
-                                        (_v = rules.ValidateMinMax) === null || _v === void 0 ? void 0 : _v.onsuccess(input);
+                                    if ((_u = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _u === void 0 ? void 0 : _u.onsuccess) {
+                                        (_v = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _v === void 0 ? void 0 : _v.onsuccess(input);
                                     }
                                 }
                             }
@@ -363,7 +364,7 @@ var ValidateForm = /** @class */ (function (_super) {
                     });
                 });
             }
-            else if (((_b = rules.ValidateMinMax) === null || _b === void 0 ? void 0 : _b.when) === "onblur") {
+            else if (((_b = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _b === void 0 ? void 0 : _b.when) === "onblur") {
                 inputs.forEach(function (input) {
                     input.addEventListener("blur", function (event) {
                         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
@@ -377,89 +378,98 @@ var ValidateForm = /** @class */ (function (_super) {
                         if (min && max) {
                             if (type === "number") {
                                 if (value < min) {
-                                    if ((_a = rules.ValidateMinMax) === null || _a === void 0 ? void 0 : _a.exceedsMin) {
-                                        (_b = rules.ValidateMinMax) === null || _b === void 0 ? void 0 : _b.exceedsMin(input);
+                                    if ((_a = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _a === void 0 ? void 0 : _a.exceedsMin) {
+                                        (_b = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _b === void 0 ? void 0 : _b.exceedsMin(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
+                                        isInputRedBorder = true;
                                     }
                                     else {
                                         input.style.border = "1px solid red";
+                                        isInputRedBorder = true;
                                     }
                                     if (inputMinMessage) {
                                         setErrorText(inputMinMessage);
                                     }
                                     else {
-                                        if ((_c = rules.ValidateMinMax) === null || _c === void 0 ? void 0 : _c.message) {
-                                            setErrorText((_d = rules.ValidateMinMax) === null || _d === void 0 ? void 0 : _d.message.min);
+                                        if ((_c = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _c === void 0 ? void 0 : _c.message) {
+                                            setErrorText((_d = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _d === void 0 ? void 0 : _d.message.min);
                                         }
                                     }
                                 }
                                 else if (value > max) {
-                                    if ((_e = rules.ValidateMinMax) === null || _e === void 0 ? void 0 : _e.exceedsMax) {
-                                        (_f = rules.ValidateMinMax) === null || _f === void 0 ? void 0 : _f.exceedsMax(input);
+                                    if ((_e = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _e === void 0 ? void 0 : _e.exceedsMax) {
+                                        (_f = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _f === void 0 ? void 0 : _f.exceedsMax(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
+                                        isInputRedBorder = true;
                                     }
                                     else {
                                         input.style.border = "1px solid red";
+                                        isInputRedBorder = true;
                                     }
                                     if (inputMaxMessage) {
                                         setErrorText(inputMaxMessage);
                                     }
                                     else {
-                                        if ((_g = rules.ValidateMinMax) === null || _g === void 0 ? void 0 : _g.message) {
-                                            setErrorText((_h = rules.ValidateMinMax) === null || _h === void 0 ? void 0 : _h.message.max);
+                                        if ((_g = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _g === void 0 ? void 0 : _g.message) {
+                                            setErrorText((_h = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _h === void 0 ? void 0 : _h.message.max);
                                         }
                                     }
                                 }
                                 else {
                                     input.style.borderColor = "";
+                                    isInputRedBorder = false;
                                     if (errorText) {
                                         errorText.innerText = "";
                                     }
-                                    if ((_j = rules.ValidateMinMax) === null || _j === void 0 ? void 0 : _j.onsuccess) {
-                                        (_k = rules.ValidateMinMax) === null || _k === void 0 ? void 0 : _k.onsuccess(input);
+                                    if ((_j = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _j === void 0 ? void 0 : _j.onsuccess) {
+                                        (_k = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _k === void 0 ? void 0 : _k.onsuccess(input);
                                     }
                                 }
                             }
                             else if (type === "text") {
                                 if (value.length < Number(min)) {
-                                    if ((_l = rules.ValidateMinMax) === null || _l === void 0 ? void 0 : _l.exceedsMin) {
-                                        (_m = rules.ValidateMinMax) === null || _m === void 0 ? void 0 : _m.exceedsMin(input);
+                                    if ((_l = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _l === void 0 ? void 0 : _l.exceedsMin) {
+                                        (_m = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _m === void 0 ? void 0 : _m.exceedsMin(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
+                                        isInputRedBorder = true;
                                     }
                                     else {
                                         input.style.border = "1px solid red";
+                                        isInputRedBorder = true;
                                     }
                                     if (inputMinMessage) {
                                         setErrorText(inputMinMessage);
                                     }
                                     else {
-                                        if ((_o = rules.ValidateMinMax) === null || _o === void 0 ? void 0 : _o.message) {
-                                            setErrorText((_p = rules.ValidateMinMax) === null || _p === void 0 ? void 0 : _p.message.min);
+                                        if ((_o = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _o === void 0 ? void 0 : _o.message) {
+                                            setErrorText((_p = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _p === void 0 ? void 0 : _p.message.min);
                                         }
                                     }
                                 }
                                 else if (value.length > Number(max)) {
-                                    if ((_q = rules.ValidateMinMax) === null || _q === void 0 ? void 0 : _q.exceedsMax) {
-                                        (_r = rules.ValidateMinMax) === null || _r === void 0 ? void 0 : _r.exceedsMax(input);
+                                    if ((_q = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _q === void 0 ? void 0 : _q.exceedsMax) {
+                                        (_r = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _r === void 0 ? void 0 : _r.exceedsMax(input);
                                     }
                                     if (input.style.border) {
                                         input.style.borderColor = "red";
+                                        isInputRedBorder = true;
                                     }
                                     else {
                                         input.style.border = "1px solid red";
+                                        isInputRedBorder = true;
                                     }
                                     if (inputMaxMessage) {
                                         setErrorText(inputMaxMessage);
                                     }
                                     else {
-                                        if ((_s = rules.ValidateMinMax) === null || _s === void 0 ? void 0 : _s.message) {
-                                            setErrorText((_t = rules.ValidateMinMax) === null || _t === void 0 ? void 0 : _t.message.max);
+                                        if ((_s = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _s === void 0 ? void 0 : _s.message) {
+                                            setErrorText((_t = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _t === void 0 ? void 0 : _t.message.max);
                                         }
                                     }
                                 }
@@ -468,8 +478,9 @@ var ValidateForm = /** @class */ (function (_super) {
                                         errorText.innerText = "";
                                     }
                                     input.style.borderColor = "";
-                                    if ((_u = rules.ValidateMinMax) === null || _u === void 0 ? void 0 : _u.onsuccess) {
-                                        (_v = rules.ValidateMinMax) === null || _v === void 0 ? void 0 : _v.onsuccess(input);
+                                    isInputRedBorder = false;
+                                    if ((_u = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _u === void 0 ? void 0 : _u.onsuccess) {
+                                        (_v = rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) === null || _v === void 0 ? void 0 : _v.onsuccess(input);
                                     }
                                 }
                             }
@@ -481,12 +492,12 @@ var ValidateForm = /** @class */ (function (_super) {
         var runValidateEmail = function () {
             var _a, _b, _c, _d, _e, _f;
             var emailPattern;
-            var type = (_a = rules.ValidateEmail) === null || _a === void 0 ? void 0 : _a.type;
-            var emailInput = form.querySelector("input[name=\"".concat((_b = rules.ValidateEmail) === null || _b === void 0 ? void 0 : _b.emailInput, "\"]"));
-            var message = (_c = rules.ValidateEmail) === null || _c === void 0 ? void 0 : _c.message;
-            var onsuccess = (_d = rules.ValidateEmail) === null || _d === void 0 ? void 0 : _d.onsuccess;
-            var invalid = (_e = rules.ValidateEmail) === null || _e === void 0 ? void 0 : _e.invalid;
-            var when = (_f = rules.ValidateEmail) === null || _f === void 0 ? void 0 : _f.when;
+            var type = (_a = rules === null || rules === void 0 ? void 0 : rules.ValidateEmail) === null || _a === void 0 ? void 0 : _a.type;
+            var emailInput = form.querySelector("input[name=\"".concat((_b = rules === null || rules === void 0 ? void 0 : rules.ValidateEmail) === null || _b === void 0 ? void 0 : _b.emailInput, "\"]"));
+            var message = (_c = rules === null || rules === void 0 ? void 0 : rules.ValidateEmail) === null || _c === void 0 ? void 0 : _c.message;
+            var onsuccess = (_d = rules === null || rules === void 0 ? void 0 : rules.ValidateEmail) === null || _d === void 0 ? void 0 : _d.onsuccess;
+            var invalid = (_e = rules === null || rules === void 0 ? void 0 : rules.ValidateEmail) === null || _e === void 0 ? void 0 : _e.invalid;
+            var when = ((_f = rules === null || rules === void 0 ? void 0 : rules.ValidateEmail) === null || _f === void 0 ? void 0 : _f.when) || "typing";
             switch (type) {
                 case "personal":
                     emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -546,17 +557,21 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (emailInput.style.border) {
                             emailInput.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             emailInput.style.border = "";
+                            isInputRedBorder = false;
                         }
                     }
                     else {
                         if (emailInput.style.border) {
                             emailInput.style.borderColor = "red";
+                            isInputRedBorder = true;
                         }
                         else {
                             emailInput.style.border = "1px solid red";
+                            isInputRedBorder = true;
                         }
                         if (invalid) {
                             invalid();
@@ -581,17 +596,21 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (emailInput.style.border) {
                             emailInput.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             emailInput.style.border = "";
+                            isInputRedBorder = false;
                         }
                     }
                     else {
                         if (emailInput.style.border) {
                             emailInput.style.borderColor = "red";
+                            isInputRedBorder = true;
                         }
                         else {
                             emailInput.style.border = "1px solid red";
+                            isInputRedBorder = true;
                         }
                         if (invalid) {
                             invalid();
@@ -607,8 +626,8 @@ var ValidateForm = /** @class */ (function (_super) {
         };
         var runValidatePattern = function () {
             var _a;
-            var inputElement = form.querySelector("input[name=\"".concat((_a = rules.ValidatePattern) === null || _a === void 0 ? void 0 : _a.input, "\"]"));
-            var options = rules.ValidatePattern;
+            var inputElement = form.querySelector("input[name=\"".concat((_a = rules === null || rules === void 0 ? void 0 : rules.ValidatePattern) === null || _a === void 0 ? void 0 : _a.input, "\"]"));
+            var options = rules === null || rules === void 0 ? void 0 : rules.ValidatePattern;
             if ((options === null || options === void 0 ? void 0 : options.when) === "onblur") {
                 inputElement.addEventListener("blur", function () {
                     var input = inputElement.value;
@@ -638,9 +657,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (inputElement.style.border) {
                             inputElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             inputElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                     }
                     else {
@@ -690,9 +711,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (inputElement.style.border) {
                             inputElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             inputElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                     }
                     else {
@@ -710,12 +733,12 @@ var ValidateForm = /** @class */ (function (_super) {
         };
         var runValidatePhone = function () {
             var _a, _b, _c, _d, _e, _f;
-            var phoneInput = form.querySelector("input[name=\"".concat((_a = rules.ValidatePhone) === null || _a === void 0 ? void 0 : _a.phoneInput, "\"]"));
-            var countryCode = (_b = rules.ValidatePhone) === null || _b === void 0 ? void 0 : _b.countryCode;
-            var when = (_c = rules.ValidatePhone) === null || _c === void 0 ? void 0 : _c.when;
-            var onsuccess = (_d = rules.ValidatePhone) === null || _d === void 0 ? void 0 : _d.onsuccess;
-            var invalid = (_e = rules.ValidatePhone) === null || _e === void 0 ? void 0 : _e.invalid;
-            var message = (_f = rules.ValidatePhone) === null || _f === void 0 ? void 0 : _f.message;
+            var phoneInput = form.querySelector("input[name=\"".concat((_a = rules === null || rules === void 0 ? void 0 : rules.ValidatePhone) === null || _a === void 0 ? void 0 : _a.phoneInput, "\"]"));
+            var countryCode = (_b = rules === null || rules === void 0 ? void 0 : rules.ValidatePhone) === null || _b === void 0 ? void 0 : _b.countryCode;
+            var when = (_c = rules === null || rules === void 0 ? void 0 : rules.ValidatePhone) === null || _c === void 0 ? void 0 : _c.when;
+            var onsuccess = (_d = rules === null || rules === void 0 ? void 0 : rules.ValidatePhone) === null || _d === void 0 ? void 0 : _d.onsuccess;
+            var invalid = (_e = rules === null || rules === void 0 ? void 0 : rules.ValidatePhone) === null || _e === void 0 ? void 0 : _e.invalid;
+            var message = (_f = rules === null || rules === void 0 ? void 0 : rules.ValidatePhone) === null || _f === void 0 ? void 0 : _f.message;
             var mobileRegex = /^(\+?254|0)?([17](0|1|[3-9])[0-9]{6}|([2-9]|[4-6][0-9])[0-9]{6,7})$/;
             var landlineRegex = /^(\+?254|0)?([2-69][0-9]{6,7})$/;
             if (when === "onblur") {
@@ -744,17 +767,21 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (phoneInput.style.border) {
                             phoneInput.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             phoneInput.style.border = "";
+                            isInputRedBorder = false;
                         }
                     }
                     else {
                         if (phoneInput.style.border) {
                             phoneInput.style.borderColor = "red";
+                            isInputRedBorder = true;
                         }
                         else {
                             phoneInput.style.border = "1px solid red";
+                            isInputRedBorder = true;
                         }
                         if (invalid) {
                             invalid();
@@ -765,11 +792,11 @@ var ValidateForm = /** @class */ (function (_super) {
                             }
                         }
                     }
-                    if ((_a = rules.ValidatePhone) === null || _a === void 0 ? void 0 : _a.isLandlineNumber) {
-                        rules.ValidatePhone.isLandlineNumber(landlineRegex.test(phoneNumber));
+                    if ((_a = rules === null || rules === void 0 ? void 0 : rules.ValidatePhone) === null || _a === void 0 ? void 0 : _a.isLandlineNumber) {
+                        rules === null || rules === void 0 ? void 0 : rules.ValidatePhone.isLandlineNumber(landlineRegex.test(phoneNumber));
                     }
-                    if ((_b = rules.ValidatePhone) === null || _b === void 0 ? void 0 : _b.isMobileNumber) {
-                        rules.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber));
+                    if ((_b = rules === null || rules === void 0 ? void 0 : rules.ValidatePhone) === null || _b === void 0 ? void 0 : _b.isMobileNumber) {
+                        rules === null || rules === void 0 ? void 0 : rules.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber));
                     }
                 });
             }
@@ -799,9 +826,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (phoneInput.style.border) {
                             phoneInput.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             phoneInput.style.border = "";
+                            isInputRedBorder = false;
                         }
                     }
                     else {
@@ -814,30 +843,30 @@ var ValidateForm = /** @class */ (function (_super) {
                             }
                         }
                     }
-                    if ((_a = rules.ValidatePhone) === null || _a === void 0 ? void 0 : _a.isLandlineNumber) {
-                        rules.ValidatePhone.isLandlineNumber(landlineRegex.test(phoneNumber));
+                    if ((_a = rules === null || rules === void 0 ? void 0 : rules.ValidatePhone) === null || _a === void 0 ? void 0 : _a.isLandlineNumber) {
+                        rules === null || rules === void 0 ? void 0 : rules.ValidatePhone.isLandlineNumber(landlineRegex.test(phoneNumber));
                     }
-                    if ((_b = rules.ValidatePhone) === null || _b === void 0 ? void 0 : _b.isMobileNumber) {
-                        rules.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber));
+                    if ((_b = rules === null || rules === void 0 ? void 0 : rules.ValidatePhone) === null || _b === void 0 ? void 0 : _b.isMobileNumber) {
+                        rules === null || rules === void 0 ? void 0 : rules.ValidatePhone.isMobileNumber(mobileRegex.test(phoneNumber));
                     }
                 });
             }
         };
         var runValidateNumber = function () {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
-            var min = (_a = rules.ValidateNumber) === null || _a === void 0 ? void 0 : _a.min;
-            var max = (_b = rules.ValidateNumber) === null || _b === void 0 ? void 0 : _b.max;
-            var inputName = (_c = rules.ValidateNumber) === null || _c === void 0 ? void 0 : _c.input;
-            var when = (_d = rules.ValidateNumber) === null || _d === void 0 ? void 0 : _d.when;
-            var decimalPlaces = (_e = rules.ValidateNumber) === null || _e === void 0 ? void 0 : _e.decimalPlaces;
-            var allowNegative = (_f = rules.ValidateNumber) === null || _f === void 0 ? void 0 : _f.allowNegative;
-            var integersOnly = (_g = rules.ValidateNumber) === null || _g === void 0 ? void 0 : _g.integersOnly;
-            var base = (_h = rules.ValidateNumber) === null || _h === void 0 ? void 0 : _h.base;
-            var customErrorMessages = (_j = rules.ValidateNumber) === null || _j === void 0 ? void 0 : _j.customErrorMessages;
+            var min = (_a = rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) === null || _a === void 0 ? void 0 : _a.min;
+            var max = (_b = rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) === null || _b === void 0 ? void 0 : _b.max;
+            var inputName = (_c = rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) === null || _c === void 0 ? void 0 : _c.input;
+            var when = (_d = rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) === null || _d === void 0 ? void 0 : _d.when;
+            var decimalPlaces = (_e = rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) === null || _e === void 0 ? void 0 : _e.decimalPlaces;
+            var allowNegative = (_f = rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) === null || _f === void 0 ? void 0 : _f.allowNegative;
+            var integersOnly = (_g = rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) === null || _g === void 0 ? void 0 : _g.integersOnly;
+            var base = (_h = rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) === null || _h === void 0 ? void 0 : _h.base;
+            var customErrorMessages = (_j = rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) === null || _j === void 0 ? void 0 : _j.customErrorMessages;
             var inputElement = form.querySelector("input[name='".concat(inputName, "']"));
             var errorMessage;
-            var onsuccess = (_k = rules.ValidateNumber) === null || _k === void 0 ? void 0 : _k.onsuccess;
-            var invalid = (_l = rules.ValidateNumber) === null || _l === void 0 ? void 0 : _l.invalid;
+            var onsuccess = (_k = rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) === null || _k === void 0 ? void 0 : _k.onsuccess;
+            var invalid = (_l = rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) === null || _l === void 0 ? void 0 : _l.invalid;
             if (when === "onblur") {
                 inputElement.addEventListener("blur", function () {
                     errorMessage = undefined;
@@ -900,9 +929,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (inputElement.style.border) {
                             inputElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             inputElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                     }
                     else {
@@ -982,9 +1013,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (inputElement.style.border) {
                             inputElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             inputElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                     }
                     else {
@@ -1002,16 +1035,16 @@ var ValidateForm = /** @class */ (function (_super) {
         };
         var runValidateInteger = function () {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-            var when = (_a = rules.ValidateInteger) === null || _a === void 0 ? void 0 : _a.when;
-            var input = (_b = rules.ValidateInteger) === null || _b === void 0 ? void 0 : _b.input;
-            var minValue = (_c = rules.ValidateInteger) === null || _c === void 0 ? void 0 : _c.minValue;
-            var maxValue = (_d = rules.ValidateInteger) === null || _d === void 0 ? void 0 : _d.maxValue;
-            var uniqueValues = (_e = rules.ValidateInteger) === null || _e === void 0 ? void 0 : _e.uniqueValues;
-            var positiveOnly = (_f = rules.ValidateInteger) === null || _f === void 0 ? void 0 : _f.positiveOnly;
-            var evenOnly = (_g = rules.ValidateInteger) === null || _g === void 0 ? void 0 : _g.evenOnly;
-            var divisibleBy = (_h = rules.ValidateInteger) === null || _h === void 0 ? void 0 : _h.divisibleBy;
-            var invalid = (_j = rules.ValidateInteger) === null || _j === void 0 ? void 0 : _j.invalid;
-            var customErrorMessages = (_k = rules.ValidateInteger) === null || _k === void 0 ? void 0 : _k.customErrorMessages;
+            var when = (_a = rules === null || rules === void 0 ? void 0 : rules.ValidateInteger) === null || _a === void 0 ? void 0 : _a.when;
+            var input = (_b = rules === null || rules === void 0 ? void 0 : rules.ValidateInteger) === null || _b === void 0 ? void 0 : _b.input;
+            var minValue = (_c = rules === null || rules === void 0 ? void 0 : rules.ValidateInteger) === null || _c === void 0 ? void 0 : _c.minValue;
+            var maxValue = (_d = rules === null || rules === void 0 ? void 0 : rules.ValidateInteger) === null || _d === void 0 ? void 0 : _d.maxValue;
+            var uniqueValues = (_e = rules === null || rules === void 0 ? void 0 : rules.ValidateInteger) === null || _e === void 0 ? void 0 : _e.uniqueValues;
+            var positiveOnly = (_f = rules === null || rules === void 0 ? void 0 : rules.ValidateInteger) === null || _f === void 0 ? void 0 : _f.positiveOnly;
+            var evenOnly = (_g = rules === null || rules === void 0 ? void 0 : rules.ValidateInteger) === null || _g === void 0 ? void 0 : _g.evenOnly;
+            var divisibleBy = (_h = rules === null || rules === void 0 ? void 0 : rules.ValidateInteger) === null || _h === void 0 ? void 0 : _h.divisibleBy;
+            var invalid = (_j = rules === null || rules === void 0 ? void 0 : rules.ValidateInteger) === null || _j === void 0 ? void 0 : _j.invalid;
+            var customErrorMessages = (_k = rules === null || rules === void 0 ? void 0 : rules.ValidateInteger) === null || _k === void 0 ? void 0 : _k.customErrorMessages;
             var inputElement = form.querySelector("input[name=\"".concat(input, "\"]"));
             if (when === "onblur") {
                 inputElement.addEventListener("blur", function () {
@@ -1021,9 +1054,11 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if (inputElement.style.border) {
                         inputElement.style.borderColor = "";
+                        isInputRedBorder = false;
                     }
                     else {
                         inputElement.style.border = "";
+                        isInputRedBorder = false;
                     }
                     var errorMessage = __assign(__assign({}, customErrorMessages), { notANumber: "The value must be a number", notAnInteger: "The value must be an integer", outOfRange: "The value must be between ".concat(minValue, " and ").concat(maxValue), notUnique: "The value must be unique", notPositive: "The value must be positive", notEven: "The value must be even", notDivisible: "The value must be divisible by ".concat(divisibleBy) });
                     // Check that the input value is actually a number
@@ -1156,9 +1191,11 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if (inputElement.style.border) {
                         inputElement.style.borderColor = "";
+                        isInputRedBorder = false;
                     }
                     else {
                         inputElement.style.border = "";
+                        isInputRedBorder = false;
                     }
                     var errorMessage = __assign(__assign({}, customErrorMessages), { notANumber: "The value must be a number", notAnInteger: "The value must be an integer", outOfRange: "The value must be between ".concat(minValue, " and ").concat(maxValue), notUnique: "The value must be unique", notPositive: "The value must be positive", notEven: "The value must be even", notDivisible: "The value must be divisible by ".concat(divisibleBy) });
                     // Check that the input value is actually a number
@@ -1286,11 +1323,11 @@ var ValidateForm = /** @class */ (function (_super) {
         };
         var runValidateFloat = function () {
             var _a, _b, _c, _d, _e, _f;
-            var when = (_a = rules.ValidateFloat) === null || _a === void 0 ? void 0 : _a.when;
-            var input = (_b = rules.ValidateFloat) === null || _b === void 0 ? void 0 : _b.input;
-            var customErrorMessages = (_c = rules.ValidateFloat) === null || _c === void 0 ? void 0 : _c.customErrorMessages;
+            var when = (_a = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _a === void 0 ? void 0 : _a.when;
+            var input = (_b = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _b === void 0 ? void 0 : _b.input;
+            var customErrorMessages = (_c = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _c === void 0 ? void 0 : _c.customErrorMessages;
             var inputElement = form.querySelector("input[name=\"".concat(input, "\"]"));
-            var defaultErrorMessages = __assign({ required: "This field is required", invalid: "Please enter a valid number", min: "Please enter a number greater than or equal to ".concat((_d = rules.ValidateFloat) === null || _d === void 0 ? void 0 : _d.min), max: "Please enter a number less than or equal to ".concat((_e = rules.ValidateFloat) === null || _e === void 0 ? void 0 : _e.max), precision: "Please enter a number with at most ".concat((_f = rules.ValidateFloat) === null || _f === void 0 ? void 0 : _f.precision, " decimal places") }, customErrorMessages);
+            var defaultErrorMessages = __assign({ required: "This field is required", invalid: "Please enter a valid number", min: "Please enter a number greater than or equal to ".concat((_d = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _d === void 0 ? void 0 : _d.min), max: "Please enter a number less than or equal to ".concat((_e = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _e === void 0 ? void 0 : _e.max), precision: "Please enter a number with at most ".concat((_f = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _f === void 0 ? void 0 : _f.precision, " decimal places") }, customErrorMessages);
             var errorMessages = defaultErrorMessages;
             if (when === "onblur") {
                 inputElement.addEventListener("blur", function () {
@@ -1300,13 +1337,15 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if (inputElement.style.border) {
                         inputElement.style.borderColor = "";
+                        isInputRedBorder = false;
                     }
                     else {
                         inputElement.style.border = "";
+                        isInputRedBorder = false;
                     }
                     var value = inputElement.value;
                     var isEmpty = !value.trim();
-                    if (((_a = rules.ValidateFloat) === null || _a === void 0 ? void 0 : _a.required) && isEmpty) {
+                    if (((_a = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _a === void 0 ? void 0 : _a.required) && isEmpty) {
                         if (inputElement.style.border) {
                             inputElement.style.borderColor = "red";
                         }
@@ -1333,8 +1372,8 @@ var ValidateForm = /** @class */ (function (_super) {
                             }
                         }
                     }
-                    if (((_b = rules.ValidateFloat) === null || _b === void 0 ? void 0 : _b.min) !== undefined &&
-                        numberValue < rules.ValidateFloat.min) {
+                    if (((_b = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _b === void 0 ? void 0 : _b.min) !== undefined &&
+                        numberValue < (rules === null || rules === void 0 ? void 0 : rules.ValidateFloat.min)) {
                         if (inputElement.style.border) {
                             inputElement.style.borderColor = "red";
                         }
@@ -1347,8 +1386,8 @@ var ValidateForm = /** @class */ (function (_super) {
                             }
                         }
                     }
-                    if (((_c = rules.ValidateFloat) === null || _c === void 0 ? void 0 : _c.max) !== undefined &&
-                        numberValue > rules.ValidateFloat.max) {
+                    if (((_c = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _c === void 0 ? void 0 : _c.max) !== undefined &&
+                        numberValue > (rules === null || rules === void 0 ? void 0 : rules.ValidateFloat.max)) {
                         if (inputElement.style.border) {
                             inputElement.style.borderColor = "red";
                         }
@@ -1361,10 +1400,10 @@ var ValidateForm = /** @class */ (function (_super) {
                             }
                         }
                     }
-                    if (((_d = rules.ValidateFloat) === null || _d === void 0 ? void 0 : _d.precision) !== undefined) {
+                    if (((_d = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _d === void 0 ? void 0 : _d.precision) !== undefined) {
                         var parts = value.split(".");
                         if (parts.length === 2 &&
-                            parts[1].length > rules.ValidateFloat.precision) {
+                            parts[1].length > (rules === null || rules === void 0 ? void 0 : rules.ValidateFloat.precision)) {
                             if (inputElement.style.border) {
                                 inputElement.style.borderColor = "red";
                             }
@@ -1389,12 +1428,14 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if (inputElement.style.border) {
                         inputElement.style.borderColor = "";
+                        isInputRedBorder = false;
                     }
                     else {
                         inputElement.style.border = "";
+                        isInputRedBorder = false;
                     }
                     var isEmpty = !value.trim();
-                    if (((_a = rules.ValidateFloat) === null || _a === void 0 ? void 0 : _a.required) && isEmpty) {
+                    if (((_a = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _a === void 0 ? void 0 : _a.required) && isEmpty) {
                         if (inputElement.style.border) {
                             inputElement.style.borderColor = "red";
                         }
@@ -1421,8 +1462,8 @@ var ValidateForm = /** @class */ (function (_super) {
                             }
                         }
                     }
-                    if (((_b = rules.ValidateFloat) === null || _b === void 0 ? void 0 : _b.min) !== undefined &&
-                        numberValue < rules.ValidateFloat.min) {
+                    if (((_b = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _b === void 0 ? void 0 : _b.min) !== undefined &&
+                        numberValue < (rules === null || rules === void 0 ? void 0 : rules.ValidateFloat.min)) {
                         if (inputElement.style.border) {
                             inputElement.style.borderColor = "red";
                         }
@@ -1435,8 +1476,8 @@ var ValidateForm = /** @class */ (function (_super) {
                             }
                         }
                     }
-                    if (((_c = rules.ValidateFloat) === null || _c === void 0 ? void 0 : _c.max) !== undefined &&
-                        numberValue > rules.ValidateFloat.max) {
+                    if (((_c = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _c === void 0 ? void 0 : _c.max) !== undefined &&
+                        numberValue > (rules === null || rules === void 0 ? void 0 : rules.ValidateFloat.max)) {
                         if (inputElement.style.border) {
                             inputElement.style.borderColor = "red";
                         }
@@ -1449,10 +1490,10 @@ var ValidateForm = /** @class */ (function (_super) {
                             }
                         }
                     }
-                    if (((_d = rules.ValidateFloat) === null || _d === void 0 ? void 0 : _d.precision) !== undefined) {
+                    if (((_d = rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) === null || _d === void 0 ? void 0 : _d.precision) !== undefined) {
                         var parts = value.split(".");
                         if (parts.length === 2 &&
-                            parts[1].length > rules.ValidateFloat.precision) {
+                            parts[1].length > (rules === null || rules === void 0 ? void 0 : rules.ValidateFloat.precision)) {
                             if (inputElement.style.border) {
                                 inputElement.style.borderColor = "red";
                             }
@@ -1471,15 +1512,15 @@ var ValidateForm = /** @class */ (function (_super) {
         };
         var runValidateDate = function () {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
-            var when = (_a = rules.ValidateDate) === null || _a === void 0 ? void 0 : _a.when;
-            var inputValue = (_b = rules.ValidateDate) === null || _b === void 0 ? void 0 : _b.input;
-            var minDate = (_c = rules.ValidateDate) === null || _c === void 0 ? void 0 : _c.minDate;
-            var maxDate = (_d = rules.ValidateDate) === null || _d === void 0 ? void 0 : _d.maxDate;
-            var allowOnlyBusinessDay = (_e = rules.ValidateDate) === null || _e === void 0 ? void 0 : _e.allowOnlyBusinessDay;
-            var allowOnlyWeekend = (_f = rules.ValidateDate) === null || _f === void 0 ? void 0 : _f.allowOnlyWeekend;
-            var customFormat = (_g = rules.ValidateDate) === null || _g === void 0 ? void 0 : _g.customFormat;
-            var timeZone = (_h = rules.ValidateDate) === null || _h === void 0 ? void 0 : _h.timeZone;
-            var customErrorMessages = (_j = rules.ValidateDate) === null || _j === void 0 ? void 0 : _j.customErrorMessages;
+            var when = (_a = rules === null || rules === void 0 ? void 0 : rules.ValidateDate) === null || _a === void 0 ? void 0 : _a.when;
+            var inputValue = (_b = rules === null || rules === void 0 ? void 0 : rules.ValidateDate) === null || _b === void 0 ? void 0 : _b.input;
+            var minDate = (_c = rules === null || rules === void 0 ? void 0 : rules.ValidateDate) === null || _c === void 0 ? void 0 : _c.minDate;
+            var maxDate = (_d = rules === null || rules === void 0 ? void 0 : rules.ValidateDate) === null || _d === void 0 ? void 0 : _d.maxDate;
+            var allowOnlyBusinessDay = (_e = rules === null || rules === void 0 ? void 0 : rules.ValidateDate) === null || _e === void 0 ? void 0 : _e.allowOnlyBusinessDay;
+            var allowOnlyWeekend = (_f = rules === null || rules === void 0 ? void 0 : rules.ValidateDate) === null || _f === void 0 ? void 0 : _f.allowOnlyWeekend;
+            var customFormat = (_g = rules === null || rules === void 0 ? void 0 : rules.ValidateDate) === null || _g === void 0 ? void 0 : _g.customFormat;
+            var timeZone = (_h = rules === null || rules === void 0 ? void 0 : rules.ValidateDate) === null || _h === void 0 ? void 0 : _h.timeZone;
+            var customErrorMessages = (_j = rules === null || rules === void 0 ? void 0 : rules.ValidateDate) === null || _j === void 0 ? void 0 : _j.customErrorMessages;
             var inputElement = form.querySelector("input[name=\"".concat(inputValue, "\"]"));
             function isBusinessDayCheck(date) {
                 // assuming weekends are Saturday (6) and Sunday (0)
@@ -1492,8 +1533,8 @@ var ValidateForm = /** @class */ (function (_super) {
             }
             var defaultErrorMessages = {
                 invalidDate: "Invalid date format",
-                minDate: "The date must be on or after ".concat((_l = (_k = rules.ValidateDate) === null || _k === void 0 ? void 0 : _k.minDate) === null || _l === void 0 ? void 0 : _l.toLocaleDateString()),
-                maxDate: "The date must be on or before ".concat((_o = (_m = rules.ValidateDate) === null || _m === void 0 ? void 0 : _m.maxDate) === null || _o === void 0 ? void 0 : _o.toLocaleDateString()),
+                minDate: "The date must be on or after ".concat((_l = (_k = rules === null || rules === void 0 ? void 0 : rules.ValidateDate) === null || _k === void 0 ? void 0 : _k.minDate) === null || _l === void 0 ? void 0 : _l.toLocaleDateString()),
+                maxDate: "The date must be on or before ".concat((_o = (_m = rules === null || rules === void 0 ? void 0 : rules.ValidateDate) === null || _m === void 0 ? void 0 : _m.maxDate) === null || _o === void 0 ? void 0 : _o.toLocaleDateString()),
                 businessDay: "Date is not a business day",
                 notWeekend: "Date is not a weekend",
                 invalidFormat: "Date is not in the expected format",
@@ -1507,9 +1548,11 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if (inputElement.style.border) {
                         inputElement.style.borderColor = "";
+                        isInputRedBorder = false;
                     }
                     else {
                         inputElement.style.border = "";
+                        isInputRedBorder = false;
                     }
                     var input = inputElement.value;
                     var inputDate = new Date(input);
@@ -1606,9 +1649,11 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if (inputElement.style.border) {
                         inputElement.style.borderColor = "";
+                        isInputRedBorder = false;
                     }
                     else {
                         inputElement.style.border = "";
+                        isInputRedBorder = false;
                     }
                     var input = inputElement.value;
                     var inputDate = new Date(input);
@@ -1700,7 +1745,13 @@ var ValidateForm = /** @class */ (function (_super) {
             }
         };
         var runValidateTime = function () {
-            var _a = rules.ValidateTime, when = _a.when, input = _a.input, customErrorMessages = _a.customErrorMessages, timeRange = _a.timeRange, timeInterval = _a.timeInterval, timezone = _a.timezone;
+            var _a, _b, _c, _d, _e, _f;
+            var when = (_a = rules === null || rules === void 0 ? void 0 : rules.ValidateTime) === null || _a === void 0 ? void 0 : _a.when;
+            var input = (_b = rules === null || rules === void 0 ? void 0 : rules.ValidateTime) === null || _b === void 0 ? void 0 : _b.input;
+            var customErrorMessages = (_c = rules === null || rules === void 0 ? void 0 : rules.ValidateTime) === null || _c === void 0 ? void 0 : _c.customErrorMessages;
+            var timeRange = (_d = rules === null || rules === void 0 ? void 0 : rules.ValidateTime) === null || _d === void 0 ? void 0 : _d.timeRange;
+            var timeInterval = (_e = rules === null || rules === void 0 ? void 0 : rules.ValidateTime) === null || _e === void 0 ? void 0 : _e.timeInterval;
+            var timezone = (_f = rules === null || rules === void 0 ? void 0 : rules.ValidateTime) === null || _f === void 0 ? void 0 : _f.timezone;
             var defaultErrorMessages = {
                 invalidFormat: "Invalid time format",
                 invalidRange: "Time is out of range",
@@ -1716,9 +1767,11 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if (inputElement.style.border) {
                         inputElement.style.borderColor = "";
+                        isInputRedBorder = false;
                     }
                     else {
                         inputElement.style.border = "";
+                        isInputRedBorder = false;
                     }
                     var timeString = inputElement.value;
                     // Helper function to pad a number with leading zeros
@@ -1816,9 +1869,11 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if (inputElement.style.border) {
                         inputElement.style.borderColor = "";
+                        isInputRedBorder = false;
                     }
                     else {
                         inputElement.style.border = "";
+                        isInputRedBorder = false;
                     }
                     // Helper function to pad a number with leading zeros
                     function pad(num) {
@@ -1909,16 +1964,17 @@ var ValidateForm = /** @class */ (function (_super) {
             }
         };
         var runValidateUrl = function () {
-            var when = rules.ValidateUrl.when;
-            var input = rules.ValidateUrl.input;
-            var customErrorMessages = rules.ValidateUrl.CustomErrorMessages;
-            var checkUrl = rules.ValidateUrl.checkUrl;
-            var checkProtocol = rules.ValidateUrl.checkProtocol;
-            var checkDomain = rules.ValidateUrl.checkDomain;
-            var checkIpAddress = rules.ValidateUrl.checkIpAddress;
-            var checkInAccessibleUrl = rules.ValidateUrl.checkAccessibleUrl;
-            var checkCharacters = rules.ValidateUrl.checkCharacters;
-            var protocols = rules.ValidateUrl.protocols;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+            var when = (_a = rules === null || rules === void 0 ? void 0 : rules.ValidateUrl) === null || _a === void 0 ? void 0 : _a.when;
+            var input = (_b = rules === null || rules === void 0 ? void 0 : rules.ValidateUrl) === null || _b === void 0 ? void 0 : _b.input;
+            var customErrorMessages = (_c = rules === null || rules === void 0 ? void 0 : rules.ValidateUrl) === null || _c === void 0 ? void 0 : _c.CustomErrorMessages;
+            var checkUrl = (_d = rules === null || rules === void 0 ? void 0 : rules.ValidateUrl) === null || _d === void 0 ? void 0 : _d.checkUrl;
+            var checkProtocol = (_e = rules === null || rules === void 0 ? void 0 : rules.ValidateUrl) === null || _e === void 0 ? void 0 : _e.checkProtocol;
+            var checkDomain = (_f = rules === null || rules === void 0 ? void 0 : rules.ValidateUrl) === null || _f === void 0 ? void 0 : _f.checkDomain;
+            var checkIpAddress = (_g = rules === null || rules === void 0 ? void 0 : rules.ValidateUrl) === null || _g === void 0 ? void 0 : _g.checkIpAddress;
+            var checkInAccessibleUrl = (_h = rules === null || rules === void 0 ? void 0 : rules.ValidateUrl) === null || _h === void 0 ? void 0 : _h.checkAccessibleUrl;
+            var checkCharacters = (_j = rules === null || rules === void 0 ? void 0 : rules.ValidateUrl) === null || _j === void 0 ? void 0 : _j.checkCharacters;
+            var protocols = (_k = rules === null || rules === void 0 ? void 0 : rules.ValidateUrl) === null || _k === void 0 ? void 0 : _k.protocols;
             var inputElement = form.querySelector("input[name=\"".concat(input, "\"]"));
             var defaultErrorMessages = {
                 invalidUrl: "The URL is not well-formed",
@@ -1937,9 +1993,11 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if (inputElement.style.border) {
                         inputElement.style.borderColor = "";
+                        isInputRedBorder = false;
                     }
                     else {
                         inputElement.style.border = "";
+                        isInputRedBorder = false;
                     }
                     var url = inputElement.value;
                     var urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d{1,5})?(?:\/\S*)?$/;
@@ -2080,9 +2138,11 @@ var ValidateForm = /** @class */ (function (_super) {
                     }
                     if (inputElement.style.border) {
                         inputElement.style.borderColor = "";
+                        isInputRedBorder = false;
                     }
                     else {
                         inputElement.style.border = "";
+                        isInputRedBorder = false;
                     }
                     var url = inputElement.value;
                     var urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(?::\d{1,5})?(?:\/\S*)?$/;
@@ -2219,14 +2279,14 @@ var ValidateForm = /** @class */ (function (_super) {
         };
         var runValidateCreditCard = function () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            var when = (_a = rules.ValidateCreditCard) === null || _a === void 0 ? void 0 : _a.when;
-            var allowedCards = (_b = rules.ValidateCreditCard) === null || _b === void 0 ? void 0 : _b.allowedCards;
-            var cardNumberValue = (_c = rules.ValidateCreditCard) === null || _c === void 0 ? void 0 : _c.cardNumber;
-            var expirationDateValue = (_d = rules.ValidateCreditCard) === null || _d === void 0 ? void 0 : _d.expirationDate;
-            var cvvValue = (_e = rules.ValidateCreditCard) === null || _e === void 0 ? void 0 : _e.cvv;
-            var billingZipValue = (_f = rules.ValidateCreditCard) === null || _f === void 0 ? void 0 : _f.billingZip;
-            var customErrorMessages = (_g = rules.ValidateCreditCard) === null || _g === void 0 ? void 0 : _g.customErrorMessages;
-            var getCardType = (_h = rules.ValidateCreditCard) === null || _h === void 0 ? void 0 : _h.getCardType;
+            var when = (_a = rules === null || rules === void 0 ? void 0 : rules.ValidateCreditCard) === null || _a === void 0 ? void 0 : _a.when;
+            var allowedCards = (_b = rules === null || rules === void 0 ? void 0 : rules.ValidateCreditCard) === null || _b === void 0 ? void 0 : _b.allowedCards;
+            var cardNumberValue = (_c = rules === null || rules === void 0 ? void 0 : rules.ValidateCreditCard) === null || _c === void 0 ? void 0 : _c.cardNumber;
+            var expirationDateValue = (_d = rules === null || rules === void 0 ? void 0 : rules.ValidateCreditCard) === null || _d === void 0 ? void 0 : _d.expirationDate;
+            var cvvValue = (_e = rules === null || rules === void 0 ? void 0 : rules.ValidateCreditCard) === null || _e === void 0 ? void 0 : _e.cvv;
+            var billingZipValue = (_f = rules === null || rules === void 0 ? void 0 : rules.ValidateCreditCard) === null || _f === void 0 ? void 0 : _f.billingZip;
+            var customErrorMessages = (_g = rules === null || rules === void 0 ? void 0 : rules.ValidateCreditCard) === null || _g === void 0 ? void 0 : _g.customErrorMessages;
+            var getCardType = (_h = rules === null || rules === void 0 ? void 0 : rules.ValidateCreditCard) === null || _h === void 0 ? void 0 : _h.getCardType;
             var cardNumberElement = form.querySelector("input[name=\"".concat(cardNumberValue, "\"]"));
             var expirationDateElement = form.querySelector("input[name=\"".concat(expirationDateValue, "\"]"));
             var cvvElement = form.querySelector("input[name=\"".concat(cvvValue, "\"]"));
@@ -2369,9 +2429,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (cardNumberElement.style.border) {
                             cardNumberElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             cardNumberElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                         var value = cardNumberElement.value;
                         if (checkCardNumber(value) !== "") {
@@ -2410,9 +2472,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (expirationDateElement.style.border) {
                             expirationDateElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             expirationDateElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                         var value = expirationDateElement.value;
                         if (checkExpirationDate(value) !== "") {
@@ -2435,9 +2499,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (cvvElement.style.border) {
                             cvvElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             cvvElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                         var value = cvvElement.value;
                         if (checkCvv(value) !== "") {
@@ -2460,9 +2526,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (billingZipElement.style.border) {
                             billingZipElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             billingZipElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                         var value = billingZipElement.value;
                         if (checkBillingZip(value) !== "") {
@@ -2487,9 +2555,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (cardNumberElement.style.border) {
                             cardNumberElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             cardNumberElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                         var value = cardNumberElement.value;
                         if (checkCardNumber(value) !== "") {
@@ -2528,9 +2598,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (expirationDateElement.style.border) {
                             expirationDateElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             expirationDateElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                         var value = expirationDateElement.value;
                         if (checkExpirationDate(value) !== "") {
@@ -2553,9 +2625,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (cvvElement.style.border) {
                             cvvElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             cvvElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                         var value = cvvElement.value;
                         if (checkCvv(value) !== "") {
@@ -2578,9 +2652,11 @@ var ValidateForm = /** @class */ (function (_super) {
                         }
                         if (billingZipElement.style.border) {
                             billingZipElement.style.borderColor = "";
+                            isInputRedBorder = false;
                         }
                         else {
                             billingZipElement.style.border = "";
+                            isInputRedBorder = false;
                         }
                         var value = billingZipElement.value;
                         if (checkBillingZip(value) !== "") {
@@ -2599,40 +2675,40 @@ var ValidateForm = /** @class */ (function (_super) {
             }
         };
         if (rules) {
-            if (rules.validateRequired) {
+            if (rules === null || rules === void 0 ? void 0 : rules.validateRequired) {
                 runValidateRequired();
             }
-            else if (rules.ValidateMinMax) {
+            else if (rules === null || rules === void 0 ? void 0 : rules.ValidateMinMax) {
                 runValidateMinMax();
             }
-            else if (rules.ValidateEmail) {
+            else if (rules === null || rules === void 0 ? void 0 : rules.ValidateEmail) {
                 runValidateEmail();
             }
-            else if (rules.ValidatePattern) {
+            else if (rules === null || rules === void 0 ? void 0 : rules.ValidatePattern) {
                 runValidatePattern();
             }
-            else if (rules.ValidatePhone) {
+            else if (rules === null || rules === void 0 ? void 0 : rules.ValidatePhone) {
                 runValidatePhone();
             }
-            else if (rules.ValidateNumber) {
+            else if (rules === null || rules === void 0 ? void 0 : rules.ValidateNumber) {
                 runValidateNumber();
             }
-            else if (rules.ValidateInteger) {
+            else if (rules === null || rules === void 0 ? void 0 : rules.ValidateInteger) {
                 runValidateInteger();
             }
-            else if (rules.ValidateFloat) {
+            else if (rules === null || rules === void 0 ? void 0 : rules.ValidateFloat) {
                 runValidateFloat();
             }
-            else if (rules.ValidateDate) {
+            else if (rules === null || rules === void 0 ? void 0 : rules.ValidateDate) {
                 runValidateDate();
             }
-            else if (rules.ValidateTime) {
+            else if (rules === null || rules === void 0 ? void 0 : rules.ValidateTime) {
                 runValidateTime();
             }
-            else if (rules.ValidateUrl) {
+            else if (rules === null || rules === void 0 ? void 0 : rules.ValidateUrl) {
                 runValidateUrl();
             }
-            else if (rules.ValidateCreditCard) {
+            else if (rules === null || rules === void 0 ? void 0 : rules.ValidateCreditCard) {
                 runValidateCreditCard();
             }
         }
