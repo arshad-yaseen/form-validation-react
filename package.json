@@ -11,19 +11,19 @@
     "url": "git+https://github.com/arshad-yaseen/form-validation-react.git"
   },
   "keywords": [
-    "React form validation",
-    "Form validation in React",
-    "Validate forms in React",
-    "Best form validation library for React",
-    "Easy form validation in React",
-    "React form validation library"
+    "form validation",
+    "form",
+    "typescript",
+    "react form",
+    "simple form validation",
+    "form validation react"
   ],
-  "author": "Arshad Yaseen",
+  "author": "hello@arshadd.site",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/arshad-yaseen/form-validation-react/issues"
   },
-  "homepage": "https://github.com/arshad-yaseen/form-validation-react#readme",
+  "homepage": "https://reactvalidator.tech",
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
