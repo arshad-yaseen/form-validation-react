@@ -201,7 +201,7 @@ ValidateEmail: {
 
 
 ```javascript
-validatePattern:{
+ValidatePattern:{
 
 	input: 'email',
   	pattern: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
@@ -218,7 +218,7 @@ validatePattern:{
 #### Validate using a regular expression pattern
 
 ```javascript
-validatePattern:{
+ValidatePattern:{
 	pattern: /^\S+@\S+\.\S+$/,
   	modifiers: 'i',
     input: 'email',
@@ -231,7 +231,7 @@ validatePattern:{
 #### Validate using a wildcard pattern
 
 ```javascript
-validatePattern:{
+ValidatePattern:{
 	pattern: '*.com',
   	type: 'wildcard',
   	modifiers: 'i',
@@ -244,7 +244,7 @@ validatePattern:{
 #### Allow empty input
 
 ```javascript
-validatePattern:{
+ValidatePattern:{
 	pattern: /^\S+@\S+\.\S+$/,
   	modifiers: 'i',
     input: 'email',
@@ -655,10 +655,6 @@ export default App;
 
 
 ```
-## Thanks to Contributors
-
-
-![hero](https://i.postimg.cc/CMtCrcH1/contributors-removebg-preview-1.png)
 
 ## License
 
